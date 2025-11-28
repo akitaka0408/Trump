@@ -1,12 +1,13 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class BlackjackMenu : MonoBehaviour
 {
     // オブジェクト定義
     public GameObject darkOverlay;     // 暗転処理用のパネル
-    public GameObject optionPanel;     // オプション表示パネル
     public GameObject rulePanel;       // ルール表示パネル
+    public GameObject recordPanel;     // 戦績表示パネル
     public GameObject rule1Text;　　   // ルール1ページ目のテキスト
     public GameObject rule2Text;       // ルール2ページ目のテキスト
     public GameObject rule3Text;       // ルール3ページ目のテキスト
@@ -19,28 +20,27 @@ public class BlackjackMenu : MonoBehaviour
         
     }
 
-    // Optionボタンを押したときに実行されるメソッド
-    public void OnOptionButton()
+    // Recordボタン
+    public void OnRecordButton()
     {
-        // 背景を暗くする処理
         darkOverlay.SetActive(true);
-        // Panelを表示する処理
-        optionPanel.SetActive(true);
+        recordPanel.SetActive(true);
+        SEManager.Instance?.PlayClickSE();
     }
 
-    // OptionPanel内のcloseボタンを押したときに実行されるメソッド
-    public void OnOptionCloseButton()
+    // Recordボタン内のcloseボタン
+    public void OnRecordCloseButton()
     {
-        // 背景を明るくする処理
         darkOverlay.SetActive(false);
-        // Panelを閉じる処理
-        optionPanel.SetActive(false);
-
+        recordPanel.SetActive(false);
+        SEManager.Instance?.PlayClickSE();
     }
 
     // Ruleボタンを押したときに実行されるメソッド
     public void OnRuleButton()
     {
+        // クリック音を鳴らす
+        SEManager.Instance?.PlayClickSE();
         // 背景を暗くする処理
         darkOverlay.SetActive(true);
         // Panelを表示する処理
@@ -56,6 +56,8 @@ public class BlackjackMenu : MonoBehaviour
     // RulePanel内の→(進む)ボタンを押したときに実行されるメソッド
     public void OnRuleNextButton()
     {
+        // クリック音を鳴らす
+        SEManager.Instance?.PlayClickSE();
         // rule1Textがアクティブなら
         if (rule1Text.activeSelf)
         {
@@ -82,6 +84,8 @@ public class BlackjackMenu : MonoBehaviour
     // RulePanel内の←(戻る)ボタンを押したときに実行されるメソッド
     public void OnRuleBackButton()
     {
+        // クリック音を鳴らす
+        SEManager.Instance?.PlayClickSE();
         // rule2Textがアクティブなら
         if (rule2Text.activeSelf)
         {
@@ -108,6 +112,8 @@ public class BlackjackMenu : MonoBehaviour
     // RulePanel内のcloseボタンを押したときに実行されるメソッド
     public void OnRuleCloseButton()
     {
+        // クリック音を鳴らす
+        SEManager.Instance?.PlayClickSE();
         // 背景を明るくする処理
         darkOverlay.SetActive(false);
         // Panelを閉じる処理
@@ -127,6 +133,8 @@ public class BlackjackMenu : MonoBehaviour
     // ←(戻る)ボタンを押したときに実行されるメソッド
     public void OnBackButton()
     {
+        // クリック音を鳴らす
+        SEManager.Instance?.PlayClickSE();
         // StartMenu画面に遷移
         SceneManager.LoadScene("StartMenuScene");
     }
@@ -134,6 +142,8 @@ public class BlackjackMenu : MonoBehaviour
     // Startボタンを押したときに実行されるメソッド
     public void OnStartButton()
     {
+        // クリック音を鳴らす
+        SEManager.Instance?.PlayClickSE();
         // BlackjackGame画面に遷移
         SceneManager.LoadScene("BlackjackGameScene");
     }

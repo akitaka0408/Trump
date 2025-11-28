@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class StartMenu : MonoBehaviour
 {
@@ -9,78 +10,139 @@ public class StartMenu : MonoBehaviour
     public GameObject recordPanel;   // 戦績表示パネル
     public GameObject achievePanel;  // 称号表示パネル
 
-    // 開始時に実行されるメソッド
+    // トグル処理用の定義
+    [SerializeField] private RectTransform _bgmHandle;
+    [SerializeField] private Toggle _bgmToggle;
+    [SerializeField] private Image _bgmBackgroundImage;
+    [SerializeField] private Color _bgmBackgroundOnColor, _bgmBackgroundOffColor;
+
+    [SerializeField] private RectTransform _seHandle;
+    [SerializeField] private Toggle _seToggle;
+    [SerializeField] private Image _seBackgroundImage;
+    [SerializeField] private Color _seBackgroundOnColor, _seBackgroundOffColor;
+
+    // 開始時に実行される初期化
     void Start()
     {
-        Debug.Log("hello world");
+        // SE トグルの初期化
+        if (_seToggle != null && SEManager.Instance != null)
+        {
+            _seToggle.isOn = SEManager.Instance.SEEnabled;
+            _seHandle.anchoredPosition *= -1.0f;
+            _seBackgroundImage.color = _seToggle.isOn ? _seBackgroundOnColor : _seBackgroundOffColor;
+
+            if (_seToggle.isOn) SEManager.Instance.EnableSE();
+            else SEManager.Instance.DisableSE();
+        }
+        
+        // BGM トグルの初期化
+        if (_bgmToggle != null && BGMManager.Instance != null)
+        {
+            _bgmToggle.isOn = BGMManager.Instance.BGMEnabled;
+            _seHandle.anchoredPosition *= -1.0f;
+            _bgmBackgroundImage.color = _bgmToggle.isOn ? _bgmBackgroundOnColor : _bgmBackgroundOffColor;
+
+            if (_bgmToggle.isOn) BGMManager.Instance.PlayBGM();
+            else BGMManager.Instance.StopBGM();
+        }
     }
 
-    // Optionボタンを押したときに実行されるメソッド
+    // Optionボタン
     public void OnOptionButton()
     {
-        // 背景を暗くする処理
         darkOverlay.SetActive(true);
-        // Panelを表示する処理
         optionPanel.SetActive(true);
+        SEManager.Instance?.PlayClickSE();
     }
 
-    // OptionPanel内のcloseボタンを押したときに実行されるメソッド
     public void OnOptionCloseButton()
     {
-        // 背景を明るくする処理
         darkOverlay.SetActive(false);
-        // Panelを閉じる処理
         optionPanel.SetActive(false);
-
+        SEManager.Instance?.PlayClickSE();
     }
 
-    // Recordボタンを押したときの処理
+    // BGMトグル
+    public void ToggleChangedBGM()
+    {
+        _bgmHandle.anchoredPosition *= -1.0f;
+
+        if (_bgmToggle.isOn)
+        {
+            _bgmBackgroundImage.color = _bgmBackgroundOnColor;
+            BGMManager.Instance?.PlayBGM();
+        }
+        else
+        {
+            _bgmBackgroundImage.color = _bgmBackgroundOffColor;
+            BGMManager.Instance?.StopBGM();
+        }
+
+        SEManager.Instance?.PlayClickSE();
+    }
+
+    // SEトグル
+    public void ToggleChangedSE()
+    {
+        _seHandle.anchoredPosition *= -1.0f;
+
+        if (_seToggle.isOn)
+        {
+            _seBackgroundImage.color = _seBackgroundOnColor;
+            SEManager.Instance?.EnableSE();
+        }
+        else
+        {
+            _seBackgroundImage.color = _seBackgroundOffColor;
+            SEManager.Instance?.DisableSE();
+        }
+
+        SEManager.Instance?.PlayClickSE();
+    }
+
+    // Recordボタン
     public void OnRecordButton()
     {
-        // 背景を暗くする処理
         darkOverlay.SetActive(true);
-        // Panelを表示する処理
         recordPanel.SetActive(true);
+        SEManager.Instance?.PlayClickSE();
     }
 
-    // RecordPanel内のcloseボタンを押したときに実行されるメソッド
+    // Recordボタン内のcloseボタン
     public void OnRecordCloseButton()
     {
-        // 背景を明るくする処理
         darkOverlay.SetActive(false);
-        // Panelを閉じる処理
         recordPanel.SetActive(false);
+        SEManager.Instance?.PlayClickSE();
     }
 
-    // Recordボタンを押したときの処理
+    // Achieveボタン
     public void OnAchieveButton()
     {
-        // 背景を暗くする処理
         darkOverlay.SetActive(true);
-        // Panelを表示する処理
         achievePanel.SetActive(true);
+        SEManager.Instance?.PlayClickSE();
     }
 
-    // RecordPanel内のcloseボタンを押したときに実行されるメソッド
+    // Achiveパネル内のcloseボタン
     public void OnAchieveCloseButton()
     {
-        // 背景を明るくする処理
         darkOverlay.SetActive(false);
-        // Panelを閉じる処理
         achievePanel.SetActive(false);
+        SEManager.Instance?.PlayClickSE();
     }
 
-    // BlackJackボタンを押したときに実行されるメソッド
+    // BlackJackボタン
     public void OnBlackJackButton()
     {
-        // BlackjackMenu画面に遷移
+        SEManager.Instance?.PlayClickSE();
         SceneManager.LoadScene("BlackjackMenuScene");
     }
 
+    // OldMaidボタン
     public void OnOldMaidButton()
     {
-        Debug.Log("ボタンが押されました！");
-
+        SEManager.Instance?.PlayClickSE();
+        Debug.Log("OldMaid Button Pressed.");
     }
-
 }

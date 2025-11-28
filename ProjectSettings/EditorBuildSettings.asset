@@ -11,6 +11,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/StartMenuScene.unity
     guid: 50d0cbd1da0ae5a498194e3e5d77a12b
+  - enabled: 1
+    path: Assets/Scenes/BlackjackGameScene.unity
+    guid: fedf7455500be6643856dd3ba9b2d10f
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0
