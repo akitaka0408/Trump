@@ -1,39 +1,59 @@
+using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
-public class BlackjackMenu : MonoBehaviour
+public class BlackjackUI : MonoBehaviour
 {
     // フィールド定義
     public GameObject darkOverlay;     // 暗転処理用のパネル
+    public GameObject betPanel;        // マニーベット用パネル
     public GameObject rulePanel;       // ルール表示パネル
-    public GameObject recordPanel;     // 戦績表示パネル
     public GameObject rule1Text;　　   // ルール1ページ目のテキスト
     public GameObject rule2Text;       // ルール2ページ目のテキスト
     public GameObject rule3Text;       // ルール3ページ目のテキスト
     public GameObject ruleBackButton;  // ページを戻すボタン
     public GameObject ruleNextButton;  // ページを進めるボタン
+    public TMP_Text[] numberTexts; 
+    private int[] number = new int[3];
+
 
     // 開始時に実行されるメソッド
     void Start()
     {
-        
-    }
 
-    // Recordボタン
-    public void OnRecordButton()
+    }
+    public void OnIncrementNumberButton(int index)
     {
-        darkOverlay.SetActive(true);
-        recordPanel.SetActive(true);
         SEManager.Instance?.PlayClickSE();
+        number[index] = (number[index] + 1) % 10;
+        UpdateDisplay();
     }
 
-    // Recordボタン内のcloseボタン
-    public void OnRecordCloseButton()
+    public void OnDecrementNUmberButton(int index)
     {
+        SEManager.Instance?.PlayClickSE();
+        number[index] = (number[index] + 9) % 10; 
+        UpdateDisplay();
+    }
+
+    private void UpdateDisplay()
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            numberTexts[i].text = number[i].ToString();
+        }
+    }
+
+    public int GetTotalValue()
+    {
+        return number[0] * 100 + number[1] * 10 + number[2];
+    }
+
+    public void OnBetButton()
+    {
+        SEManager.Instance?.PlayClickSE();
+        // 
         darkOverlay.SetActive(false);
-        recordPanel.SetActive(false);
-        SEManager.Instance?.PlayClickSE();
+        betPanel.SetActive(false);
     }
 
     // Ruleボタンを押したときに実行されるメソッド
@@ -130,21 +150,4 @@ public class BlackjackMenu : MonoBehaviour
         ruleNextButton.SetActive(true);
     }
 
-    // ←(戻る)ボタンを押したときに実行されるメソッド
-    public void OnBackButton()
-    {
-        // クリック音を鳴らす
-        SEManager.Instance?.PlayClickSE();
-        // StartMenu画面に遷移
-        SceneManager.LoadScene("StartMenuScene");
-    }
-
-    // Startボタンを押したときに実行されるメソッド
-    public void OnStartButton()
-    {
-        // クリック音を鳴らす
-        SEManager.Instance?.PlayClickSE();
-        // BlackjackGame画面に遷移
-        SceneManager.LoadScene("BlackjackGameScene");
-    }
 }

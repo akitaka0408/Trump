@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class SEManager : MonoBehaviour
 {
+    // フィールド定義
     public static SEManager Instance { get; private set; }
-
     public AudioSource seSource;   // SE用AudioSource
     public AudioClip clickSE;      // ボタンクリック音など
 

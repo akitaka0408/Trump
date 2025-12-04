@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class StartMenu : MonoBehaviour
 {
-    // オブジェクト定義
+    // フィールド定義
     public GameObject darkOverlay;   // 暗転処理用のパネル
     public GameObject optionPanel;   // オプション表示パネル
     public GameObject recordPanel;   // 戦績表示パネル

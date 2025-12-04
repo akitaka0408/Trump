@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class BGMManager : MonoBehaviour
 {
+    // フィールド定義
     public static BGMManager Instance { get; private set; }
     public AudioSource bgmSource;
 
