@@ -7,6 +7,10 @@
       "RelativeMoniker": "D:0:0:{D1A78DF6-CF17-9435-DF22-1AB800100078}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\blackjackui.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{D1A78DF6-CF17-9435-DF22-1AB800100078}|Assembly-CSharp.csproj|C:\\Users\\akita\\Desktop\\UnityProjects\\Trump\\assets\\scripts\\gamedatamanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D1A78DF6-CF17-9435-DF22-1AB800100078}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\gamedatamanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{D1A78DF6-CF17-9435-DF22-1AB800100078}|Assembly-CSharp.csproj|C:\\Users\\akita\\Desktop\\UnityProjects\\Trump\\assets\\scripts\\blackjackmenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D1A78DF6-CF17-9435-DF22-1AB800100078}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\blackjackmenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -30,8 +34,20 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "GameDataManager.cs",
+              "DocumentMoniker": "C:\\Users\\akita\\Desktop\\UnityProjects\\Trump\\Assets\\Scripts\\GameDataManager.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\GameDataManager.cs",
+              "ToolTip": "C:\\Users\\akita\\Desktop\\UnityProjects\\Trump\\Assets\\Scripts\\GameDataManager.cs",
+              "RelativeToolTip": "Assets\\Scripts\\GameDataManager.cs",
+              "ViewState": "AgIAACkAAAAAAAAAAAAQwAoAAAAZAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-02T02:47:50.776Z"
+            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
@@ -40,14 +56,14 @@
               "RelativeDocumentMoniker": "Assets\\Scripts\\BlackjackUI.cs",
               "ToolTip": "C:\\Users\\akita\\Desktop\\UnityProjects\\Trump\\Assets\\Scripts\\BlackjackUI.cs",
               "RelativeToolTip": "Assets\\Scripts\\BlackjackUI.cs",
-              "ViewState": "AgIAAFsAAAAAAAAAAAAowDMAAAAFAAAAAAAAAA==",
+              "ViewState": "AgIAAM4AAAAAAAAAAAAAAGYAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-12-02T00:07:49.517Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "BGMManager.cs",
               "DocumentMoniker": "C:\\Users\\akita\\Desktop\\UnityProjects\\Trump\\Assets\\Scripts\\BGMManager.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\BGMManager.cs",
@@ -59,7 +75,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "SEManager.cs",
               "DocumentMoniker": "C:\\Users\\akita\\Desktop\\UnityProjects\\Trump\\Assets\\Scripts\\SEManager.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\SEManager.cs",
@@ -71,7 +87,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "BlackjackMenu.cs",
               "DocumentMoniker": "C:\\Users\\akita\\Desktop\\UnityProjects\\Trump\\Assets\\Scripts\\BlackjackMenu.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\BlackjackMenu.cs",
@@ -83,7 +99,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "StartMenu.cs",
               "DocumentMoniker": "C:\\Users\\akita\\Desktop\\UnityProjects\\Trump\\Assets\\Scripts\\StartMenu.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\StartMenu.cs",
