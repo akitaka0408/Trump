@@ -209,7 +209,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1404625592002034589, guid: d79eafcbc4e46354e83a1b99732c3697, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3747888404134544033, guid: d79eafcbc4e46354e83a1b99732c3697, type: 3}
       propertyPath: m_Name
@@ -992,7 +992,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &433818182
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1814,13 +1814,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1885163567}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
+      - m_Target: {fileID: 1885163569}
+        m_TargetAssemblyTypeName: BlackjackUI, Assembly-CSharp
+        m_MethodName: OnHomeButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -3391,6 +3391,47 @@ MonoBehaviour:
   - {fileID: 21300000, guid: b8b33fd1bba8e824488d5d04b2186236, type: 3}
   - {fileID: 21300000, guid: eef50b7453abf254eba00232b05599c9, type: 3}
   - {fileID: 21300000, guid: 04b5036c16ed6e447a064bb782972fd1, type: 3}
+  - {fileID: 21300000, guid: c705567f9d0bdb649850d54bbf6f480f, type: 3}
+  - {fileID: 21300000, guid: 120a160f250fe384584f4ebce13d3554, type: 3}
+  - {fileID: 21300000, guid: 146ca64799f0feb41a54a1b5f84d1cf6, type: 3}
+  - {fileID: 21300000, guid: 5ff8b14cd6d76ac4091621865caf9770, type: 3}
+  - {fileID: 21300000, guid: fd0becf2f7971714a8f7afdfcc77caf0, type: 3}
+  - {fileID: 21300000, guid: 1805ae8f3d7cd8f43b32f68e38311a72, type: 3}
+  - {fileID: 21300000, guid: 453b73ef0d5d2474c95f20349a41374f, type: 3}
+  - {fileID: 21300000, guid: 96d5236b96933c34b991c2c27ab2a8f0, type: 3}
+  - {fileID: 21300000, guid: 4324bc57527587c409ea189b181baded, type: 3}
+  - {fileID: 21300000, guid: 07a5da6b7637dd74483b16673bb72462, type: 3}
+  - {fileID: 21300000, guid: c64e84dcee254094f96adde2a9be7582, type: 3}
+  - {fileID: 21300000, guid: 936da86d113d4e8408bda1c0ad1948d0, type: 3}
+  - {fileID: 21300000, guid: 581a7018aa7e0cc449d26ea7ba5c68ae, type: 3}
+  - {fileID: 21300000, guid: 82d6029e45b525341ac6c0fa70022289, type: 3}
+  - {fileID: 21300000, guid: 1756de90be05e77489fd476232ad8e65, type: 3}
+  - {fileID: 21300000, guid: afc33674693c6d24fa525252ba31ae08, type: 3}
+  - {fileID: 21300000, guid: 33d594337916a5a45a5ecbec5e90daf0, type: 3}
+  - {fileID: 21300000, guid: 8d73fc8cdc606f44bbcd2bc80d5f76d6, type: 3}
+  - {fileID: 21300000, guid: 9e04ef4e745c5dd4d8d1dc62f3ff6ab9, type: 3}
+  - {fileID: 21300000, guid: c8554c7b342467e4f846c2484de04c77, type: 3}
+  - {fileID: 21300000, guid: a6556f595204d15468b3e6fc9fd29d70, type: 3}
+  - {fileID: 21300000, guid: 4599c3535e60bfd4aab36d9c0f47bc2b, type: 3}
+  - {fileID: 21300000, guid: 9b24b2ce0955e3f4ca05fc6f7d93567c, type: 3}
+  - {fileID: 21300000, guid: ba6f3e6e1fe344f49b6b6728eb4d46a7, type: 3}
+  - {fileID: 21300000, guid: 8a16745eceee0fa4e954aa099b1e17f2, type: 3}
+  - {fileID: 21300000, guid: 23a497b14a2fa564a83f68205cf7642d, type: 3}
+  - {fileID: 21300000, guid: 6d0248b776c18e24db50f351ca84a88f, type: 3}
+  - {fileID: 21300000, guid: 156330a1849656844bd3d5f0311c6f8d, type: 3}
+  - {fileID: 21300000, guid: b2f38fc7ad9244a4e966458cc29e36bf, type: 3}
+  - {fileID: 21300000, guid: fa11906ff7a436846ac8ab8dee8afade, type: 3}
+  - {fileID: 21300000, guid: 241d4f0f3ad76a949bc5daed30271947, type: 3}
+  - {fileID: 21300000, guid: eb9de5e45282efa4eb40bb5e956b8ed9, type: 3}
+  - {fileID: 21300000, guid: 9d8b9658bb59644428d3acba82f06b8f, type: 3}
+  - {fileID: 21300000, guid: ee27a665d0dcebd4f9f9220f8423211b, type: 3}
+  - {fileID: 21300000, guid: e0a2fc547b0194d46a79c4f930224c15, type: 3}
+  - {fileID: 21300000, guid: 68a69c5b709295c4d949b29fe5d72159, type: 3}
+  - {fileID: 21300000, guid: 40bb000e7fd29094d9bc51c5373cbf60, type: 3}
+  - {fileID: 21300000, guid: 90666266e36bf0742813dd3dc3193315, type: 3}
+  - {fileID: 21300000, guid: 7255c5c8f342487489b2f8b45871f544, type: 3}
+  nullCardSprite: {fileID: -9022942101511829407, guid: 5f718fe3e27011042afba9825bb4cf1d, type: 3}
+  backCardSprite: {fileID: 21300000, guid: 14127f26d5f8b3f4482c0407bf17958d, type: 3}
   backgroundImage: {fileID: 0}
   playerScoreText: {fileID: 1830584845}
   hostScoreText: {fileID: 1461743109}
@@ -3885,7 +3926,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3997065513341470026, guid: 5ad38f81c9767f14c8412d369f1254aa, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6194870795066683582, guid: 5ad38f81c9767f14c8412d369f1254aa, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target

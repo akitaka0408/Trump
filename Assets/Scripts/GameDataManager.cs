@@ -68,8 +68,14 @@ public class GameDataManager : MonoBehaviour
             data.records.Add(record);
         }
         record.PlayCount++;
-        if (isWin) record.WinCount++;
-        else record.LoseCount++;
+        if (isWin)
+        {
+            record.WinCount++;
+        }
+        else
+        {
+            record.LoseCount++;
+        }
         Save();
     }
 

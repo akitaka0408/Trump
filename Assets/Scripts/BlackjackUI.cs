@@ -1,6 +1,7 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
-using System.Collections;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class BlackjackUI : MonoBehaviour
@@ -20,6 +21,8 @@ public class BlackjackUI : MonoBehaviour
     public GameObject[] playerCardImages;
     public GameObject[] hostCardImages;
     public Sprite[] cardSprites;
+    public Sprite nullCardSprite;
+    public Sprite backCardSprite;
     public GameObject backgroundImage;
 
     public TMP_Text playerScoreText;
@@ -48,7 +51,9 @@ public class BlackjackUI : MonoBehaviour
     void UpdateDisplay()
     {
         for (int i = 0; i < 3; i++)
+        {
             numberTexts[i].text = number[i].ToString();
+        }
     }
 
     int GetBetAmount()
@@ -78,7 +83,9 @@ public class BlackjackUI : MonoBehaviour
         SEManager.Instance?.PlayClickSE();
         int bet = GetBetAmount();
         if (bet <= 0 || bet > game.PlayerChips)
+        {
             return;
+        }
 
         game.SetBet(bet);
         game.StartRound();
@@ -98,13 +105,17 @@ public class BlackjackUI : MonoBehaviour
         UpdateCardUI();
 
         if (game.PlayerScore > BlackjackGame.BLACKJACK)
+        {
             EndRound();
+        }
     }
 
     public void OnStandButton()
     {
         // クリック音を鳴らす
         SEManager.Instance?.PlayClickSE();
+        game.HostSecondCard = true; 
+        UpdateCardUI();
         StartCoroutine(HostTurn());
     }
 
@@ -113,9 +124,12 @@ public class BlackjackUI : MonoBehaviour
         // クリック音を鳴らす
         SEManager.Instance?.PlayClickSE();
         if (!game.CanDoubleDown())
+        {
             return;
+        }
 
         game.DoubleDown();
+        game.HostSecondCard = true;
         UpdateCardUI();
         UpdateBetUI();
 
@@ -133,20 +147,52 @@ public class BlackjackUI : MonoBehaviour
         // クリック音を鳴らす
         SEManager.Instance?.PlayClickSE();
 
+        game.HostSecondCard = false;
+
         resultText.text = "";
 
         foreach (var img in playerCardImages)
-            img.GetComponent<Image>().sprite = null;
+        {
+            img.GetComponent<Image>().sprite = nullCardSprite;
+        }
 
         foreach (var img in hostCardImages)
-            img.GetComponent<Image>().sprite = null;
+        {
+            img.GetComponent<Image>().sprite = nullCardSprite;
+        }
+
+        hostCardImages[1].GetComponent<Image>().sprite = backCardSprite;
 
         resultPanel.SetActive(false);
-
         betPanel.SetActive(true);
         blackjackUIPanel.SetActive(false);
     }
 
+    public void OnHomeButton()
+    {
+        // クリック音を鳴らす
+        SEManager.Instance?.PlayClickSE();
+
+        resultText.text = "";
+
+        game.HostSecondCard = false;
+
+        foreach (var img in playerCardImages)
+        {
+            img.GetComponent<Image>().sprite = nullCardSprite;
+        }
+
+        foreach (var img in hostCardImages)
+        {
+            img.GetComponent<Image>().sprite = nullCardSprite;
+        }
+
+        resultPanel.SetActive(false);
+        blackjackUIPanel.SetActive(false);
+
+        // BlackjackMenu画面に遷移
+        SceneManager.LoadScene("BlackjackMenuScene");
+    }
 
     IEnumerator HostTurn()
     {
@@ -175,10 +221,10 @@ public class BlackjackUI : MonoBehaviour
         }
 
         // コルーチンで待機処理を開始
-        StartCoroutine(ShowResultPanelAfterDelay());
+        StartCoroutine(ShowResultPanelDelay());
     }
 
-    IEnumerator ShowResultPanelAfterDelay()
+    IEnumerator ShowResultPanelDelay()
     {
         // 2秒待つ
         yield return new WaitForSeconds(2f);
@@ -188,13 +234,40 @@ public class BlackjackUI : MonoBehaviour
         darkOverlay.SetActive(true);
     }
 
+    int GetVisibleHostScore()
+    {
+        int total = 0;
+
+        // 1枚目は常に見えている
+        if (game.HostHand.Count > 0)
+        {
+            Card card = game.HostHand[0];
+            int value;
+
+            // Rank → 値に変換（Game.cs と同じルール）
+            if (card.Rank == 1)
+                value = 11;       // ACE_HIGH
+            else if (card.Rank >= 11)
+                value = 10;       // JQK
+            else
+                value = card.Rank;
+
+            total += value;
+        }
+
+        return total;
+    }
+
     void UpdateCardUI()
     {
         for (int i = 0; i < playerCardImages.Length; i++)
         {
             if (i < game.PlayerHand.Count)
             {
-                playerCardImages[i].GetComponent<Image>().sprite = cardSprites[game.PlayerHand[i] - 1];
+                Card card = game.PlayerHand[i];
+                int index = card.Suit * 13 + (card.Rank - 1);
+                playerCardImages[i].GetComponent<Image>().sprite = cardSprites[index];
+
             }
         }
 
@@ -202,12 +275,31 @@ public class BlackjackUI : MonoBehaviour
         {
             if (i < game.HostHand.Count)
             {
-                hostCardImages[i].GetComponent<Image>().sprite = cardSprites[game.HostHand[i] - 1];
+                Card card = game.HostHand[i];
+                int index = card.Suit * 13 + (card.Rank - 1);
+                hostCardImages[i].GetComponent<Image>().sprite = cardSprites[index];
+                
+                if (i == 1 && !game.HostSecondCard)
+                {
+                    hostCardImages[i].GetComponent<Image>().sprite = backCardSprite;
+                }
+
             }
         }
 
         playerScoreText.text = game.PlayerScore.ToString();
-        hostScoreText.text = game.HostScore.ToString();
+
+        if (!game.HostSecondCard)
+        {
+            // ★ 見えているカードだけの合計を表示
+            hostScoreText.text = GetVisibleHostScore().ToString();
+        }
+        else
+        {
+            // ★ Stand後は本来のスコアを表示
+            hostScoreText.text = game.HostScore.ToString();
+        }
+
     }
 
     void UpdateBetUI()

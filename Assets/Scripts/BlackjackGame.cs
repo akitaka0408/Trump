@@ -7,6 +7,18 @@ public enum GameResult
     Push
 }
 
+public struct Card
+{
+    public int Suit;
+    public int Rank; 
+
+    public Card(int suit, int rank)
+    {
+        Suit = suit;
+        Rank = rank;
+    }
+}
+
 public class BlackjackGame
 {
     public const int BLACKJACK = 21;
@@ -15,16 +27,18 @@ public class BlackjackGame
     const int ACE_LOW = 1;
     const int JQK = 10;
 
-    private List<int> deck = new List<int>();
+    private List<Card> deck = new List<Card>();
 
-    public List<int> PlayerHand { get; } = new List<int>();
-    public List<int> HostHand { get; } = new List<int>();
+    public List<Card> PlayerHand { get; } = new List<Card>();
+    public List<Card> HostHand { get; } = new List<Card>();
 
     public int PlayerChips { get; private set; } = 100;
     public int CurrentBet { get; private set; }
 
-    public int PlayerScore => CalculateHand(PlayerHand);
-    public int HostScore => CalculateHand(HostHand);
+    public int PlayerScore => ValueHand(PlayerHand);
+    public int HostScore => ValueHand(HostHand);
+
+    public bool HostSecondCard = false;
 
     public void SetBet(int bet)
     {
@@ -60,29 +74,47 @@ public class BlackjackGame
 
     public GameResult Evaluate()
     {
-        if (PlayerScore > BLACKJACK) return GameResult.HostWin;
-        if (HostScore > BLACKJACK) return GameResult.PlayerWin;
-
-        if (PlayerScore > HostScore) return GameResult.PlayerWin;
-        if (PlayerScore < HostScore) return GameResult.HostWin;
+        if (PlayerScore > BLACKJACK)
+        {
+            return GameResult.HostWin;
+        }
+        if (HostScore > BLACKJACK)
+        {
+            return GameResult.PlayerWin;
+        }
+        if (PlayerScore > HostScore)
+        {
+            return GameResult.PlayerWin;
+        }
+        if (PlayerScore < HostScore)
+        {
+            return GameResult.HostWin;
+        }
         return GameResult.Push;
     }
 
     public void ApplyResult(GameResult result)
     {
         if (result == GameResult.PlayerWin)
+        {
             PlayerChips += CurrentBet;
+        }
         else if (result == GameResult.HostWin)
+        {
             PlayerChips -= CurrentBet;
+        }
     }
 
     void PrepareDeck()
     {
         deck.Clear();
-        for (int i = 0; i < 4; i++)
-            for (int j = 1; j <= 13; j++)
-                deck.Add(j);
-
+        for (int suit = 0; suit < 4; suit++)
+        {
+            for (int rank = 1; rank <= 13; rank++)
+            {
+                deck.Add(new Card(suit, rank));
+            }
+        }
         Shuffle();
     }
 
@@ -96,12 +128,9 @@ public class BlackjackGame
         }
     }
 
-    int Draw()
+    Card Draw()
     {
-        if (deck.Count == 0)
-            PrepareDeck(); // ƒfƒbƒL‚ª‹ó‚É‚È‚Á‚½‚çÄì¬
-
-        int card = deck[0];
+        Card card = deck[0];
         deck.RemoveAt(0);
         return card;
     }
@@ -117,22 +146,31 @@ public class BlackjackGame
         PlayerHand.Add(Draw());
     }
 
-    int GetCardValue(int raw)
+    int GetCardValue(Card card)
     {
-        if (raw == 1) return ACE_HIGH;
-        if (raw >= 11) return JQK;
-        return raw;
+        if (card.Rank == 1)
+        {
+            return ACE_HIGH;
+        }
+        if (card.Rank >= 11)
+        {
+            return JQK;
+        }
+        return card.Rank;
     }
 
-    int CalculateHand(List<int> hand)
+    int ValueHand(List<Card> hand)
     {
         int total = 0;
         int aceCount = 0;
 
-        foreach (int card in hand)
+        foreach (Card card in hand)
         {
             int value = GetCardValue(card);
-            if (value == ACE_HIGH) aceCount++;
+            if (value == ACE_HIGH)
+            {
+                aceCount++;
+            }
             total += value;
         }
 
