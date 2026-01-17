@@ -553,5 +553,5 @@ public class BlackjackUI : MonoBehaviour
             rt.DOScaleX(1f, 0.15f).SetEase(Ease.OutQuad);
         });
     }
-
+    
 }

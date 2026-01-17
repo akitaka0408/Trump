@@ -9,10 +9,12 @@ public class BlackjackMenu : MonoBehaviour
     public GameObject darkOverlay;     // 暗転処理用のパネル
     public GameObject rulePanel;       // ルール表示パネル
     public GameObject recordPanel;     // 戦績表示パネル
+    public GameObject achievePanel;    // 称号表示パネル
+    public GameObject optionPanel;     // オプション表示パネル
     public TMP_Text moneyText;         // 所持金表示テキスト
     public TMP_Text playText;          // プレイ回数表示テキスト
     public TMP_Text winText;　　　　　 // 勝利数表示テキスト
-    public TMP_Text winPerText;　　    // 勝率表示テキスト
+    public TMP_Text winPerText;        // 勝率表示テキスト
     public GameObject rule1Text;　　   // ルール1ページ目のテキスト
     public GameObject rule2Text;       // ルール2ページ目のテキスト
     public GameObject rule3Text;       // ルール3ページ目のテキスト
@@ -20,6 +22,44 @@ public class BlackjackMenu : MonoBehaviour
     public GameObject ruleBackButton;  // ページを戻すボタン
     public GameObject ruleNextButton;  // ページを進めるボタン
 
+    private int t = 0;
+    private int b = 0;
+    private int s = 0;
+
+    // トグル処理用の定義
+    [SerializeField] private RectTransform _bgmHandle;
+    [SerializeField] private Toggle _bgmToggle;
+    [SerializeField] private Image _bgmBackgroundImage;
+    [SerializeField] private Color _bgmBackgroundOnColor, _bgmBackgroundOffColor;
+
+    [SerializeField] private RectTransform _seHandle;
+    [SerializeField] private Toggle _seToggle;
+    [SerializeField] private Image _seBackgroundImage;
+    [SerializeField] private Color _seBackgroundOnColor, _seBackgroundOffColor;
+
+    // 開始時に実行される初期化
+    void Start()
+    {
+        // SE トグルの初期化
+        if (_seToggle != null && SEManager.Instance != null)
+        {
+            _seToggle.isOn = GameDataManager.Instance.data.SE;
+            _seBackgroundImage.color = _seToggle.isOn ? _seBackgroundOnColor : _seBackgroundOffColor;
+
+            if (_seToggle.isOn) SEManager.Instance.EnableSE();
+            else SEManager.Instance.DisableSE();
+        }
+
+        // BGM トグルの初期化
+        if (_bgmToggle != null && BGMManager.Instance != null)
+        {
+            _bgmToggle.isOn = GameDataManager.Instance.data.BGM;
+            _bgmBackgroundImage.color = _bgmToggle.isOn ? _bgmBackgroundOnColor : _bgmBackgroundOffColor;
+
+            if (_bgmToggle.isOn) BGMManager.Instance.PlayBGM();
+            else BGMManager.Instance.StopBGM();
+        }
+    }
     // Recordボタン
     public void OnRecordButton()
     {
@@ -29,6 +69,20 @@ public class BlackjackMenu : MonoBehaviour
 
         // 戦績（Blackjack）
         Record record = GameDataManager.Instance.data.records.Find(r => r.GameType == "Blackjack");
+
+        if (record == null)
+        {
+            record = new Record
+            {
+                GameType = "Blackjack",
+                PlayCount = 0,
+                WinCount = 0,
+                LoseCount = 0
+            };
+            GameDataManager.Instance.data.records.Add(record);
+            GameDataManager.Instance.Save();
+        }
+
 
         playText.text = record.PlayCount.ToString();
         winText.text = record.WinCount.ToString();
@@ -168,13 +222,86 @@ public class BlackjackMenu : MonoBehaviour
         ruleNextButton.SetActive(true);
     }
 
-    // ←(戻る)ボタンを押したときに実行されるメソッド
-    public void OnBackButton()
+    // Optionボタン
+    public void OnOptionButton()
     {
-        // クリック音を鳴らす
+        darkOverlay.SetActive(true);
+        optionPanel.SetActive(true);
         SEManager.Instance?.PlayClickSE();
-        // StartMenu画面に遷移
-        SceneManager.LoadScene("StartMenuScene");
+        t++;
+    }
+
+    public void OnOptionCloseButton()
+    {
+        darkOverlay.SetActive(false);
+        optionPanel.SetActive(false);
+        SEManager.Instance?.PlayClickSE();
+    }
+
+    // BGMトグルs
+    public void ToggleChangedBGM()
+    {
+        _bgmHandle.anchoredPosition *= -1.0f;
+
+        if (_bgmToggle.isOn)
+        {
+            _bgmBackgroundImage.color = _bgmBackgroundOnColor;
+            BGMManager.Instance?.PlayBGM();
+        }
+        else
+        {
+            _bgmBackgroundImage.color = _bgmBackgroundOffColor;
+            BGMManager.Instance?.StopBGM();
+        }
+
+        GameDataManager.Instance.SetBGM(_bgmToggle.isOn);
+
+        SEManager.Instance?.PlayClickSE();
+    }
+
+    // SEトグル
+    public void ToggleChangedSE()
+    {
+        _seHandle.anchoredPosition *= -1.0f;
+
+        if (_seToggle.isOn)
+        {
+            _seBackgroundImage.color = _seBackgroundOnColor;
+            SEManager.Instance?.EnableSE();
+        }
+        else
+        {
+            _seBackgroundImage.color = _seBackgroundOffColor;
+            SEManager.Instance?.DisableSE();
+        }
+
+        GameDataManager.Instance.SetSE(_seToggle.isOn);
+
+        SEManager.Instance?.PlayClickSE();
+    }
+
+
+    // Achieveボタン
+    public void OnAchieveButton()
+    {
+        darkOverlay.SetActive(true);
+        achievePanel.SetActive(true);
+        SEManager.Instance?.PlayClickSE();
+        s++;
+    }
+
+    // Achiveパネル内のcloseボタン
+    public void OnAchieveCloseButton()
+    {
+        darkOverlay.SetActive(false);
+        achievePanel.SetActive(false);
+        SEManager.Instance?.PlayClickSE();
+    }
+
+    // Exitボタン
+    public void OnExitButton()
+    {
+        Application.Quit();
     }
 
     // Startボタンを押したときに実行されるメソッド

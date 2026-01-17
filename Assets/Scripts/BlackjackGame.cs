@@ -52,6 +52,7 @@ public class BlackjackGame
     public void SetBet(int bet)
     {
         CurrentBet = bet;
+        PlayerMoney -= bet;
     }
 
     public void StartRound()
@@ -120,17 +121,22 @@ public class BlackjackGame
 
     public void ApplyResult(GameResult result)
     {
-        if (result == GameResult.BlackJack)
+        switch (result)
         {
-            PlayerMoney += (int)(CurrentBet * 1.5f);
-        }
-        if (result == GameResult.PlayerWin)
-        {
-            PlayerMoney += CurrentBet;
-        }
-        else if (result == GameResult.HostWin)
-        {
-            PlayerMoney -= CurrentBet;
+            case GameResult.BlackJack:
+                PlayerMoney += (int)(CurrentBet * 2.5f);
+                break;
+
+            case GameResult.PlayerWin:
+                PlayerMoney += CurrentBet * 2;
+                break;
+
+            case GameResult.Push:
+                PlayerMoney += CurrentBet;
+                break;
+
+            case GameResult.HostWin:
+                break;
         }
     }
 
@@ -181,6 +187,7 @@ public class BlackjackGame
 
     public void DoubleDown()
     {
+        PlayerMoney -= CurrentBet;
         CurrentBet *= 2;
         PlayerHand.Add(Draw());
     }
