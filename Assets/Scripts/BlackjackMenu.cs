@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -8,21 +9,36 @@ public class BlackjackMenu : MonoBehaviour
     public GameObject darkOverlay;     // 暗転処理用のパネル
     public GameObject rulePanel;       // ルール表示パネル
     public GameObject recordPanel;     // 戦績表示パネル
+    public TMP_Text moneyText;         // 所持金表示テキスト
+    public TMP_Text playText;          // プレイ回数表示テキスト
+    public TMP_Text winText;　　　　　 // 勝利数表示テキスト
+    public TMP_Text winPerText;　　    // 勝率表示テキスト
     public GameObject rule1Text;　　   // ルール1ページ目のテキスト
     public GameObject rule2Text;       // ルール2ページ目のテキスト
     public GameObject rule3Text;       // ルール3ページ目のテキスト
+    public GameObject rule4Text;       // ルール4ページ目のテキスト
     public GameObject ruleBackButton;  // ページを戻すボタン
     public GameObject ruleNextButton;  // ページを進めるボタン
-
-    // 開始時に実行されるメソッド
-    void Start()
-    {
-        
-    }
 
     // Recordボタン
     public void OnRecordButton()
     {
+
+        // 所持金
+        moneyText.text = GameDataManager.Instance.data.money.ToString();
+
+        // 戦績（Blackjack）
+        Record record = GameDataManager.Instance.data.records.Find(r => r.GameType == "Blackjack");
+
+        playText.text = record.PlayCount.ToString();
+        winText.text = record.WinCount.ToString();
+
+        float winRate = (record.PlayCount > 0)
+            ? (record.WinCount * 100f / record.PlayCount)
+            : 0f;
+
+        winPerText.text = winRate.ToString("F1") + "%";
+
         darkOverlay.SetActive(true);
         recordPanel.SetActive(true);
         SEManager.Instance?.PlayClickSE();
@@ -49,6 +65,8 @@ public class BlackjackMenu : MonoBehaviour
         rule2Text.SetActive(false);
         // Rule3Textを非表示にする
         rule3Text.SetActive(false);
+        // Rule4Textを非表示にする
+        rule4Text.SetActive(false);
         // RuleBackButtonを非表示にする
         ruleBackButton.SetActive(false);
     }
@@ -76,6 +94,15 @@ public class BlackjackMenu : MonoBehaviour
             rule2Text.SetActive(false);
             // Rule3Textを表示
             rule3Text.SetActive(true);
+        }
+
+        // rule3Textがアクティブなら
+        else if (rule3Text.activeSelf)
+        {
+            // Rule3Textを非表示
+            rule3Text.SetActive(false);
+            // Rule3Textを表示
+            rule4Text.SetActive(true);
             //RuleNextButtonを非表示
             ruleNextButton.SetActive(false);
         }
@@ -100,10 +127,19 @@ public class BlackjackMenu : MonoBehaviour
         // rule3Textがアクティブなら
         else if (rule3Text.activeSelf)
         {
-            // Rule3Textを非表示
-            rule3Text.SetActive(false);
             // Rule2Textを表示
             rule2Text.SetActive(true);
+            // Rule3Textを非表示
+            rule3Text.SetActive(false);
+        }
+
+        // rule4Textがアクティブなら
+        else if (rule4Text.activeSelf)
+        {
+            // Rule3Textを表示
+            rule3Text.SetActive(true);
+            // Rule4Textを非表示
+            rule4Text.SetActive(false);
             //RuleNextButtonを表示
             ruleNextButton.SetActive(true);
         }
@@ -122,6 +158,8 @@ public class BlackjackMenu : MonoBehaviour
         rule2Text.SetActive(false);
         // Rule3Textを非表示
         rule3Text.SetActive(false);
+        // Rule3Textを非表示
+        rule4Text.SetActive(false);
         // Rule1Textを表示
         rule1Text.SetActive(true);
         // RuleBackButtonを非表示

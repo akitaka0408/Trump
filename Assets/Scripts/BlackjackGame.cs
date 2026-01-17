@@ -1,10 +1,13 @@
+using DG.Tweening;
 using System.Collections.Generic;
+using UnityEngine;
 
 public enum GameResult
 {
     PlayerWin,
     HostWin,
-    Push
+    Push,
+    BlackJack   
 }
 
 public struct Card
@@ -32,7 +35,13 @@ public class BlackjackGame
     public List<Card> PlayerHand { get; } = new List<Card>();
     public List<Card> HostHand { get; } = new List<Card>();
 
-    public int PlayerChips { get; private set; } = 100;
+    public int PlayerMoney { get; private set; }
+
+    public void SetPlayerMoney(int money)
+    {
+        PlayerMoney = money;
+    }
+
     public int CurrentBet { get; private set; }
 
     public int PlayerScore => ValueHand(PlayerHand);
@@ -74,10 +83,26 @@ public class BlackjackGame
 
     public GameResult Evaluate()
     {
+        if (IsBlackJack(PlayerHand) && IsBlackJack(HostHand))
+        {
+            return GameResult.Push;
+        }
+
+        if (IsBlackJack(PlayerHand))
+        {
+            return GameResult.BlackJack;
+        }
+
         if (PlayerScore > BLACKJACK)
         {
+            if (HostScore > BLACKJACK)
+            {
+                return GameResult.Push;
+            }
+
             return GameResult.HostWin;
         }
+
         if (HostScore > BLACKJACK)
         {
             return GameResult.PlayerWin;
@@ -95,13 +120,17 @@ public class BlackjackGame
 
     public void ApplyResult(GameResult result)
     {
+        if (result == GameResult.BlackJack)
+        {
+            PlayerMoney += (int)(CurrentBet * 1.5f);
+        }
         if (result == GameResult.PlayerWin)
         {
-            PlayerChips += CurrentBet;
+            PlayerMoney += CurrentBet;
         }
         else if (result == GameResult.HostWin)
         {
-            PlayerChips -= CurrentBet;
+            PlayerMoney -= CurrentBet;
         }
     }
 
@@ -135,9 +164,19 @@ public class BlackjackGame
         return card;
     }
 
+    bool IsBlackJack(List<Card> hand)
+    {
+        if (hand.Count != 2) return false;
+
+        bool hasAce = (hand[0].Rank == 1 || hand[1].Rank == 1);
+        bool hasTenValue = (hand[0].Rank >= 10 && hand[0].Rank <= 13) || (hand[1].Rank >= 10 && hand[1].Rank <= 13);
+
+        return hasAce && hasTenValue;
+    }
+
     public bool CanDoubleDown()
     {
-        return PlayerHand.Count == 2 && PlayerChips >= CurrentBet;
+        return PlayerHand.Count == 2 && PlayerMoney >= CurrentBet;
     }
 
     public void DoubleDown()
@@ -182,4 +221,5 @@ public class BlackjackGame
 
         return total;
     }
+
 }

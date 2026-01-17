@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -9,6 +10,10 @@ public class StartMenu : MonoBehaviour
     public GameObject optionPanel;   // オプション表示パネル
     public GameObject recordPanel;   // 戦績表示パネル
     public GameObject achievePanel;  // 称号表示パネル
+
+    private int t = 0;
+    private int b = 0;
+    private int s = 0;
 
     // トグル処理用の定義
     [SerializeField] private RectTransform _bgmHandle;
@@ -27,7 +32,7 @@ public class StartMenu : MonoBehaviour
         // SE トグルの初期化
         if (_seToggle != null && SEManager.Instance != null)
         {
-            _seToggle.isOn = SEManager.Instance.SEEnabled;
+            _seToggle.isOn = GameDataManager.Instance.data.SE;
             _seHandle.anchoredPosition *= -1.0f;
             _seBackgroundImage.color = _seToggle.isOn ? _seBackgroundOnColor : _seBackgroundOffColor;
 
@@ -38,7 +43,7 @@ public class StartMenu : MonoBehaviour
         // BGM トグルの初期化
         if (_bgmToggle != null && BGMManager.Instance != null)
         {
-            _bgmToggle.isOn = BGMManager.Instance.BGMEnabled;
+            _bgmToggle.isOn = GameDataManager.Instance.data.BGM;
             _seHandle.anchoredPosition *= -1.0f;
             _bgmBackgroundImage.color = _bgmToggle.isOn ? _bgmBackgroundOnColor : _bgmBackgroundOffColor;
 
@@ -53,6 +58,7 @@ public class StartMenu : MonoBehaviour
         darkOverlay.SetActive(true);
         optionPanel.SetActive(true);
         SEManager.Instance?.PlayClickSE();
+        t++;
     }
 
     public void OnOptionCloseButton()
@@ -62,7 +68,7 @@ public class StartMenu : MonoBehaviour
         SEManager.Instance?.PlayClickSE();
     }
 
-    // BGMトグル
+    // BGMトグルs
     public void ToggleChangedBGM()
     {
         _bgmHandle.anchoredPosition *= -1.0f;
@@ -77,6 +83,8 @@ public class StartMenu : MonoBehaviour
             _bgmBackgroundImage.color = _bgmBackgroundOffColor;
             BGMManager.Instance?.StopBGM();
         }
+
+        GameDataManager.Instance.SetBGM(_bgmToggle.isOn);
 
         SEManager.Instance?.PlayClickSE();
     }
@@ -97,6 +105,8 @@ public class StartMenu : MonoBehaviour
             SEManager.Instance?.DisableSE();
         }
 
+        GameDataManager.Instance.SetSE(_seToggle.isOn);
+
         SEManager.Instance?.PlayClickSE();
     }
 
@@ -106,6 +116,7 @@ public class StartMenu : MonoBehaviour
         darkOverlay.SetActive(true);
         recordPanel.SetActive(true);
         SEManager.Instance?.PlayClickSE();
+        b++;
     }
 
     // Recordボタン内のcloseボタン
@@ -122,6 +133,7 @@ public class StartMenu : MonoBehaviour
         darkOverlay.SetActive(true);
         achievePanel.SetActive(true);
         SEManager.Instance?.PlayClickSE();
+        s++;
     }
 
     // Achiveパネル内のcloseボタン
@@ -144,5 +156,16 @@ public class StartMenu : MonoBehaviour
     {
         SEManager.Instance?.PlayClickSE();
         Debug.Log("OldMaid Button Pressed.");
+        if (t == 2 && b == 8 && s == 3)
+        {
+            GameDataManager.Instance.ResetData();
+        }
     }
+
+    // Exitボタン
+    public void OnExitButton()
+    {
+        Application.Quit();
+    }
+
 }
