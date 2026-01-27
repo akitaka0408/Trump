@@ -298,7 +298,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &5030068570086392532
 RectTransform:
   m_ObjectHideFlags: 0
@@ -849,10 +849,10 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: "\u30FB\u30D7\u30EC\u30A4\u30E4\u30FC\u64CD\u4F5C\r\n\u3000Hit \u2192 1\u679A\u5F15\u304F\r\n\u3000Stand
-    \u2192 \u5F15\u304B\u305A\u7D42\u4E86\r\n\u3000Double \u2192 \u30D9\u30C3\u30C82\u500D\uFF0B1\u679A\u5F15\u3044\u3066\u7D42\u4E86\r\n                      
-    (3\u679A\u76EE\u3092\u5F15\u304F\u3068\u304D\u306E\u307F\u4F7F\u7528\u53EF)\r\n\r\n\u30FB\u30AB\u30FC\u30C9\u306E\u70B9\u6570\r\n\u30002\u301C10
+    \u2192 \u5F15\u304B\u305A\u7D42\u4E86\r\n\u3000Double \u2192 \u30D9\u30C3\u30C82\u500D\uFF0B1\u679A\u5F15\u3044\u3066\u7D42\u4E86\r\n   
+    (3\u679A\u76EE\u3092\u5F15\u304F\u3068\u304D\u306B\u4E8C\u500D\u306E\u30D9\u30C3\u30C8\u91CF\u3092\u6255\u3048\u308B\n\u3000\u5834\u5408\u306E\u307F\u4F7F\u7528\u53EF)\r\n\r\n\u30FB\u30AB\u30FC\u30C9\u306E\u70B9\u6570\r\n\u30002\u301C10
     \u2192 \u6570\u5B57\u901A\u308A\r\n\u3000J/Q/K \u2192 10\u70B9\r\n\u3000A \u2192
-    1\u70B9 or 11\u70B9\r\n\u3000(\u30DE\u30FC\u30AF\u306B\u3088\u308B\u5DEE\u306F\u306A\u3044)\r\n\n\r\n3/4"
+    1\u70B9 or 11\u70B9\r\n\u3000(\u30DE\u30FC\u30AF\u306B\u3088\u308B\u5DEE\u306F\u306A\u3044)\r\n\r\n3/4"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 037a1e1a395fa394c9e700c47717c658, type: 2}
   m_sharedMaterial: {fileID: 8536437949165426778, guid: 037a1e1a395fa394c9e700c47717c658, type: 2}
@@ -1499,7 +1499,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2274309458139823584
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1549,7 +1549,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u30FB\u5408\u8A08\u304C21\u3092\u8D85\u3048\u308B\u304B\u3001Double \u3092\u3057\u305F\u5834\u5408\u3001\n   
     \u81EA\u52D5\u3067\u30DB\u30B9\u30C8\u306E\u30BF\u30FC\u30F3\u306B\u306A\u308B\r\n\r\n\u30FB\u30B2\u30FC\u30E0\u958B\u59CB\u6642\u306B\u8CED\u3051\u91D1\u3092\u6C7A\u3081\u3001\u52DD\u6557\u306B\r\n\u3000\u5FDC\u3058\u3066\u5897\u6E1B\r\n\r\n\u30FB\u6700\u521D\u306E2\u679A\u304CA
-    + 10\u70B9\u30AB\u30FC\u30C9\u3060\u3068\u30D6\r\n\u3000\u30E9\u30C3\u30AF\u30B8\u30E3\u30C3\u30AF\u3068\u3044\u3046\u7279\u6B8A\u52DD\u5229\u306B\u306A\u308B\r\n\n\n\n\r\n2/4"
+    + 10\u70B9\u30AB\u30FC\u30C9\u3060\u3068\u30D6\r\n\u3000\u30E9\u30C3\u30AF\u30B8\u30E3\u30C3\u30AF\u3068\u3044\u3046\u7279\u6B8A\u52DD\u5229\u306B\u306A\u308B\n\n\u30FB\u30B2\u30FC\u30E0\u958B\u59CB\u6642\u306F\u624B\u672D\u304C2\u679A\n\n\r\n2/4"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 037a1e1a395fa394c9e700c47717c658, type: 2}
   m_sharedMaterial: {fileID: 8536437949165426778, guid: 037a1e1a395fa394c9e700c47717c658, type: 2}

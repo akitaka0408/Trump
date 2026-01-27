@@ -260,16 +260,16 @@ MonoBehaviour:
   rule4Text: {fileID: 2130211617553565039}
   ruleBackButton: {fileID: 910280640}
   ruleNextButton: {fileID: 1861816303}
-  _bgmHandle: {fileID: 452564813}
-  _bgmToggle: {fileID: 291116804}
-  _bgmBackgroundImage: {fileID: 619482970}
-  _bgmBackgroundOnColor: {r: 0.4862745, g: 0.9882354, b: 0, a: 1}
-  _bgmBackgroundOffColor: {r: 0.7, g: 0.7, b: 0.7, a: 1}
-  _seHandle: {fileID: 688526007}
-  _seToggle: {fileID: 1147044054}
-  _seBackgroundImage: {fileID: 1326698757}
-  _seBackgroundOnColor: {r: 0.4862745, g: 0.9882354, b: 0, a: 1}
-  _seBackgroundOffColor: {r: 0.7, g: 0.7, b: 0.7, a: 1}
+  bgmHandle: {fileID: 452564813}
+  bgmToggle: {fileID: 291116804}
+  bgmBackgroundImage: {fileID: 619482970}
+  bgmBackgroundOnColor: {r: 0.4862745, g: 0.9882354, b: 0, a: 1}
+  bgmBackgroundOffColor: {r: 0.6, g: 0.6, b: 0.6, a: 1}
+  seHandle: {fileID: 688526007}
+  seToggle: {fileID: 1147044054}
+  seBackgroundImage: {fileID: 1326698757}
+  seBackgroundOnColor: {r: 0.4862745, g: 0.9882354, b: 0, a: 1}
+  seBackgroundOffColor: {r: 0.6, g: 0.6, b: 0.6, a: 1}
 --- !u!4 &173042772
 Transform:
   m_ObjectHideFlags: 0
@@ -342,7 +342,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -1000472569394323851, guid: 01638f870a782a84bac74e38233bda2c, type: 3}
+  m_Sprite: {fileID: 3429734692814665788, guid: 399a4122f6259e3459ee0b6ae8f50465, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -700,6 +700,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1290768544}
     m_Modifications:
+    - target: {fileID: 3400978625442725431, guid: e47bb0b7a8814c14794d73369d3efb70, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -2600382934303169456, guid: a5cd35da015a61e4aa51b1dd6ffd5f99, type: 3}
     - target: {fileID: 4367182130678966433, guid: e47bb0b7a8814c14794d73369d3efb70, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 1
@@ -1112,7 +1116,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 649660824713432270, guid: ebf76ebfd4c31f84fbbaa1af86b21119, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 281
+      value: 238
       objectReference: {fileID: 0}
     - target: {fileID: 880700819663451023, guid: ebf76ebfd4c31f84fbbaa1af86b21119, type: 3}
       propertyPath: m_fontSize
@@ -1236,7 +1240,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3759206741346529284, guid: ebf76ebfd4c31f84fbbaa1af86b21119, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 88
+      value: 49
       objectReference: {fileID: 0}
     - target: {fileID: 3814736056516215748, guid: ebf76ebfd4c31f84fbbaa1af86b21119, type: 3}
       propertyPath: m_Name
@@ -1264,7 +1268,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4339147833457659668, guid: ebf76ebfd4c31f84fbbaa1af86b21119, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 16
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5522632298499520453, guid: ebf76ebfd4c31f84fbbaa1af86b21119, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -1324,7 +1328,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5531537492080753753, guid: ebf76ebfd4c31f84fbbaa1af86b21119, type: 3}
       propertyPath: m_SizeDelta.y
-      value: -360
+      value: -440
       objectReference: {fileID: 0}
     - target: {fileID: 5531537492080753753, guid: ebf76ebfd4c31f84fbbaa1af86b21119, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1420,7 +1424,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6345333972582546663, guid: ebf76ebfd4c31f84fbbaa1af86b21119, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 161
+      value: 125
       objectReference: {fileID: 0}
     - target: {fileID: 6769984892124279385, guid: ebf76ebfd4c31f84fbbaa1af86b21119, type: 3}
       propertyPath: m_SizeDelta.x
@@ -1492,7 +1496,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8553794810767023462, guid: ebf76ebfd4c31f84fbbaa1af86b21119, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -281
+      value: -210
       objectReference: {fileID: 0}
     - target: {fileID: 8909387417808196410, guid: ebf76ebfd4c31f84fbbaa1af86b21119, type: 3}
       propertyPath: m_SizeDelta.x
@@ -1508,7 +1512,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8909387417808196410, guid: ebf76ebfd4c31f84fbbaa1af86b21119, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -57
+      value: -64
       objectReference: {fileID: 0}
     - target: {fileID: 9143754883301931010, guid: ebf76ebfd4c31f84fbbaa1af86b21119, type: 3}
       propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
@@ -2461,13 +2465,33 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8750626032256680727, guid: 93920b5254ac16744befcf98a0374647, type: 3}
+      propertyPath: winSE
+      value: 
+      objectReference: {fileID: 8300000, guid: 6b7d811bfcac4c446b7a1f5994ab6097, type: 3}
+    - target: {fileID: 8750626032256680727, guid: 93920b5254ac16744befcf98a0374647, type: 3}
       propertyPath: cardSE
       value: 
       objectReference: {fileID: 8300000, guid: 8730700086847fa4ba2962ba8ba89998, type: 3}
     - target: {fileID: 8750626032256680727, guid: 93920b5254ac16744befcf98a0374647, type: 3}
+      propertyPath: drawSE
+      value: 
+      objectReference: {fileID: 8300000, guid: cb1d081cd859c1040818175d824a2e9f, type: 3}
+    - target: {fileID: 8750626032256680727, guid: 93920b5254ac16744befcf98a0374647, type: 3}
+      propertyPath: loseSE
+      value: 
+      objectReference: {fileID: 8300000, guid: 2057577ec9c271740ba0618ad1e15d6b, type: 3}
+    - target: {fileID: 8750626032256680727, guid: 93920b5254ac16744befcf98a0374647, type: 3}
+      propertyPath: retireSE
+      value: 
+      objectReference: {fileID: 8300000, guid: 11ec9729887fa4a479ec7d38b60953b5, type: 3}
+    - target: {fileID: 8750626032256680727, guid: 93920b5254ac16744befcf98a0374647, type: 3}
       propertyPath: seSource
       value: 
       objectReference: {fileID: 164080837}
+    - target: {fileID: 8750626032256680727, guid: 93920b5254ac16744befcf98a0374647, type: 3}
+      propertyPath: blackjackSE
+      value: 
+      objectReference: {fileID: 8300000, guid: a2415ee9975b6ec46930e9ee117c27cd, type: 3}
     - target: {fileID: 8977086378863993383, guid: 93920b5254ac16744befcf98a0374647, type: 3}
       propertyPath: m_Resource
       value: 
@@ -2611,7 +2635,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -703330411608830473, guid: 046f6a1f21e891f44a0b0ff7fa082ec2, type: 3}
+  m_Sprite: {fileID: 5407575419586454565, guid: bcb7ee1cf2a6a3a4ebc054e85d7becbb, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3291,6 +3315,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2192303722289188947, guid: 849d903b2453c4a4794dd270d532bd80, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -4877870392961683841, guid: bf25600cc8c48ca47aca195e799ce6cf, type: 3}
     - target: {fileID: 2527389460471239138, guid: 849d903b2453c4a4794dd270d532bd80, type: 3}
       propertyPath: m_Name
       value: OptionButton
@@ -3907,6 +3935,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1310414577588072367, guid: d79eafcbc4e46354e83a1b99732c3697, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 3018730908198190184, guid: 47ec02632a848c14dafc73f866069b25, type: 3}
     - target: {fileID: 3747888404134544033, guid: d79eafcbc4e46354e83a1b99732c3697, type: 3}
       propertyPath: m_Name
       value: 'RuleButton '

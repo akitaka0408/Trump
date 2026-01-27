@@ -3,75 +3,124 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+// メニュー画面(起動時に表示される画面)
 public class BlackjackMenu : MonoBehaviour
 {
     // フィールド定義
-    public GameObject darkOverlay;     // 暗転処理用のパネル
-    public GameObject rulePanel;       // ルール表示パネル
-    public GameObject recordPanel;     // 戦績表示パネル
-    public GameObject achievePanel;    // 称号表示パネル
-    public GameObject optionPanel;     // オプション表示パネル
-    public TMP_Text moneyText;         // 所持金表示テキスト
-    public TMP_Text playText;          // プレイ回数表示テキスト
-    public TMP_Text winText;　　　　　 // 勝利数表示テキスト
-    public TMP_Text winPerText;        // 勝率表示テキスト
-    public GameObject rule1Text;　　   // ルール1ページ目のテキスト
-    public GameObject rule2Text;       // ルール2ページ目のテキスト
-    public GameObject rule3Text;       // ルール3ページ目のテキスト
-    public GameObject rule4Text;       // ルール4ページ目のテキスト
-    public GameObject ruleBackButton;  // ページを戻すボタン
-    public GameObject ruleNextButton;  // ページを進めるボタン
 
+    // パネル参照用
+    public GameObject darkOverlay;        // 暗転処理用のパネル
+    public GameObject rulePanel;          // ルール表示パネル
+    public GameObject recordPanel;        // 戦績表示パネル
+    public GameObject achievePanel;       // 称号表示パネル
+    public GameObject optionPanel;        // オプション表示パネル
+
+    // テキスト参照用
+    public TMP_Text moneyText;            // 所持金表示テキスト
+    public TMP_Text playText;             // プレイ回数表示テキスト
+    public TMP_Text winText;　　　　　    // 勝利数表示テキスト
+    public TMP_Text winPerText;           // 勝率表示テキスト
+    public GameObject rule1Text;　　      // ルール1ページ目のテキスト
+    public GameObject rule2Text;          // ルール2ページ目のテキスト
+    public GameObject rule3Text;          // ルール3ページ目のテキスト
+    public GameObject rule4Text;          // ルール4ページ目のテキスト
+
+    // ボタン参照用
+    public GameObject ruleBackButton;     // ページを戻すボタン
+    public GameObject ruleNextButton;     // ページを進めるボタン
+
+    // トグル参照用
+    public RectTransform bgmHandle;      // BGMトグルの位置
+    public Toggle bgmToggle;             // BGMトグル
+    public Image bgmBackgroundImage;     // BGMトグルの背景画像
+    public Color bgmBackgroundOnColor;   // BGMトグルがONの時の背景色
+    public Color bgmBackgroundOffColor;  // BGMトグルがOFFの時の背景色
+    public RectTransform seHandle;       // SEトグルの位置
+    public Toggle seToggle;              // SEトグル
+    public Image seBackgroundImage;      // SEトグルの背景画像
+    public Color seBackgroundOnColor;    // SEトグルがONの時の背景色
+    public Color seBackgroundOffColor;   // SEトグルがOFFの時の背景色
+
+    // 隠しコマンド用
     private int t = 0;
     private int b = 0;
     private int s = 0;
 
-    // トグル処理用の定義
-    [SerializeField] private RectTransform _bgmHandle;
-    [SerializeField] private Toggle _bgmToggle;
-    [SerializeField] private Image _bgmBackgroundImage;
-    [SerializeField] private Color _bgmBackgroundOnColor, _bgmBackgroundOffColor;
-
-    [SerializeField] private RectTransform _seHandle;
-    [SerializeField] private Toggle _seToggle;
-    [SerializeField] private Image _seBackgroundImage;
-    [SerializeField] private Color _seBackgroundOnColor, _seBackgroundOffColor;
-
-    // 開始時に実行される初期化
+    // 開始時に実行される
     void Start()
     {
         // SE トグルの初期化
-        if (_seToggle != null && SEManager.Instance != null)
-        {
-            _seToggle.isOn = GameDataManager.Instance.data.SE;
-            _seBackgroundImage.color = _seToggle.isOn ? _seBackgroundOnColor : _seBackgroundOffColor;
 
-            if (_seToggle.isOn) SEManager.Instance.EnableSE();
-            else SEManager.Instance.DisableSE();
+        // seToggleとSEManagerのインスタンスが存在する場合
+        if (seToggle != null && SEManager.Instance != null)
+        {
+            // SEトグルの状態をGameDataManagerから取得する
+            seToggle.isOn = GameDataManager.Instance.data.SE;
+
+            // seToggleがONなら
+            if (seToggle.isOn)
+            {
+                // 背景色をONの色(緑色)にする
+                seBackgroundImage.color = seBackgroundOnColor;
+                // SEをONにする
+                SEManager.Instance.EnableSE();
+            }
+            // seToggleがOFFなら
+            else
+            {
+                // 背景色をOFFの色(灰色)にする
+                seBackgroundImage.color = seBackgroundOffColor;
+                // SEをOFFにする
+                SEManager.Instance.DisableSE();
+            }
         }
 
         // BGM トグルの初期化
-        if (_bgmToggle != null && BGMManager.Instance != null)
-        {
-            _bgmToggle.isOn = GameDataManager.Instance.data.BGM;
-            _bgmBackgroundImage.color = _bgmToggle.isOn ? _bgmBackgroundOnColor : _bgmBackgroundOffColor;
 
-            if (_bgmToggle.isOn) BGMManager.Instance.PlayBGM();
-            else BGMManager.Instance.StopBGM();
+        // bgmToggleとBGMManagerのインスタンスが存在する場合
+        if (bgmToggle != null && BGMManager.Instance != null)
+        {
+            // BGMトグルの状態をGameDataManagerから取得する
+            bgmToggle.isOn = GameDataManager.Instance.data.BGM;
+
+            // bgmToggleがONなら
+            if (bgmToggle.isOn)
+            {
+                // 背景色をONの色(緑色)にする
+                bgmBackgroundImage.color = bgmBackgroundOnColor;
+                // BGMをONにする
+                BGMManager.Instance.PlayBGM();
+            }
+            // bgmToggleがOFFなら
+            else
+            {
+                // 背景色をONの色(緑色)にする
+                bgmBackgroundImage.color = bgmBackgroundOffColor;
+                // BGMをOFFにする
+                BGMManager.Instance.StopBGM();
+            }
         }
     }
+
+    // 戦績があるかどうかの判定
+    bool IsBlackjackRecord(Record r)
+    {
+        return r.GameType == "Blackjack";
+    }
+
     // Recordボタン
     public void OnRecordButton()
     {
-
-        // 所持金
+        // 所持金をGameDataManagerから取得する
         moneyText.text = GameDataManager.Instance.data.money.ToString();
 
-        // 戦績（Blackjack）
-        Record record = GameDataManager.Instance.data.records.Find(r => r.GameType == "Blackjack");
+        // 戦績をGameDataManagerから取得する
+        Record record = GameDataManager.Instance.data.records.Find(IsBlackjackRecord);
 
+        // GameDataManagerに戦績がない場合
         if (record == null)
         {
+            // 初期値を入れる
             record = new Record
             {
                 GameType = "Blackjack",
@@ -79,204 +128,255 @@ public class BlackjackMenu : MonoBehaviour
                 WinCount = 0,
                 LoseCount = 0
             };
+            
+            //GameDataManagerに追加する
             GameDataManager.Instance.data.records.Add(record);
+            // 保存する
             GameDataManager.Instance.Save();
         }
 
-
+        // GameDataManagerから取得したプレイ回数を表示する
         playText.text = record.PlayCount.ToString();
+        // GameDataManagerから取得した勝利回数を表示する
         winText.text = record.WinCount.ToString();
 
-        float winRate = (record.PlayCount > 0)
-            ? (record.WinCount * 100f / record.PlayCount)
-            : 0f;
+        // 計算結果を格納する変数
+        float winRate;
 
+        // プレイ回数が0より大きい場合
+        if (record.PlayCount > 0)
+        {
+            // 勝率を計算し、格納
+            winRate = record.WinCount * 100f / record.PlayCount;
+        }
+        // プレイ回数が0の場合
+        else
+        {
+            // 勝率は0
+            winRate = 0;
+        }
+
+        // 計算された勝率を少数第一位まで表示
         winPerText.text = winRate.ToString("F1") + "%";
 
+        // 背景を暗転
         darkOverlay.SetActive(true);
+        // 戦績パネルを表示
         recordPanel.SetActive(true);
+        // クリック音を鳴らす
         SEManager.Instance?.PlayClickSE();
+        // 隠しコマンド用
+        b++;
     }
 
     // Recordボタン内のcloseボタン
     public void OnRecordCloseButton()
     {
+        // 背景を暗転解除
         darkOverlay.SetActive(false);
+        // 戦績パネルを表示
         recordPanel.SetActive(false);
+        // クリック音を鳴らす
         SEManager.Instance?.PlayClickSE();
     }
 
-    // Ruleボタンを押したときに実行されるメソッド
+    // Ruleボタン
     public void OnRuleButton()
     {
         // クリック音を鳴らす
         SEManager.Instance?.PlayClickSE();
-        // 背景を暗くする処理
+        // 背景を暗転
         darkOverlay.SetActive(true);
-        // Panelを表示する処理
+        // ルールパネルを表示
         rulePanel.SetActive(true);
-        // Rule2Textを非表示にする
+        // ルール2ページ目テキストを非表示
         rule2Text.SetActive(false);
-        // Rule3Textを非表示にする
+        // ルール3ページ目テキストを非表示
         rule3Text.SetActive(false);
-        // Rule4Textを非表示にする
+        // ルール4ページ目テキストを非表示
         rule4Text.SetActive(false);
-        // RuleBackButtonを非表示にする
+        // ページを戻すボタンを非表示
         ruleBackButton.SetActive(false);
+        // 隠しコマンド用
+        s++;
     }
 
-    // RulePanel内の→(進む)ボタンを押したときに実行されるメソッド
+    // ルールパネル内の→(進む)ボタンを押したときに実行されるメソッド
     public void OnRuleNextButton()
     {
         // クリック音を鳴らす
         SEManager.Instance?.PlayClickSE();
-        // rule1Textがアクティブなら
+
+        // 現在ルール1ページ目の場合
         if (rule1Text.activeSelf)
         {
-            //RuleBackButtonを表示
+            // ページを戻すボタンを表示
             ruleBackButton.SetActive(true);
-            // Rule1Textを非表示
+            // ルール1ページ目テキストを非表示
             rule1Text.SetActive(false);
-            // Rule2Textを表示
+            // ルール2ページ目テキストを表示
             rule2Text.SetActive(true);
         }
 
-        // rule2Textがアクティブなら
+        // 現在ルール2ページ目の場合
         else if (rule2Text.activeSelf)
         {
-            // Rule2Textを非表示
+            // ルール2ページ目テキストを非表示
             rule2Text.SetActive(false);
-            // Rule3Textを表示
+            // ルール3ページ目テキストを表示
             rule3Text.SetActive(true);
         }
 
-        // rule3Textがアクティブなら
+        // 現在ルール3ページ目の場合
         else if (rule3Text.activeSelf)
         {
-            // Rule3Textを非表示
+            // ルール3ページ目テキストを非表示
             rule3Text.SetActive(false);
-            // Rule3Textを表示
+            // ルール4ページ目テキストを表示
             rule4Text.SetActive(true);
-            //RuleNextButtonを非表示
+            //ページを進めるを非表示
             ruleNextButton.SetActive(false);
         }
     }
 
-    // RulePanel内の←(戻る)ボタンを押したときに実行されるメソッド
+    // ルールパネル内の←(戻る)ボタンを押したときに実行されるメソッド
     public void OnRuleBackButton()
     {
         // クリック音を鳴らす
         SEManager.Instance?.PlayClickSE();
-        // rule2Textがアクティブなら
+
+        // 現在ルール2ページ目の場合
         if (rule2Text.activeSelf)
         {
-            //RuleBackButtonを非表示
+            // ページを戻るボタンを非表示
             ruleBackButton.SetActive(false);
-            // Rule1Textを表示
+            // ルール1ページ目テキストを表示
             rule1Text.SetActive(true);
-            // Rule2Textを非表示
+            // ルール2ページ目テキストを非表示
             rule2Text.SetActive(false);
         }
 
-        // rule3Textがアクティブなら
+        // 現在ルール3ページ目の場合
         else if (rule3Text.activeSelf)
         {
-            // Rule2Textを表示
+            // ルール2ページ目テキストを表示
             rule2Text.SetActive(true);
-            // Rule3Textを非表示
+            // ルール3ページ目テキストを非表示
             rule3Text.SetActive(false);
         }
 
-        // rule4Textがアクティブなら
+        // 現在ルール3ページ目の場合
         else if (rule4Text.activeSelf)
         {
-            // Rule3Textを表示
+            // ルール3ページ目テキストを表示
             rule3Text.SetActive(true);
-            // Rule4Textを非表示
+            // ルール4ページ目テキストを非表示
             rule4Text.SetActive(false);
-            //RuleNextButtonを表示
+            // ページを進めるボタンを表示
             ruleNextButton.SetActive(true);
         }
     }
 
-    // RulePanel内のcloseボタンを押したときに実行されるメソッド
+    // ルールパネル内のcloseボタンを押したときに実行されるメソッド
     public void OnRuleCloseButton()
     {
         // クリック音を鳴らす
         SEManager.Instance?.PlayClickSE();
-        // 背景を明るくする処理
+        // 暗転を解除
         darkOverlay.SetActive(false);
-        // Panelを閉じる処理
+        // ルールパネルを閉じる
         rulePanel.SetActive(false);
-        // Rule2Textを非表示
+        // ルール2ページ目テキストを非表示
         rule2Text.SetActive(false);
-        // Rule3Textを非表示
+        // ルール3ページ目テキストを非表示
         rule3Text.SetActive(false);
-        // Rule3Textを非表示
+        // ルール3ページ目テキストを非表示
         rule4Text.SetActive(false);
-        // Rule1Textを表示
+        // ルール1ページ目テキストを表示
         rule1Text.SetActive(true);
-        // RuleBackButtonを非表示
+        // ページを戻すボタンを非表示
         ruleBackButton.SetActive(false);
-        // RuleNextButtonを非表示
+        // ページを進めるを非表示
         ruleNextButton.SetActive(true);
     }
 
     // Optionボタン
     public void OnOptionButton()
     {
+        // 背景を暗転
         darkOverlay.SetActive(true);
+        // オプションパネルを表示
         optionPanel.SetActive(true);
+        // クリック音を鳴らす
         SEManager.Instance?.PlayClickSE();
         t++;
     }
 
     public void OnOptionCloseButton()
     {
+        // 暗転を解除
         darkOverlay.SetActive(false);
+        // オプションパネルを非表示
         optionPanel.SetActive(false);
+        // クリック音を鳴らす
         SEManager.Instance?.PlayClickSE();
     }
 
-    // BGMトグルs
+    // BGMトグル
     public void ToggleChangedBGM()
     {
-        _bgmHandle.anchoredPosition *= -1.0f;
+        // ハンドルの位置を反転させる
+        bgmHandle.anchoredPosition *= -1.0f;
 
-        if (_bgmToggle.isOn)
+        // bgmToggleがONの場合
+        if (bgmToggle.isOn)
         {
-            _bgmBackgroundImage.color = _bgmBackgroundOnColor;
+            // 背景色をONの色(緑色)にする
+            bgmBackgroundImage.color = bgmBackgroundOnColor;
+            // BGMをONにする
             BGMManager.Instance?.PlayBGM();
         }
+        // bgmToggleがOFFの場合
         else
         {
-            _bgmBackgroundImage.color = _bgmBackgroundOffColor;
+            // 背景色をOFFの色(灰色)にする
+            bgmBackgroundImage.color = bgmBackgroundOffColor;
+            // BGMをOFFにする
             BGMManager.Instance?.StopBGM();
         }
 
-        GameDataManager.Instance.SetBGM(_bgmToggle.isOn);
-
+        // GameDataManagerにセットする
+        GameDataManager.Instance.SetBGM(bgmToggle.isOn);
+        // クリック音を鳴らす
         SEManager.Instance?.PlayClickSE();
     }
 
     // SEトグル
     public void ToggleChangedSE()
     {
-        _seHandle.anchoredPosition *= -1.0f;
+        // ハンドルの位置を反転させる
+        seHandle.anchoredPosition *= -1.0f;
 
-        if (_seToggle.isOn)
+        // seToggleがONの場合
+        if (seToggle.isOn)
         {
-            _seBackgroundImage.color = _seBackgroundOnColor;
+            // 背景色をONの色(緑色)にする
+            seBackgroundImage.color = seBackgroundOnColor;
+            // SEをONにする
             SEManager.Instance?.EnableSE();
         }
+        // seToggleがOFFの場合
         else
         {
-            _seBackgroundImage.color = _seBackgroundOffColor;
+            // 背景色をOFFの色(灰色)にする
+            seBackgroundImage.color = seBackgroundOffColor;
+            // SEをOFFにする
             SEManager.Instance?.DisableSE();
         }
 
-        GameDataManager.Instance.SetSE(_seToggle.isOn);
-
+        // GameDataManagerにセットする
+        GameDataManager.Instance.SetSE(seToggle.isOn);
+        // クリック音を鳴らす
         SEManager.Instance?.PlayClickSE();
     }
 
@@ -284,27 +384,49 @@ public class BlackjackMenu : MonoBehaviour
     // Achieveボタン
     public void OnAchieveButton()
     {
+        // 背景を暗転
         darkOverlay.SetActive(true);
+        // 実績パネルを表示
         achievePanel.SetActive(true);
+        // クリック音を鳴らす
         SEManager.Instance?.PlayClickSE();
-        s++;
+
+        // 隠しコマンド
+
+        // それぞれのボタンが特定の回数押されていたら
+        if (t == 2 && b == 8 && s == 3)
+        {
+            // ゲームのデータを初期値にリセット
+            GameDataManager.Instance.ResetData();
+
+            // ログを表示
+            Debug.Log("データを初期化しました");
+        }
+        // 変数の初期化
+        t = 0;
+        b = 0;
+        s = 0;
     }
 
     // Achiveパネル内のcloseボタン
     public void OnAchieveCloseButton()
     {
+        // 暗転を解除
         darkOverlay.SetActive(false);
+        // 実績パネルを非表示
         achievePanel.SetActive(false);
+        // クリック音を鳴らす
         SEManager.Instance?.PlayClickSE();
     }
 
     // Exitボタン
     public void OnExitButton()
     {
+        // ゲームを閉じる
         Application.Quit();
     }
 
-    // Startボタンを押したときに実行されるメソッド
+    // Startボタン
     public void OnStartButton()
     {
         // クリック音を鳴らす
