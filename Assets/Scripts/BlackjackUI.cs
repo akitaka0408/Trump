@@ -128,10 +128,10 @@ public class BlackjackUI : MonoBehaviour
 
         // ベット額をセット
         game.SetBet(bet);
-        // 所持金をインスタンスにセット
-        GameDataManager.Instance.data.money = game.PlayerMoney;
-        // 所持金を保存
-        GameDataManager.Instance.Save();
+        // ミッション用（最大ベット）
+        GameDataManager.Instance.SetBet(bet);
+        // 所持金更新（マイナス）
+        GameDataManager.Instance.AddMoney(-bet);
         // スタートラウンド開始
         game.StartRound();
         // カードのUIを更新
@@ -177,10 +177,9 @@ public class BlackjackUI : MonoBehaviour
         game.ApplyResult(GameResult.HostWin);
         // 負けなのでfalseにして更新
         GameDataManager.Instance.UpdateRecord("Blackjack", false);
-        // 所持金を更新
-        GameDataManager.Instance.data.money = game.PlayerMoney;
-        // 保存する
-        GameDataManager.Instance.Save();
+        // 所持金差分を計算して更新
+        int diff = game.PlayerMoney - GameDataManager.Instance.data.money;
+        GameDataManager.Instance.AddMoney(diff);
         // リザルトパネルにリタイアを入れる
         resultText.text = "Retire";
         // フォントカラーを灰色にする
@@ -274,6 +273,8 @@ public class BlackjackUI : MonoBehaviour
         SEManager.Instance?.PlayClickSE();
         // Doubledown(ベット2倍＋1枚引く)する
         game.DoubleDown();
+        // ダブル後のベット額をミッションに反映
+        GameDataManager.Instance.SetBet(game.CurrentBet);
         // カードを引く音を鳴らす
         SEManager.Instance?.PlayCardSE();
         // ホストの二枚目のカードを表向きの判定
@@ -402,8 +403,9 @@ public class BlackjackUI : MonoBehaviour
         GameResult result = game.Evaluate();
         // 所持金の更新
         game.ApplyResult(result);
-        // データ保存用の所持金を更新
-        GameDataManager.Instance.data.money = game.PlayerMoney;
+        // 所持金差分を計算して更新
+        int diff = game.PlayerMoney - GameDataManager.Instance.data.money;
+        GameDataManager.Instance.AddMoney(diff);
 
         // 勝敗記録を更新
         switch (result)

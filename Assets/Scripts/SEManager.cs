@@ -13,6 +13,7 @@ public class SEManager : MonoBehaviour
     public AudioClip loseSE;            // 敗北時の音
     public AudioClip blackjackSE;       // ブラックジャック時の音
     public AudioClip retireSE;          // リタイア時の音
+    public AudioClip gameOverSE;        // ゲームオーバー時の音
     private bool seEnabled = true;      // SEが有効かどうか
 
     // 一番最初に呼び出される
@@ -121,4 +122,11 @@ public class SEManager : MonoBehaviour
     {
         PlaySE(retireSE);
     }
+
+    // ゲームオーバー時の音
+    public void PlayGameOverSE()
+    {
+        PlaySE(gameOverSE);
+    }
+    
 }

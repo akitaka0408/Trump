@@ -1,0 +1,8 @@
+using System;
+
+[Serializable]
+public class Mission
+{
+    public string MissionID;   // ó·: "Win_1", "Win_10"
+    public bool IsCleared;     // íBê¨çœÇ›Ç©
+}

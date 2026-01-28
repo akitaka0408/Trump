@@ -14,6 +14,7 @@ public class BlackjackMenu : MonoBehaviour
     public GameObject recordPanel;        // 戦績表示パネル
     public GameObject achievePanel;       // 称号表示パネル
     public GameObject optionPanel;        // オプション表示パネル
+    public GameObject gameOverPanel;      // ゲームオーバーパネル
 
     // テキスト参照用
     public TMP_Text moneyText;            // 所持金表示テキスト
@@ -49,6 +50,32 @@ public class BlackjackMenu : MonoBehaviour
     // 開始時に実行される
     void Start()
     {
+        // 所持金が0の場合、ミッションリセットと所持金を1000に設定
+        if (GameDataManager.Instance.data.money <= 0)
+        {
+            // ミッションデータをリセット
+            GameDataManager.Instance.ResetMissions();
+
+            // ミッションの勝利数・連勝・連敗・最大掛け金も初期化
+            GameDataManager.Instance.data.totalWinCount = 0;
+            GameDataManager.Instance.data.winStreak = 0;
+            GameDataManager.Instance.data.loseStreak = 0;
+            GameDataManager.Instance.data.maxBet = 0;
+
+            // 所持金を1000にする
+            GameDataManager.Instance.data.money = 1000;
+
+            // データを保存
+            GameDataManager.Instance.Save();
+
+            // 背景を暗転
+            darkOverlay.SetActive(true);
+            // ゲームオーバーパネルを表示
+            gameOverPanel.SetActive(true);
+            // クリック音を鳴らす
+            SEManager.Instance?.PlayGameOverSE();
+        }
+
         // SE トグルの初期化
 
         // seToggleとSEManagerのインスタンスが存在する場合
@@ -381,7 +408,7 @@ public class BlackjackMenu : MonoBehaviour
     }
 
 
-    // Achieveボタン
+    // ミッションボタン
     public void OnAchieveButton()
     {
         // 背景を暗転
@@ -415,6 +442,17 @@ public class BlackjackMenu : MonoBehaviour
         darkOverlay.SetActive(false);
         // 実績パネルを非表示
         achievePanel.SetActive(false);
+        // クリック音を鳴らす
+        SEManager.Instance?.PlayClickSE();
+    }
+
+    // Achiveパネル内のcloseボタン
+    public void OnGameOverCloseButton()
+    {
+        // 暗転を解除
+        darkOverlay.SetActive(false);
+        // 実績パネルを非表示
+        gameOverPanel.SetActive(false);
         // クリック音を鳴らす
         SEManager.Instance?.PlayClickSE();
     }

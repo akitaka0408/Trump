@@ -9,4 +9,12 @@ public class Data
     public bool BGM = true;                            // BGMの ON/OFF(初期値はON)
     public bool SE = true;                             // SEの ON/OFF(初期値はON)
     public int money = 1000;                           // プレイヤーの所持金(初期値は1000)
+
+    // ミッション用
+    public int totalWinCount = 0;      　　　　　　　　  // 累計勝利数
+    public int winStreak = 0;                            // 現在の連勝数
+    public int loseStreak = 0;                           // 現在の連敗数
+    public int maxBet = 0;                               // 1回の最大ベット額
+
+    public List<Mission> missions = new List<Mission>(); // ミッションデータを格納するリスト。
 }

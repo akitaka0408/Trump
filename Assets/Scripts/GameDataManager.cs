@@ -29,6 +29,13 @@ public class GameDataManager : MonoBehaviour
         filePath = Path.Combine(Application.persistentDataPath, "save.json");
         // データ読み込み
         Load();
+
+        // ミッションリストが空なら初期化する
+        if (data.missions == null || data.missions.Count == 0)
+        {
+            ResetMissions();
+            Save(); // 初期ミッションを書き込む
+        }
     }
 
     // シングルトン参照用
@@ -107,13 +114,22 @@ public class GameDataManager : MonoBehaviour
         {
             // 勝利数を増やす
             record.WinCount++;
+            data.totalWinCount++;
+            data.winStreak++;
+            data.loseStreak = 0;
         }
         // 敗北した場合
         else
         {
             // 敗北数を増やす
             record.LoseCount++;
+            data.loseStreak++;
+            data.winStreak = 0;
         }
+
+        // ミッションが達成したかどうか
+        CheckMissions();
+        Save();
     }
 
     // 所持金更新
@@ -121,8 +137,25 @@ public class GameDataManager : MonoBehaviour
     {
         // 所持金を増やす
         data.money += amount;
+
+        CheckMissions();
         Save();
     }
+
+    // 掛け金セット
+    public void SetBet(int bet)
+    {
+        // 掛け金が保存されている掛け金より多い場合
+        if (bet > data.maxBet)
+        {
+            data.maxBet = bet;
+        }
+
+        // ミッションが達成したかどうか
+        CheckMissions();
+        Save();
+    }
+
 
     // SEの更新
     public void SetSE(bool se)
@@ -141,6 +174,106 @@ public class GameDataManager : MonoBehaviour
         Save();
     }
 
+    // ミッション達成チェック
+    void CheckMissions()
+    {
+        // ミッションの数まで
+        foreach (var mis in data.missions)
+        {
+            // そのミッションがクリア済みの場合
+            if (mis.IsCleared)
+            {
+                // 処理を飛ばす
+                continue;
+            }
+
+            // ミッションIDごとに達成条件を判定
+            switch (mis.MissionID)
+            {
+                // 勝利数が1以上ならクリア
+                case "Win_1":
+                    if (data.totalWinCount >= 1)
+                    {
+                        mis.IsCleared = true;
+                    }
+                    break;
+
+                // 勝利数が10以上ならクリア
+                case "Win_10":
+                    if (data.totalWinCount >= 10)
+                    {
+                        mis.IsCleared = true;
+                    }
+                    break;
+
+                // 勝利数が50以上ならクリア
+                case "Win_50":
+                    if (data.totalWinCount >= 50)
+                    {
+                        mis.IsCleared = true;
+                    }
+                    break;
+
+                // 連勝数が10以上ならクリア
+                case "WinStreak_10":
+                    if (data.winStreak >= 10)
+                    {
+                        mis.IsCleared = true;
+                    }
+                    break;
+
+                // 連敗数が5以上ならクリア
+                case "LoseStreak_5":
+                    if (data.loseStreak >= 5)
+                    {
+                        mis.IsCleared = true;
+                    }
+                    break;
+
+                // 所持金がが10000以上ならクリア
+                case "Money_10000":
+                    if (data.money >= 10000)
+                    {
+                        mis.IsCleared = true;
+                    }
+                    break;
+
+                // 掛け金がが1998ならクリア
+                case "Bet_1998":
+                    if (data.maxBet >= 1998)
+                    {
+                        mis.IsCleared = true;
+                    }
+                    break;
+
+                // 所持金が100以下ならクリア
+                case "Money_100":
+                    if (data.money <= 100)
+                    {
+                        mis.IsCleared = true;
+                    }
+                    break;
+            }
+        }
+    }
+
+    // ミッション初期化用
+    public void ResetMissions()
+    {
+        data.missions = new List<Mission>
+        {
+            new Mission { MissionID = "Win_1" },
+            new Mission { MissionID = "Win_10" },
+            new Mission { MissionID = "Win_50" },
+            new Mission { MissionID = "WinStreak_10" },
+            new Mission { MissionID = "LoseStreak_5" },
+            new Mission { MissionID = "Money_10000" },
+            new Mission { MissionID = "Bet_1998" },
+            new Mission { MissionID = "Money_100" },
+        };
+    }
+
+
     // データの初期化
     public void ResetData()
     {
@@ -154,7 +287,19 @@ public class GameDataManager : MonoBehaviour
             },
             BGM = true,
             SE = true,
-            money = 1000
+            money = 1000,
+
+            missions = new List<Mission>
+            {
+                new Mission { MissionID = "Win_1" },
+                new Mission { MissionID = "Win_10" },
+                new Mission { MissionID = "Win_50" },
+                new Mission { MissionID = "WinStreak_10" },
+                new Mission { MissionID = "LoseStreak_5" },
+                new Mission { MissionID = "Money_10000" },
+                new Mission { MissionID = "Bet_1998" },
+                new Mission { MissionID = "Money_100" },
+            }
         };
 
         // 保存
