@@ -3,6 +3,6 @@ using System;
 [Serializable]
 public class Mission
 {
-    public string MissionID;   // —á: "Win_1", "Win_10"
-    public bool IsCleared;     // ’B¬Ï‚İ‚©
+    public string missionID;   // —á: "Win_1", "Win_10"
+    public bool isCleared;     // ’B¬Ï‚İ‚©
 }

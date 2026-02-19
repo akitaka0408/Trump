@@ -6,15 +6,18 @@ using System.Collections.Generic;
 public class Data
 {
     public List<Record> records = new List<Record>();  // 戦績データを格納するリスト。
-    public bool BGM = true;                            // BGMの ON/OFF(初期値はON)
-    public bool SE = true;                             // SEの ON/OFF(初期値はON)
+    public bool bgm = true;                            // BGMの ON/OFF(初期値はON)
+    public bool se = true;                             // SEの ON/OFF(初期値はON)
+    public int bgmIndex = 0;                           // 流すBGMの添え字(初期値は0)
     public int money = 1000;                           // プレイヤーの所持金(初期値は1000)
 
     // ミッション用
-    public int totalWinCount = 0;      　　　　　　　　  // 累計勝利数
-    public int winStreak = 0;                            // 現在の連勝数
-    public int loseStreak = 0;                           // 現在の連敗数
-    public int maxBet = 0;                               // 1回の最大ベット額
+    public int missionWinCount = 0;      　　　　　　　　// ミッション用勝利数(初期値は0)
+    public int missionPlayCount = 0;      　　　　　　　 // ミッション用プレイ回数(初期値は0)
+    public int winStreak = 0;                            // 現在の連勝数(初期値は0)
+    public int loseStreak = 0;                           // 現在の連敗数(初期値は0)
+    public int maxBet = 0;                               // 1回の最大ベット額(初期値は0)
+    public int blackjackCount = 0;                       // blackjack回数(初期値は0)
 
     public List<Mission> missions = new List<Mission>(); // ミッションデータを格納するリスト。
 }

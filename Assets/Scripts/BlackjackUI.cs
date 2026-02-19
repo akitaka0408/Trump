@@ -40,6 +40,7 @@ public class BlackjackUI : MonoBehaviour
     public GameObject rule3Text;          // ルール3ページ目のテキスト
     public GameObject rule4Text;          // ルール4ページ目のテキスト
     public TMP_Text[] numberTexts;        // ベットパネルの3桁の数字テキスト
+    public TMP_Text missionNoticeText;    // ミッション達成お知らせ用
 
     // ボタン参照用
     public GameObject hitButton;          // Hitボタン
@@ -176,7 +177,7 @@ public class BlackjackUI : MonoBehaviour
         // 負け判定にする
         game.ApplyResult(GameResult.HostWin);
         // 負けなのでfalseにして更新
-        GameDataManager.Instance.UpdateRecord("Blackjack", false);
+        GameDataManager.Instance.UpdateRecord("Blackjack", 1, false);
         // 所持金差分を計算して更新
         int diff = game.PlayerMoney - GameDataManager.Instance.data.money;
         GameDataManager.Instance.AddMoney(diff);
@@ -184,6 +185,7 @@ public class BlackjackUI : MonoBehaviour
         resultText.text = "Retire";
         // フォントカラーを灰色にする
         resultText.color = Color.gray;
+
         // 少し待ち、リザルトパネルを開く
         StartCoroutine(ShowResultPanelDelay());
         // リタイア確認パネルを非表示
@@ -236,6 +238,7 @@ public class BlackjackUI : MonoBehaviour
         }
     }
 
+    // Standボタン
     public void OnStandButton()
     {
         // クリック音を鳴らす
@@ -315,6 +318,8 @@ public class BlackjackUI : MonoBehaviour
         resultText.color = Color.white;
         // 結果テキストをクリア
         resultText.text = "";
+        // この試合で達成したミッションリストをリセット
+        GameDataManager.Instance.ClearNewlyClearedMissions();
 
         // プレイヤーの手札数分回す
         foreach (var img in playerCardImages)
@@ -353,6 +358,8 @@ public class BlackjackUI : MonoBehaviour
         TurnHostCard = false;
         // フォントカラーを白に戻す
         resultText.color = Color.white;
+        // この試合で達成したミッションリストをリセット
+        GameDataManager.Instance.ClearNewlyClearedMissions();
 
         // プレイヤーの手札数分回す
         foreach (var img in playerCardImages)
@@ -397,6 +404,7 @@ public class BlackjackUI : MonoBehaviour
         EndRound();
     }
 
+    // ターンの終了時
     void EndRound()
     {
         // 勝敗判定
@@ -410,23 +418,30 @@ public class BlackjackUI : MonoBehaviour
         // 勝敗記録を更新
         switch (result)
         {
-            // ブラックジャックかプレイヤー勝利判定の場合
+            // ブラックジャック勝利判定の場合
             case GameResult.BlackJack:
+                // ブラックジャック回数をカウント
+                GameDataManager.Instance.AddBlackjackCount();
+                // 勝利なのでtrue
+                GameDataManager.Instance.UpdateRecord("Blackjack", 0, true);
+                break;
+
+            // 勝利判定の場合
             case GameResult.PlayerWin:
                 // 勝利なのでtrue
-                GameDataManager.Instance.UpdateRecord("Blackjack", true);
+                GameDataManager.Instance.UpdateRecord("Blackjack", 0, false);
                 break;
 
             // ホスト勝利の場合
             case GameResult.HostWin:
                 // 敗北なのでfalse
-                GameDataManager.Instance.UpdateRecord("Blackjack", false);
+                GameDataManager.Instance.UpdateRecord("Blackjack", 1, false);
                 break;
 
             // 引き分けの場合
             case GameResult.Push:
                 // 勝利ではないのでfalse
-                GameDataManager.Instance.UpdateRecord("Blackjack", false);
+                GameDataManager.Instance.UpdateRecord("Blackjack", 2, false);
                 break;
         }
 
@@ -481,6 +496,7 @@ public class BlackjackUI : MonoBehaviour
         StartCoroutine(HostTurn());
     }
 
+    // 待機して、リザルト表示
     IEnumerator ShowResultPanelDelay()
     {
         // 1秒待つ
@@ -492,9 +508,29 @@ public class BlackjackUI : MonoBehaviour
         resultPanel.SetActive(true);
         // 背景の暗転
         darkOverlay.SetActive(true);
-        // プレイヤー操作不可パネル表示
+        // プレイヤー操作不可パネル非表示
         dontTouchPanel.SetActive(false);
 
+        // 新しくクリアしたミッションがある場合
+        if (GameDataManager.Instance.HasNewlyClearedMission())
+        {
+            // 新しく達成したミッションリストを取得
+            var list = GameDataManager.Instance.GetNewlyClearedMissions();
+            // テキストを表示
+            missionNoticeText.gameObject.SetActive(true);
+            // テキストにリストの内容を追加
+            missionNoticeText.text = string.Join("・", list);
+            // テキストに文字を追加
+            missionNoticeText.text += " を達成しました";
+        }
+        // ない場合
+        else
+        {
+            // テキストを非表示
+            missionNoticeText.gameObject.SetActive(false);
+        }
+
+        // 勝利時テキスト変更
         switch (resultText.text)
         {
             case "BlackJack":

@@ -5,8 +5,11 @@ public class BGMManager : MonoBehaviour
 {
     // フィールド定義
     private static BGMManager instance;    // シングルトン管理用
-    public AudioSource bgmSource;          // SE用AudioSource(SEの情報)
+    public AudioSource bgmSource;          // BGM用AudioSource(BGMの情報)
+    public AudioClip[] bgmClips;           // BGM用の配列
+
     private bool bgmEnabled = true;        // BGMが有効かどうか
+    private int currentIndex = -1;         // 現在選ばれている音楽
 
     // 一番最初に呼び出される
     private void Awake()
@@ -49,18 +52,34 @@ public class BGMManager : MonoBehaviour
         }
     }
 
-    // BGMを再生
-    public void PlayBGM()
+    // 指定番号のBGMを再生
+    public void PlayBGM(int index)
     {
-        // bgmEnabledをONにする
+        // BGMをオンにする
         bgmEnabled = true;
 
-        // bgmSourceがあり、bgmがOFFの場合
-        if (bgmSource != null && !bgmSource.isPlaying)
+        // BGMが有効の場合
+        if (!bgmEnabled)
         {
-            // BGMを鳴らす
-            bgmSource.Play();
+            return;
         }
+        // 番号が正しい
+        if (index < 0 || index >= bgmClips.Length)
+        {
+            return;
+        }
+
+        // 同じ曲なら何もしない
+        if (currentIndex == index && bgmSource.isPlaying)
+        {
+            return;
+        }
+
+        currentIndex = index;
+        bgmSource.clip = bgmClips[index];
+        bgmSource.loop = true;
+        // 曲を流す
+        bgmSource.Play();
     }
 
     // BGMを停止

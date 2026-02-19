@@ -9,6 +9,7 @@ public class GameDataManager : MonoBehaviour
     private static GameDataManager instance;  // シングルトン管理用
     private string filePath;                  // ファイルパス用変数
     public Data data;                         // Data参照用
+    private List<string> newlyClearedMissions = new List<string>();　// 新しくクリアしたミッションを保存
 
     // 一番初めに動く
     void Awake()
@@ -78,8 +79,8 @@ public class GameDataManager : MonoBehaviour
         }
     }
 
-    // 戦績更新
-    public void UpdateRecord(string gameType, bool isWin)
+    // 記録の更新
+    public void UpdateRecord(string gameType, int result, bool isBlackJack)
     {
         // Record を入れるための変数
         Record record = null;
@@ -88,7 +89,7 @@ public class GameDataManager : MonoBehaviour
         for (int i = 0; i < data.records.Count; i++)
         {
             // recordが特定のgameTypeだった場合
-            if (data.records[i].GameType == gameType)
+            if (data.records[i].gameType == gameType)
             {
                 // recordに値を格納
                 record = data.records[i];
@@ -101,30 +102,45 @@ public class GameDataManager : MonoBehaviour
         {
             // 新規作成
             record = new Record();
-            record.GameType = gameType;
+            record.gameType = gameType;
             // リストに追加
             data.records.Add(record);
         }
 
         // プレイ回数を1回増やす
-        record.PlayCount++;
+        record.playCount++;
+        data.missionPlayCount++;
 
         // 勝利した場合
-        if (isWin)
+        if (result == 0)
         {
             // 勝利数を増やす
-            record.WinCount++;
-            data.totalWinCount++;
+            record.winCount++;
+            data.missionWinCount++;
             data.winStreak++;
             data.loseStreak = 0;
         }
         // 敗北した場合
-        else
+        else if(result == 1)
         {
             // 敗北数を増やす
-            record.LoseCount++;
+            record.loseCount++;
             data.loseStreak++;
             data.winStreak = 0;
+        }
+        // 引き分けの場合
+        else
+        {
+            // 連勝、連敗カウントを初期化
+            data.winStreak = 0;
+            data.loseStreak = 0;
+        }
+
+        // ブラックジャックの場合
+        if (isBlackJack)
+        {
+            // ブラックジャック回数を増やす
+            record.totalBlackJackCount++;
         }
 
         // ミッションが達成したかどうか
@@ -156,20 +172,30 @@ public class GameDataManager : MonoBehaviour
         Save();
     }
 
+    // ブラックジャック回数を加算
+    public void AddBlackjackCount()
+    {
+        // blackjack回数をカウント
+        data.blackjackCount++;
+        CheckMissions();
+        Save();
+    }
+
 
     // SEの更新
     public void SetSE(bool se)
     {
         // 引数で渡されてきたSEを格納
-        data.SE = se;
+        data.se = se;
         // 保存
         Save();
     }
 
+    // BGMの更新
     public void SetBGM(bool bgm)
     {
         // 引数で渡されてきたBGMを格納
-        data.BGM = bgm;
+        data.bgm = bgm;
         // 保存
         Save();
     }
@@ -177,104 +203,168 @@ public class GameDataManager : MonoBehaviour
     // ミッション達成チェック
     void CheckMissions()
     {
-        // ミッションの数まで
+
+        // ミッションの数分回す
         foreach (var mis in data.missions)
         {
-            // そのミッションがクリア済みの場合
-            if (mis.IsCleared)
+            // すでにクリア済みの場合
+            if (mis.isCleared)
             {
-                // 処理を飛ばす
                 continue;
             }
 
-            // ミッションIDごとに達成条件を判定
-            switch (mis.MissionID)
+            // クリアしたミッションがあるかの判定
+            bool clear = false;
+
+            switch (mis.missionID)
             {
-                // 勝利数が1以上ならクリア
-                case "Win_1":
-                    if (data.totalWinCount >= 1)
-                    {
-                        mis.IsCleared = true;
-                    }
+                // プレイ回数が1回以上の場合
+                case "初":
+                    clear = data.missionPlayCount >= 1;
                     break;
 
-                // 勝利数が10以上ならクリア
-                case "Win_10":
-                    if (data.totalWinCount >= 10)
-                    {
-                        mis.IsCleared = true;
-                    }
+                // 勝利数が1回以上の場合
+                case "レギュラー":
+                    clear = data.missionWinCount >= 1;
                     break;
 
-                // 勝利数が50以上ならクリア
-                case "Win_50":
-                    if (data.totalWinCount >= 50)
-                    {
-                        mis.IsCleared = true;
-                    }
+                // 勝利数が10回以上の場合
+                case "プロ":
+                    clear = data.missionWinCount >= 10;
                     break;
 
-                // 連勝数が10以上ならクリア
-                case "WinStreak_10":
-                    if (data.winStreak >= 10)
-                    {
-                        mis.IsCleared = true;
-                    }
+                // 勝利数が30回以上の場合
+                case "マスター":
+                    clear = data.missionWinCount >= 30;
                     break;
 
-                // 連敗数が5以上ならクリア
-                case "LoseStreak_5":
-                    if (data.loseStreak >= 5)
-                    {
-                        mis.IsCleared = true;
-                    }
+                // 勝利数が50回以上の場合
+                case "レジェンド":
+                    clear = data.missionWinCount >= 50;
                     break;
 
-                // 所持金がが10000以上ならクリア
-                case "Money_10000":
-                    if (data.money >= 10000)
-                    {
-                        mis.IsCleared = true;
-                    }
+                // 連勝数が5以上の場合
+                case "一番星":
+                    clear = data.winStreak >= 5;
                     break;
 
-                // 掛け金がが1998ならクリア
-                case "Bet_1998":
-                    if (data.maxBet >= 1998)
-                    {
-                        mis.IsCleared = true;
-                    }
+                // 連敗数が5以上の場合
+                case "ままならないね":
+                    clear = data.loseStreak >= 5;
                     break;
 
-                // 所持金が100以下ならクリア
-                case "Money_100":
-                    if (data.money <= 100)
-                    {
-                        mis.IsCleared = true;
-                    }
+                // 所持マニーが10000以上の場合
+                case "GOLD RUSH":
+                    clear = data.money >= 10000;
                     break;
+
+                // 最大ベット額が1998以上の場合
+                case "全力":
+                    clear = data.maxBet >= 1998;
+                    break;
+
+                // 10回Blackjackを達成した場合
+                case "THE bLACKJ@CK":
+                    clear = data.blackjackCount >= 10;
+                    break;
+            }
+
+            // クリアしていた場合
+            if (clear)
+            {
+                // ミッションをクリア済みにする
+                mis.isCleared = true;
+
+                // まだ追加されていないミッションIDだけ登録する
+                if (!newlyClearedMissions.Contains(mis.missionID))
+                {
+                    // 新規クリアとして追加
+                    newlyClearedMissions.Add(mis.missionID);
+                }
             }
         }
     }
+
+    // この試合で達成したミッションリストをリセットする
+    public void ClearNewlyClearedMissions()
+    {
+        newlyClearedMissions.Clear();
+    }
+
+    // 今回の処理でミッションを1つ以上クリアしたか
+    public bool HasNewlyClearedMission()
+    {
+        return newlyClearedMissions.Count > 0;
+    }
+
+    // 表示用（ミッションID一覧）
+    public List<string> GetNewlyClearedMissions()
+    {
+        return newlyClearedMissions;
+    }
+
+    // 特定のミッションが達成済みか
+    public bool IsMissionCleared(string missionID)
+    {
+        // 全ミッションを順番にチェック
+        foreach (Mission mission in data.missions)
+        {
+            if (mission.missionID == missionID)
+            {
+                return mission.isCleared;
+            }
+        }
+
+        // 見つからなかった場合は false
+        return false;
+    }
+
+    // すべてのミッションが達成済みか
+    public bool IsAllMissionsCleared()
+    {
+        // 全ミッションを順番にチェック
+        foreach (Mission mission in data.missions)
+        {
+            // 1つでも未達成がある場合
+            if (!mission.isCleared)
+            {
+                return false; 
+            }
+        }
+
+        // 全て true なら達成済み
+        return true; 
+    }
+
 
     // ミッション初期化用
     public void ResetMissions()
     {
         data.missions = new List<Mission>
         {
-            new Mission { MissionID = "Win_1" },
-            new Mission { MissionID = "Win_10" },
-            new Mission { MissionID = "Win_50" },
-            new Mission { MissionID = "WinStreak_10" },
-            new Mission { MissionID = "LoseStreak_5" },
-            new Mission { MissionID = "Money_10000" },
-            new Mission { MissionID = "Bet_1998" },
-            new Mission { MissionID = "Money_100" },
+            new Mission { missionID = "初" },
+            new Mission { missionID = "レギュラー" },
+            new Mission { missionID = "プロ" },
+            new Mission { missionID = "マスター" },
+            new Mission { missionID = "レジェンド" },
+            new Mission { missionID = "一番星" },
+            new Mission { missionID = "ままならないね" },
+            new Mission { missionID = "GOLD RUSH" },
+            new Mission { missionID = "全力" },
+            new Mission { missionID = "THE bLACKJ@CK" },
         };
+
+        // ミッションの勝利数・連勝・連敗・最大掛け金・BlackJack回数も初期化
+        GameDataManager.Instance.data.missionPlayCount = 0; 
+        GameDataManager.Instance.data.missionWinCount = 0;
+        GameDataManager.Instance.data.winStreak = 0;
+        GameDataManager.Instance.data.loseStreak = 0;
+        GameDataManager.Instance.data.maxBet = 0;
+        GameDataManager.Instance.data.blackjackCount = 0;
     }
 
 
-    // データの初期化
+    // 全体の初期化
     public void ResetData()
     {
         // dataの初期化用のインスタンス生成
@@ -282,23 +372,31 @@ public class GameDataManager : MonoBehaviour
         {
             records = new List<Record>
             {
-                new Record { GameType = "OldMaid", PlayCount = 0, WinCount = 0, LoseCount = 0 },
-                new Record { GameType = "Blackjack", PlayCount = 0, WinCount = 0, LoseCount = 0 }
+                new Record { gameType = "Blackjack", playCount = 0, winCount = 0, loseCount = 0 }
             },
-            BGM = true,
-            SE = true,
+            bgm = true,
+            se = true,
             money = 1000,
+            missionPlayCount = 0,
+            missionWinCount = 0,      　　　　　　　　 
+            winStreak = 0,                          
+            loseStreak = 0,                          
+            maxBet = 0,
+            blackjackCount = 0,
+            bgmIndex = 0,
 
-            missions = new List<Mission>
+    missions = new List<Mission>
             {
-                new Mission { MissionID = "Win_1" },
-                new Mission { MissionID = "Win_10" },
-                new Mission { MissionID = "Win_50" },
-                new Mission { MissionID = "WinStreak_10" },
-                new Mission { MissionID = "LoseStreak_5" },
-                new Mission { MissionID = "Money_10000" },
-                new Mission { MissionID = "Bet_1998" },
-                new Mission { MissionID = "Money_100" },
+                new Mission { missionID = "初" },
+                new Mission { missionID = "レギュラー" },
+                new Mission { missionID = "プロ" },
+                new Mission { missionID = "マスター" },
+                new Mission { missionID = "レジェンド" },
+                new Mission { missionID = "一番星" },
+                new Mission { missionID = "ままならないね" },
+                new Mission { missionID = "GOLD RUSH" },
+                new Mission { missionID = "全力" },
+                new Mission { missionID = "THE bLACKJ@CK" },
             }
         };
 

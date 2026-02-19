@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -9,26 +10,57 @@ public class BlackjackMenu : MonoBehaviour
     // フィールド定義
 
     // パネル参照用
-    public GameObject darkOverlay;        // 暗転処理用のパネル
-    public GameObject rulePanel;          // ルール表示パネル
-    public GameObject recordPanel;        // 戦績表示パネル
-    public GameObject achievePanel;       // 称号表示パネル
-    public GameObject optionPanel;        // オプション表示パネル
-    public GameObject gameOverPanel;      // ゲームオーバーパネル
+    public GameObject darkOverlay;           // 暗転処理用のパネル
+    public GameObject rulePanel;             // ルール表示パネル
+    public GameObject recordPanel;           // 記録表示パネル
+    public GameObject missionPanel;          // ミッション表示パネル
+    public GameObject optionPanel;           // オプション表示パネル
+    public GameObject gameOverPanel;         // ゲームオーバーパネル
+    public GameObject missionCompletePanel;  // ゲームオーバーパネル
 
     // テキスト参照用
     public TMP_Text moneyText;            // 所持金表示テキスト
     public TMP_Text playText;             // プレイ回数表示テキスト
     public TMP_Text winText;　　　　　    // 勝利数表示テキスト
     public TMP_Text winPerText;           // 勝率表示テキスト
+    public TMP_Text blackJackText;        // BlackJack回数表示テキスト
+    public TMP_Text bgmNameText;          // 曲名表示テキスト
+    public TMP_Text missionTitleText1;　  // ミッションタイトル表示テキスト
+    public TMP_Text missionTitleText2;　  // ミッションタイトル表示テキスト
+    public TMP_Text missionTitleText3;　  // ミッションタイトル表示テキスト
+    public TMP_Text missionTitleText4;　  // ミッションタイトル表示テキスト
+    public TMP_Text missionText1;　       // ミッション内容表示テキスト
+    public TMP_Text missionText2;　       // ミッション内容表示テキスト
+    public TMP_Text missionText3;　       // ミッション内容表示テキスト
+    public TMP_Text missionText4;         // ミッション内容表示テキスト
+    public TMP_Text missionGoalText1;　   // ミッション達成目標表示テキスト
+    public TMP_Text missionGoalText2;　   // ミッション達成目標表示テキスト
+    public TMP_Text missionGoalText3;　   // ミッション達成目標表示テキスト
+    public TMP_Text missionGoalText4;     // ミッション達成目標表示テキスト
+    public TMP_Text missionGoalPerText1;　// ミッション達成率表示テキスト
+    public TMP_Text missionGoalPerText2;　// ミッション達成率表示テキスト
+    public TMP_Text missionGoalPerText3;  // ミッション達成率標表示テキスト
+    public TMP_Text missionGoalPerText4;　// ミッション達成率標表示テキスト
+    public TMP_Text missionPageText;　    // ミッションページ表示テキスト
     public GameObject rule1Text;　　      // ルール1ページ目のテキスト
     public GameObject rule2Text;          // ルール2ページ目のテキスト
     public GameObject rule3Text;          // ルール3ページ目のテキスト
     public GameObject rule4Text;          // ルール4ページ目のテキスト
 
     // ボタン参照用
-    public GameObject ruleBackButton;     // ページを戻すボタン
-    public GameObject ruleNextButton;     // ページを進めるボタン
+    public GameObject ruleBackButton;         // ページを戻すボタン
+    public GameObject ruleNextButton;         // ページを進めるボタン
+    public GameObject missionBackButton;      // ページを戻すボタン
+    public GameObject missionNextButton;  　　// ページを進めるボタン
+    public GameObject missionCompleteButton;  // ページを進めるボタン
+
+    // 画像参照尾用
+    public GameObject missionCompleteImage1;   // ミッション達成時の画像
+    public GameObject missionCompleteImage2;   // ミッションの達成時の画像
+    public GameObject missionCompleteImage3;   // ミッションの達成時の画像
+    public GameObject missionCompleteImage4;   // ミッションの達成時の画像
+    public GameObject missionImage1;  　　　　 // ミッションの背景画像
+    public GameObject missionImage2;  　　　　 // ミッションの背景画像
 
     // トグル参照用
     public RectTransform bgmHandle;      // BGMトグルの位置
@@ -43,9 +75,30 @@ public class BlackjackMenu : MonoBehaviour
     public Color seBackgroundOffColor;   // SEトグルがOFFの時の背景色
 
     // 隠しコマンド用
-    private int t = 0;
-    private int b = 0;
-    private int s = 0;
+    private int ka = 0;
+    private int ku = 0;
+    private int shi = 0;
+
+    // 現在のページ
+    int currentPage = 0;
+
+    // ミッションタイトル定義
+    string[] missionTitle1 = { "レギュラー", "初", "全力" };
+    string[] missionTitle2 = { "プロ", "一番星", "THE bLACKJ@CK" };
+    string[] missionTitle3 = { "マスター", "ままならないね" };
+    string[] missionTitle4 = { "レジェンド", "GOLD RUSH" };
+
+    // ミッション定義
+    string[] mission1 = { "1回勝利する", "1回プレイする", "マニーを1試合で1998ベットする" };
+    string[] mission2 = { "10回勝利する", "5連勝する", "BlackJackを10回達成する" };
+    string[] mission3 = { "30回勝利する", "5連敗する" };
+    string[] mission4 = { "50回勝利する", "所持マニーを1万以上にする" };
+
+    // ミッション達成目標定義
+    string[] missionGoal1 = { "/ 1", "/ 1", "/ 1998" };
+    string[] missionGoal2 = { "/ 10", "/ 5", "/ 10" };
+    string[] missionGoal3 = { "/ 30", "/ 5" };
+    string[] missionGoal4 = { "/ 50", "/ 10000" };
 
     // 開始時に実行される
     void Start()
@@ -55,25 +108,48 @@ public class BlackjackMenu : MonoBehaviour
         {
             // ミッションデータをリセット
             GameDataManager.Instance.ResetMissions();
-
-            // ミッションの勝利数・連勝・連敗・最大掛け金も初期化
-            GameDataManager.Instance.data.totalWinCount = 0;
-            GameDataManager.Instance.data.winStreak = 0;
-            GameDataManager.Instance.data.loseStreak = 0;
-            GameDataManager.Instance.data.maxBet = 0;
-
             // 所持金を1000にする
             GameDataManager.Instance.data.money = 1000;
-
             // データを保存
             GameDataManager.Instance.Save();
-
             // 背景を暗転
             darkOverlay.SetActive(true);
             // ゲームオーバーパネルを表示
             gameOverPanel.SetActive(true);
-            // クリック音を鳴らす
-            SEManager.Instance?.PlayGameOverSE();
+        }
+
+        // すべてのミッションを達成している場合
+        if (GameDataManager.Instance.IsAllMissionsCleared())
+        {
+            // コンプリートボタンを表示する
+            missionCompleteButton.SetActive(true);
+        }
+        // 達成していない場合
+        else
+        {
+            // 非表示にする
+            missionCompleteButton.SetActive(false);
+        }
+
+
+        // BGM名の初期化
+        switch (GameDataManager.Instance.data.bgmIndex)
+        {
+            case 0:
+                bgmNameText.text = "アコースティック";
+                break;
+
+            case 1:
+                bgmNameText.text = "Burning Heart";
+                break;
+
+            case 2:
+                bgmNameText.text = "シャイニングスター";
+                break;
+
+            case 3:
+                bgmNameText.text = "12345";
+                break;
         }
 
         // SE トグルの初期化
@@ -82,7 +158,7 @@ public class BlackjackMenu : MonoBehaviour
         if (seToggle != null && SEManager.Instance != null)
         {
             // SEトグルの状態をGameDataManagerから取得する
-            seToggle.isOn = GameDataManager.Instance.data.SE;
+            seToggle.isOn = GameDataManager.Instance.data.se;
 
             // seToggleがONなら
             if (seToggle.isOn)
@@ -102,21 +178,21 @@ public class BlackjackMenu : MonoBehaviour
             }
         }
 
-        // BGM トグルの初期化
+        // BGMトグルの初期化
 
         // bgmToggleとBGMManagerのインスタンスが存在する場合
         if (bgmToggle != null && BGMManager.Instance != null)
         {
             // BGMトグルの状態をGameDataManagerから取得する
-            bgmToggle.isOn = GameDataManager.Instance.data.BGM;
+            bgmToggle.isOn = GameDataManager.Instance.data.bgm;
 
             // bgmToggleがONなら
             if (bgmToggle.isOn)
             {
                 // 背景色をONの色(緑色)にする
                 bgmBackgroundImage.color = bgmBackgroundOnColor;
-                // BGMをONにする
-                BGMManager.Instance.PlayBGM();
+                // 保存されたBGM番号で再生
+                BGMManager.Instance.PlayBGM(GameDataManager.Instance.data.bgmIndex);
             }
             // bgmToggleがOFFなら
             else
@@ -129,31 +205,54 @@ public class BlackjackMenu : MonoBehaviour
         }
     }
 
-    // 戦績があるかどうかの判定
+    // 記録があるかどうかの判定
     bool IsBlackjackRecord(Record r)
     {
-        return r.GameType == "Blackjack";
+        return r.gameType == "Blackjack";
     }
 
-    // Recordボタン
+    // コンプリートボタン
+    public void OnMissionCompleteButton()
+    {
+        // 背景を暗転
+        darkOverlay.SetActive(true);
+        // コンプリートパネルを表示
+        missionCompletePanel.SetActive(true);
+        // クリック音を鳴らす
+        SEManager.Instance?.PlayClickSE();
+    }
+
+    // コンプリートボタン内の閉じるボタン
+    public void OnMissionCompleteCloseButton()
+    {
+        // 背景を暗転解除
+        darkOverlay.SetActive(false);
+        // 記録パネルを非表示
+        missionCompletePanel.SetActive(false);
+        // クリック音を鳴らす
+        SEManager.Instance?.PlayClickSE();
+    }
+
+    // 記録ボタン
     public void OnRecordButton()
     {
         // 所持金をGameDataManagerから取得する
         moneyText.text = GameDataManager.Instance.data.money.ToString();
 
-        // 戦績をGameDataManagerから取得する
+        // 記録をGameDataManagerから取得する
         Record record = GameDataManager.Instance.data.records.Find(IsBlackjackRecord);
 
-        // GameDataManagerに戦績がない場合
+        // GameDataManagerに記録がない場合
         if (record == null)
         {
             // 初期値を入れる
             record = new Record
             {
-                GameType = "Blackjack",
-                PlayCount = 0,
-                WinCount = 0,
-                LoseCount = 0
+                gameType = "Blackjack",
+                playCount = 0,
+                winCount = 0,
+                loseCount = 0,
+                totalBlackJackCount = 0
             };
             
             //GameDataManagerに追加する
@@ -163,18 +262,18 @@ public class BlackjackMenu : MonoBehaviour
         }
 
         // GameDataManagerから取得したプレイ回数を表示する
-        playText.text = record.PlayCount.ToString();
+        playText.text = record.playCount.ToString();
         // GameDataManagerから取得した勝利回数を表示する
-        winText.text = record.WinCount.ToString();
+        winText.text = record.winCount.ToString();
 
         // 計算結果を格納する変数
         float winRate;
 
         // プレイ回数が0より大きい場合
-        if (record.PlayCount > 0)
+        if (record.playCount > 0)
         {
             // 勝率を計算し、格納
-            winRate = record.WinCount * 100f / record.PlayCount;
+            winRate = record.winCount * 100f / record.playCount;
         }
         // プレイ回数が0の場合
         else
@@ -186,6 +285,9 @@ public class BlackjackMenu : MonoBehaviour
         // 計算された勝率を少数第一位まで表示
         winPerText.text = winRate.ToString("F1") + "%";
 
+        // GameDataManagerから取得したブラックジャック回数を表示する
+        blackJackText.text = record.totalBlackJackCount.ToString();
+
         // 背景を暗転
         darkOverlay.SetActive(true);
         // 戦績パネルを表示
@@ -193,10 +295,10 @@ public class BlackjackMenu : MonoBehaviour
         // クリック音を鳴らす
         SEManager.Instance?.PlayClickSE();
         // 隠しコマンド用
-        b++;
+        ku++;
     }
 
-    // Recordボタン内のcloseボタン
+    // 記録ボタン内のcloseボタン
     public void OnRecordCloseButton()
     {
         // 背景を暗転解除
@@ -207,7 +309,7 @@ public class BlackjackMenu : MonoBehaviour
         SEManager.Instance?.PlayClickSE();
     }
 
-    // Ruleボタン
+    // ルールボタン
     public void OnRuleButton()
     {
         // クリック音を鳴らす
@@ -225,7 +327,7 @@ public class BlackjackMenu : MonoBehaviour
         // ページを戻すボタンを非表示
         ruleBackButton.SetActive(false);
         // 隠しコマンド用
-        s++;
+        shi++;
     }
 
     // ルールパネル内の→(進む)ボタンを押したときに実行されるメソッド
@@ -327,7 +429,7 @@ public class BlackjackMenu : MonoBehaviour
         ruleNextButton.SetActive(true);
     }
 
-    // Optionボタン
+    // 設定ボタン
     public void OnOptionButton()
     {
         // 背景を暗転
@@ -336,7 +438,7 @@ public class BlackjackMenu : MonoBehaviour
         optionPanel.SetActive(true);
         // クリック音を鳴らす
         SEManager.Instance?.PlayClickSE();
-        t++;
+        ka++;
     }
 
     public void OnOptionCloseButton()
@@ -361,7 +463,7 @@ public class BlackjackMenu : MonoBehaviour
             // 背景色をONの色(緑色)にする
             bgmBackgroundImage.color = bgmBackgroundOnColor;
             // BGMをONにする
-            BGMManager.Instance?.PlayBGM();
+            BGMManager.Instance?.PlayBGM(GameDataManager.Instance.data.bgmIndex);
         }
         // bgmToggleがOFFの場合
         else
@@ -408,45 +510,668 @@ public class BlackjackMenu : MonoBehaviour
     }
 
 
+    // 設定パネル内のBGMを次に進めるボタン
+    public void OnNextBGMButton()
+    {
+        // bgmClipsの配列のサイズを取得
+        int max = BGMManager.Instance.bgmClips.Length;
+        // 保存されているBGM番号を取得
+        int index = GameDataManager.Instance.data.bgmIndex;
+        // 配列のサイズでループ
+        index = (index + 1) % max;
+        // indexの値を格納
+        GameDataManager.Instance.data.bgmIndex = index;
+        // 保存
+        GameDataManager.Instance.Save();
+
+        // BGMがONの場合
+        if (GameDataManager.Instance.data.bgm)
+        {
+            // BGM番号に合ったBGMを再生
+            BGMManager.Instance.PlayBGM(index);
+        }
+
+        // BGM名の初期化
+        switch (index)
+        {
+            case 0:
+                bgmNameText.text = "アコースティック";
+                break;
+
+            case 1:
+                bgmNameText.text = "Burning Heart";
+                break;
+
+            case 2:
+                bgmNameText.text = "シャイニングスター";
+                break;
+
+            case 3:
+                bgmNameText.text = "12345";
+                break;
+        }
+
+        // クリック音を鳴らす
+        SEManager.Instance?.PlayClickSE();
+    }
+
+    // 設定パネル内のBGMを前に戻すボタン
+    public void OnBackBGMButton()
+    {
+        // bgmClipsの配列のサイズを取得
+        int max = BGMManager.Instance.bgmClips.Length;
+        // 保存されているBGM番号を取得
+        int index = GameDataManager.Instance.data.bgmIndex;
+        // 配列のサイズでループ
+        index = (index - 1 + max) % max;
+        // indexの値を格納
+        GameDataManager.Instance.data.bgmIndex = index;
+        // 保存
+        GameDataManager.Instance.Save();
+
+        // BGMがONの場合
+        if (GameDataManager.Instance.data.bgm)
+        {
+            // BGM番号に合ったBGMを再生
+            BGMManager.Instance.PlayBGM(index);
+        }
+
+        // BGM名の初期化
+        switch (index)
+        {
+            case 0:
+                bgmNameText.text = "アコースティック";
+                break;
+
+            case 1:
+                bgmNameText.text = "Burning Heart";
+                break;
+
+            case 2:
+                bgmNameText.text = "シャイニングスター";
+                break;
+
+            case 3:
+                bgmNameText.text = "12345";
+                break;
+        }
+
+        // クリック音を鳴らす
+        SEManager.Instance?.PlayClickSE();
+    }
+
+
     // ミッションボタン
-    public void OnAchieveButton()
+    public void OnMissionButton()
     {
         // 背景を暗転
         darkOverlay.SetActive(true);
-        // 実績パネルを表示
-        achievePanel.SetActive(true);
+        // ミッションパネルを表示
+        missionPanel.SetActive(true);
         // クリック音を鳴らす
         SEManager.Instance?.PlayClickSE();
 
-        // 隠しコマンド
+        // ミッション一覧画面の初期化
+        missionTitleText1.text = missionTitle1[0];
+        missionTitleText2.text = missionTitle2[0];
+        missionTitleText3.text = missionTitle3[0];
+        missionTitleText4.text = missionTitle4[0];
+        missionText1.text = mission1[0];
+        missionText2.text = mission2[0];
+        missionText3.text = mission3[0];
+        missionText4.text = mission4[0];
+        missionGoalText1.text = missionGoal1[0];
+        missionGoalText2.text = missionGoal2[0];
+        missionGoalText3.text = missionGoal3[0];
+        missionGoalText4.text = missionGoal4[0];
+        missionGoalPerText1.text = GameDataManager.Instance.data.missionWinCount.ToString();
+        missionGoalPerText2.text = GameDataManager.Instance.data.missionWinCount.ToString();
+        missionGoalPerText3.text = GameDataManager.Instance.data.missionWinCount.ToString();
+        missionGoalPerText4.text = GameDataManager.Instance.data.missionWinCount.ToString();
+        missionPageText.text = "1/3";
+        missionNextButton.SetActive(true);
+        missionBackButton.SetActive(false);
+        missionImage1.SetActive(true);
+        missionImage2.SetActive(true);
+        currentPage = 0;
 
-        // それぞれのボタンが特定の回数押されていたら
-        if (t == 2 && b == 8 && s == 3)
+        // 1回勝利するが達成済みの場合
+        if (GameDataManager.Instance.IsMissionCleared("レギュラー"))
+        {
+            missionCompleteImage1.SetActive(true);
+            missionGoalPerText1.text = "1";
+        }
+        // 未達成の場合
+        else
+        {
+            missionCompleteImage1.SetActive(false);
+        }
+
+        // 10回勝利するが達成済みの場合
+        if (GameDataManager.Instance.IsMissionCleared("プロ"))
+        {
+            missionCompleteImage2.SetActive(true);
+            missionGoalPerText2.text = "10";
+        }
+        // 未達成の場合
+        else
+        {
+            missionCompleteImage2.SetActive(false);
+        }
+
+        // 30回勝利するが達成済みの場合
+        if (GameDataManager.Instance.IsMissionCleared("マスター"))
+        {
+            missionCompleteImage3.SetActive(true);
+            missionGoalPerText3.text = "30";
+        }
+        // 未達成の場合
+        else
+        {
+            missionCompleteImage3.SetActive(false);
+        }
+
+        // 50回勝利するが達成済みの場合
+        if (GameDataManager.Instance.IsMissionCleared("レジェンド"))
+        {
+            missionCompleteImage4.SetActive(true);
+            missionGoalPerText4.text = "50";
+        }
+        // 未達成の場合
+        else
+        {
+            missionCompleteImage4.SetActive(false);
+        }
+
+        // 隠しコマンド(それぞれのボタンが特定の回数押されていたら)
+
+        // ミッション達成状況と進捗をリセット
+        if (ka == 7 && ku == 6 && shi == 5)
+        {
+            // ゲームのデータを初期値にリセット
+            GameDataManager.Instance.ResetMissions();
+
+            // ログを表示
+            Debug.Log("ミッションを初期化しました");
+
+            // データを保存
+            GameDataManager.Instance.Save();
+        }
+
+        // 記録を含むすべてのデータの初期化
+        if (ka == 9 && ku == 6 && shi == 1)
         {
             // ゲームのデータを初期値にリセット
             GameDataManager.Instance.ResetData();
 
             // ログを表示
             Debug.Log("データを初期化しました");
+
+            // データを保存
+            GameDataManager.Instance.Save();
         }
+
+        // 所持マニーを1000000にする
+        if (ka == 2 && ku == 8 && shi == 3)
+        {
+            // ゲームのデータを初期値にリセット
+            GameDataManager.Instance.data.money = 1000000;
+
+            // ログを表示
+            Debug.Log("所持金を1000000にしました");
+
+            // データを保存
+            GameDataManager.Instance.Save();
+        }
+
         // 変数の初期化
-        t = 0;
-        b = 0;
-        s = 0;
+        ka = 0;
+        ku = 0;
+        shi = 0;
     }
 
-    // Achiveパネル内のcloseボタン
-    public void OnAchieveCloseButton()
+    // ミッションパネル内の→(進む)ボタンを押したときに実行されるメソッド
+    public void OnMissionNextButton()
+    {
+        // クリック音を鳴らす
+        SEManager.Instance?.PlayClickSE();
+
+        // 現在のページを進める
+        currentPage++;
+
+        // 現在1ページ目の場合
+        if (currentPage == 0)
+        {
+            // 1ページ目のミッション表示
+            missionTitleText1.text = missionTitle1[0];
+            missionTitleText2.text = missionTitle2[0];
+            missionTitleText3.text = missionTitle3[0];
+            missionTitleText4.text = missionTitle4[0];
+            missionText1.text = mission1[0];
+            missionText2.text = mission2[0];
+            missionText3.text = mission3[0];
+            missionText4.text = mission4[0];
+            missionGoalText1.text = missionGoal1[0];
+            missionGoalText2.text = missionGoal2[0];
+            missionGoalText3.text = missionGoal3[0];
+            missionGoalText4.text = missionGoal4[0];
+            missionGoalPerText1.text = GameDataManager.Instance.data.missionWinCount.ToString();
+            missionGoalPerText2.text = GameDataManager.Instance.data.missionWinCount.ToString();
+            missionGoalPerText3.text = GameDataManager.Instance.data.missionWinCount.ToString();
+            missionGoalPerText4.text = GameDataManager.Instance.data.missionWinCount.ToString();
+            missionPageText.text = "1/3";
+            missionImage1.SetActive(true);
+            missionImage2.SetActive(true);
+            missionNextButton.SetActive(true);
+            missionBackButton.SetActive(false);
+
+            // 1回勝利するが達成済みの場合
+            if (GameDataManager.Instance.IsMissionCleared("レギュラー"))
+            {
+                missionCompleteImage1.SetActive(true);
+                missionGoalPerText1.text = "1";
+            }
+            // 未達成の場合
+            else
+            {
+                missionCompleteImage1.SetActive(false);
+            }
+
+            // 10回勝利するが達成済みの場合
+            if (GameDataManager.Instance.IsMissionCleared("プロ"))
+            {
+                missionCompleteImage2.SetActive(true);
+                missionGoalPerText2.text = "10";
+            }
+            // 未達成の場合
+            else
+            {
+                missionCompleteImage2.SetActive(false);
+            }
+
+            // 30回勝利するが達成済みの場合
+            if (GameDataManager.Instance.IsMissionCleared("マスター"))
+            {
+                missionCompleteImage3.SetActive(true);
+                missionGoalPerText3.text = "30";
+            }
+            // 未達成の場合
+            else
+            {
+                missionCompleteImage3.SetActive(false);
+            }
+
+            // 50回勝利するが達成済みの場合
+            if (GameDataManager.Instance.IsMissionCleared("レジェンド"))
+            {
+                missionCompleteImage4.SetActive(true);
+                missionGoalPerText4.text = "50";
+            }
+            // 未達成の場合
+            else
+            {
+                missionCompleteImage4.SetActive(false);
+            }
+        }
+
+        // 現在2ページ目の場合
+        if (currentPage == 1)
+        {
+            // 2ページ目のミッション表示
+            missionTitleText1.text = missionTitle1[1];
+            missionTitleText2.text = missionTitle2[1];
+            missionTitleText3.text = missionTitle3[1];
+            missionTitleText4.text = missionTitle4[1];
+            missionText1.text = mission1[1];
+            missionText2.text = mission2[1];
+            missionText3.text = mission3[1];
+            missionText4.text = mission4[1];
+            missionGoalText1.text = missionGoal1[1];
+            missionGoalText2.text = missionGoal2[1];
+            missionGoalText3.text = missionGoal3[1];
+            missionGoalText4.text = missionGoal4[1];
+            missionGoalPerText1.text = GameDataManager.Instance.data.missionPlayCount.ToString();
+            missionGoalPerText2.text = GameDataManager.Instance.data.winStreak.ToString();
+            missionGoalPerText3.text = GameDataManager.Instance.data.loseStreak.ToString();
+            missionGoalPerText4.text = GameDataManager.Instance.data.money.ToString();
+            missionPageText.text = "2/3";
+            missionImage1.SetActive(true);
+            missionImage2.SetActive(true);
+            missionNextButton.SetActive(true);
+            missionBackButton.SetActive(true);
+
+            // 1回プレイするが達成済みの場合
+            if (GameDataManager.Instance.IsMissionCleared("初"))
+            {
+                missionCompleteImage1.SetActive(true);
+                missionGoalPerText1.text = "1";
+            }
+            // 未達成の場合
+            else
+            {
+                missionCompleteImage1.SetActive(false);
+            }
+
+            // 5連勝するが達成済みの場合
+            if (GameDataManager.Instance.IsMissionCleared("一番星"))
+            {
+                missionCompleteImage2.SetActive(true);
+                missionGoalPerText2.text = "5";
+            }
+            // 未達成の場合
+            else
+            {
+                missionCompleteImage2.SetActive(false);
+            }
+
+            // 5連敗するが達成済みの場合
+            if (GameDataManager.Instance.IsMissionCleared("ままならないね"))
+            {
+                missionCompleteImage3.SetActive(true);
+                missionGoalPerText3.text = "5";
+            }
+            // 未達成の場合
+            else
+            {
+                missionCompleteImage3.SetActive(false);
+            }
+
+            // 所持マニー10000以上が達成済みの場合
+            if (GameDataManager.Instance.IsMissionCleared("GOLD RUSH"))
+            {
+                missionCompleteImage4.SetActive(true);
+                missionGoalPerText4.text = "10000";
+            }
+            // 未達成の場合
+            else
+            {
+                missionCompleteImage4.SetActive(false);
+            }
+        }
+
+        // 現在3ページ目の場合
+        if (currentPage == 2)
+        {
+            // 3ページ目のミッション表示
+            missionTitleText1.text = missionTitle1[2];
+            missionTitleText2.text = missionTitle2[2];
+            missionTitleText3.text = "";
+            missionTitleText4.text = "";
+            missionText1.text = mission1[2];
+            missionText2.text = mission2[2];
+            missionText3.text = "";
+            missionText4.text = "";
+            missionGoalText1.text = missionGoal1[2];
+            missionGoalText2.text = missionGoal2[2];
+            missionGoalText3.text = "";
+            missionGoalText4.text = "";
+            missionPageText.text = "3/3";
+            missionGoalPerText1.text = GameDataManager.Instance.data.maxBet.ToString();
+            missionGoalPerText2.text = GameDataManager.Instance.data.blackjackCount.ToString();
+            missionGoalPerText3.text = "";
+            missionGoalPerText4.text = "";
+            missionImage1.SetActive(false);
+            missionImage2.SetActive(false);
+            missionNextButton.SetActive(false);
+            missionBackButton.SetActive(true);
+
+            // 1998賭けるが達成済みの場合
+            if (GameDataManager.Instance.IsMissionCleared("全力"))
+            {
+                missionCompleteImage1.SetActive(true);
+                missionGoalPerText1.text = "1998";
+            }
+            // 未達成の場合
+            else
+            {
+                missionCompleteImage1.SetActive(false);
+            }
+
+            // 10回ブラックジャックするが達成済みの場合
+            if (GameDataManager.Instance.IsMissionCleared("THE bLACKJ@CK"))
+            {
+                missionCompleteImage2.SetActive(true);
+                missionGoalPerText2.text = "10";
+            }
+            // 未達成の場合
+            else
+            {
+                missionCompleteImage2.SetActive(false);
+            }
+
+            // ここにはミッションがない
+            missionCompleteImage3.SetActive(false);
+            missionCompleteImage4.SetActive(false);
+        }
+    }
+
+    // ミッションパネル内の←(戻る)ボタンを押したときに実行されるメソッド
+    public void OnMissionBackButton()
+    {
+        // クリック音を鳴らす
+        SEManager.Instance?.PlayClickSE();
+
+        // 現在のページを進める
+        currentPage--;
+
+        // 現在1ページ目の場合
+        if (currentPage == 0)
+        {
+            // 1ページ目のミッション表示
+            missionTitleText1.text = missionTitle1[0];
+            missionTitleText2.text = missionTitle2[0];
+            missionTitleText3.text = missionTitle3[0];
+            missionTitleText4.text = missionTitle4[0];
+            missionText1.text = mission1[0];
+            missionText2.text = mission2[0];
+            missionText3.text = mission3[0];
+            missionText4.text = mission4[0];
+            missionGoalText1.text = missionGoal1[0];
+            missionGoalText2.text = missionGoal2[0];
+            missionGoalText3.text = missionGoal3[0];
+            missionGoalText4.text = missionGoal4[0];
+            missionGoalPerText1.text = GameDataManager.Instance.data.missionWinCount.ToString();
+            missionGoalPerText2.text = GameDataManager.Instance.data.missionWinCount.ToString();
+            missionGoalPerText3.text = GameDataManager.Instance.data.missionWinCount.ToString();
+            missionGoalPerText4.text = GameDataManager.Instance.data.missionWinCount.ToString();
+            missionPageText.text = "1/3";
+            missionImage1.SetActive(true);
+            missionImage2.SetActive(true);
+            missionNextButton.SetActive(true);
+            missionBackButton.SetActive(false);
+
+            // 1回勝利するが達成済みの場合
+            if (GameDataManager.Instance.IsMissionCleared("レギュラー"))
+            {
+                missionCompleteImage1.SetActive(true);
+                missionGoalPerText1.text = "1";
+            }
+            // 未達成の場合
+            else
+            {
+                missionCompleteImage1.SetActive(false);
+            }
+
+            // 10回勝利するが達成済みの場合
+            if (GameDataManager.Instance.IsMissionCleared("プロ"))
+            {
+                missionCompleteImage2.SetActive(true);
+                missionGoalPerText2.text = "10";
+            }
+            // 未達成の場合
+            else
+            {
+                missionCompleteImage2.SetActive(false);
+            }
+
+            // 30回勝利するが達成済みの場合
+            if (GameDataManager.Instance.IsMissionCleared("マスター"))
+            {
+                missionCompleteImage3.SetActive(true);
+                missionGoalPerText3.text = "30";
+            }
+            // 未達成の場合
+            else
+            {
+                missionCompleteImage3.SetActive(false);
+            }
+
+            // 50回勝利するが達成済みの場合
+            if (GameDataManager.Instance.IsMissionCleared("レジェンド"))
+            {
+                missionCompleteImage4.SetActive(true);
+                missionGoalPerText4.text = "50";
+            }
+            // 未達成の場合
+            else
+            {
+                missionCompleteImage4.SetActive(false);
+            }
+        }
+
+        // 現在2ページ目の場合
+        if (currentPage == 1)
+        {
+            // 2ページ目のミッション表示
+            missionTitleText1.text = missionTitle1[1];
+            missionTitleText2.text = missionTitle2[1];
+            missionTitleText3.text = missionTitle3[1];
+            missionTitleText4.text = missionTitle4[1];
+            missionText1.text = mission1[1];
+            missionText2.text = mission2[1];
+            missionText3.text = mission3[1];
+            missionText4.text = mission4[1];
+            missionGoalText1.text = missionGoal1[1];
+            missionGoalText2.text = missionGoal2[1];
+            missionGoalText3.text = missionGoal3[1];
+            missionGoalText4.text = missionGoal4[1];
+            missionGoalPerText1.text = GameDataManager.Instance.data.missionPlayCount.ToString();
+            missionGoalPerText2.text = GameDataManager.Instance.data.winStreak.ToString();
+            missionGoalPerText3.text = GameDataManager.Instance.data.loseStreak.ToString();
+            missionGoalPerText4.text = GameDataManager.Instance.data.money.ToString();
+            missionPageText.text = "2/3";
+            missionImage1.SetActive(true);
+            missionImage2.SetActive(true);
+            missionNextButton.SetActive(true);
+            missionBackButton.SetActive(true);
+
+            // 1回プレイするが達成済みの場合
+            if (GameDataManager.Instance.IsMissionCleared("初"))
+            {
+                missionCompleteImage1.SetActive(true);
+                missionGoalPerText1.text = "1";
+            }
+            // 未達成の場合
+            else
+            {
+                missionCompleteImage1.SetActive(false);
+            }
+
+            // 5連勝するが達成済みの場合
+            if (GameDataManager.Instance.IsMissionCleared("一番星"))
+            {
+                missionCompleteImage2.SetActive(true);
+                missionGoalPerText2.text = "5";
+            }
+            // 未達成の場合
+            else
+            {
+                missionCompleteImage2.SetActive(false);
+            }
+
+            // 5連敗するが達成済みの場合
+            if (GameDataManager.Instance.IsMissionCleared("ままならないね"))
+            {
+                missionCompleteImage3.SetActive(true);
+                missionGoalPerText3.text = "5";
+            }
+            // 未達成の場合
+            else
+            {
+                missionCompleteImage3.SetActive(false);
+            }
+
+            // 所持マニー10000以上が達成済みの場合
+            if (GameDataManager.Instance.IsMissionCleared("GOLD RUSH"))
+            {
+                missionCompleteImage4.SetActive(true);
+                missionGoalPerText4.text = "10000";
+            }
+            // 未達成の場合
+            else
+            {
+                missionCompleteImage4.SetActive(false);
+            }
+        }
+
+        // 現在3ページ目の場合
+        if (currentPage == 2)
+        {
+            // 3ページ目のミッション表示
+            missionTitleText1.text = missionTitle1[2];
+            missionTitleText2.text = missionTitle2[2];
+            missionTitleText3.text = "";
+            missionTitleText4.text = "";
+            missionText1.text = mission1[2];
+            missionText2.text = mission2[2];
+            missionText3.text = "";
+            missionText4.text = "";
+            missionGoalText1.text = missionGoal1[2];
+            missionGoalText2.text = missionGoal2[2];
+            missionGoalText3.text = "";
+            missionGoalText4.text = "";
+            missionGoalPerText1.text = GameDataManager.Instance.data.maxBet.ToString();
+            missionGoalPerText2.text = GameDataManager.Instance.data.blackjackCount.ToString();
+            missionGoalPerText3.text = "";
+            missionGoalPerText4.text = "";
+            missionPageText.text = "3/3";
+            missionImage1.SetActive(false);
+            missionImage2.SetActive(false);
+            missionNextButton.SetActive(false);
+            missionBackButton.SetActive(true);
+
+            // 1998賭けるが達成済みの場合
+            if (GameDataManager.Instance.IsMissionCleared("全力"))
+            {
+                missionCompleteImage1.SetActive(true);
+                missionGoalPerText1.text = "1998";
+            }
+            // 未達成の場合
+            else
+            {
+                missionCompleteImage1.SetActive(false);
+            }
+
+            // 10回ブラックジャックするが達成済みの場合
+            if (GameDataManager.Instance.IsMissionCleared("THE bLACKJ@CK"))
+            {
+                missionCompleteImage2.SetActive(true);
+                missionGoalPerText2.text = "10";
+            }
+            // 未達成の場合
+            else
+            {
+                missionCompleteImage2.SetActive(false);
+            }
+
+            // ここにはミッションがない
+            missionCompleteImage3.SetActive(false);
+            missionCompleteImage4.SetActive(false);
+        }
+    }
+
+    // ミッションパネル内のcloseボタン
+    public void OnMissionCloseButton()
     {
         // 暗転を解除
         darkOverlay.SetActive(false);
         // 実績パネルを非表示
-        achievePanel.SetActive(false);
+        missionPanel.SetActive(false);
         // クリック音を鳴らす
         SEManager.Instance?.PlayClickSE();
     }
 
-    // Achiveパネル内のcloseボタン
+    // ゲームオーバーパネル内のcloseボタン
     public void OnGameOverCloseButton()
     {
         // 暗転を解除
