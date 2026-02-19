@@ -39,6 +39,10 @@ public class BlackjackUI : MonoBehaviour
     public GameObject rule2Text;          // ルール2ページ目のテキスト
     public GameObject rule3Text;          // ルール3ページ目のテキスト
     public GameObject rule4Text;          // ルール4ページ目のテキスト
+    public GameObject rule1IndexText;　　 // ページ表示1/4のテキスト
+    public GameObject rule2IndexText;     // ページ表示2/4のテキスト
+    public GameObject rule3IndexText;     // ページ表示3/4のテキスト
+    public GameObject rule4IndexText;     // ページ表示4/4のテキスト
     public TMP_Text[] numberTexts;        // ベットパネルの3桁の数字テキスト
     public TMP_Text missionNoticeText;    // ミッション達成お知らせ用
 
@@ -709,7 +713,7 @@ public class BlackjackUI : MonoBehaviour
         money2Text.text = game.PlayerMoney.ToString();
     }
 
-    // Ruleボタン
+    // ルールボタン
     public void OnRuleButton()
     {
         // クリック音を鳴らす
@@ -724,11 +728,19 @@ public class BlackjackUI : MonoBehaviour
         rule3Text.SetActive(false);
         // ルール4ページ目テキストを非表示
         rule4Text.SetActive(false);
+        // ページ表示1を表示
+        rule1IndexText.SetActive(true);
+        // ページ表示2を非表示
+        rule2IndexText.SetActive(false);
+        // ページ表示3を非表示
+        rule3IndexText.SetActive(false);
+        // ページ表示4を非表示
+        rule4IndexText.SetActive(false);
         // ページを戻すボタンを非表示
         ruleBackButton.SetActive(false);
     }
 
-    // ルールパネル内の→(進む)ボタン
+    // ルールパネル内の→(進む)ボタンを押したときに実行されるメソッド
     public void OnRuleNextButton()
     {
         // クリック音を鳴らす
@@ -743,6 +755,10 @@ public class BlackjackUI : MonoBehaviour
             rule1Text.SetActive(false);
             // ルール2ページ目テキストを表示
             rule2Text.SetActive(true);
+            // ページ表示1を非表示
+            rule1IndexText.SetActive(false);
+            // ページ表示2を表示
+            rule2IndexText.SetActive(true);
         }
 
         // 現在ルール2ページ目の場合
@@ -752,6 +768,10 @@ public class BlackjackUI : MonoBehaviour
             rule2Text.SetActive(false);
             // ルール3ページ目テキストを表示
             rule3Text.SetActive(true);
+            // ページ表示2を非表示
+            rule2IndexText.SetActive(false);
+            // ページ表示3を表示
+            rule3IndexText.SetActive(true);
         }
 
         // 現在ルール3ページ目の場合
@@ -761,12 +781,16 @@ public class BlackjackUI : MonoBehaviour
             rule3Text.SetActive(false);
             // ルール4ページ目テキストを表示
             rule4Text.SetActive(true);
-            //ページを進めるを非表示
+            // ページ表示3を非表示
+            rule3IndexText.SetActive(false);
+            // ページ表示4を表示
+            rule4IndexText.SetActive(true);
+            // ページを進めるを非表示
             ruleNextButton.SetActive(false);
         }
     }
 
-    // ルールパネル内の←(戻る)ボタン
+    // ルールパネル内の←(戻る)ボタンを押したときに実行されるメソッド
     public void OnRuleBackButton()
     {
         // クリック音を鳴らす
@@ -781,6 +805,10 @@ public class BlackjackUI : MonoBehaviour
             rule1Text.SetActive(true);
             // ルール2ページ目テキストを非表示
             rule2Text.SetActive(false);
+            // ページ表示1を表示
+            rule1IndexText.SetActive(true);
+            // ページ表示2を非表示
+            rule2IndexText.SetActive(false);
         }
 
         // 現在ルール3ページ目の場合
@@ -790,6 +818,10 @@ public class BlackjackUI : MonoBehaviour
             rule2Text.SetActive(true);
             // ルール3ページ目テキストを非表示
             rule3Text.SetActive(false);
+            // ページ表示2を表示
+            rule2IndexText.SetActive(true);
+            // ページ表示3を非表示
+            rule3IndexText.SetActive(false);
         }
 
         // 現在ルール3ページ目の場合
@@ -799,12 +831,16 @@ public class BlackjackUI : MonoBehaviour
             rule3Text.SetActive(true);
             // ルール4ページ目テキストを非表示
             rule4Text.SetActive(false);
+            // ページ表示3を表示
+            rule3IndexText.SetActive(true);
+            // ページ表示4を非表示
+            rule4IndexText.SetActive(false);
             // ページを進めるボタンを表示
             ruleNextButton.SetActive(true);
         }
     }
 
-    // ルールパネル内のcloseボタン
+    // ルールパネル内のcloseボタンを押したときに実行されるメソッド
     public void OnRuleCloseButton()
     {
         // クリック音を鳴らす
@@ -821,6 +857,14 @@ public class BlackjackUI : MonoBehaviour
         rule4Text.SetActive(false);
         // ルール1ページ目テキストを表示
         rule1Text.SetActive(true);
+        // ページ表示1を表示
+        rule1IndexText.SetActive(true);
+        // ページ表示2を非表示
+        rule2IndexText.SetActive(false);
+        // ページ表示3を非表示
+        rule3IndexText.SetActive(false);
+        // ページ表示4を非表示
+        rule4IndexText.SetActive(false);
         // ページを戻すボタンを非表示
         ruleBackButton.SetActive(false);
         // ページを進めるを非表示

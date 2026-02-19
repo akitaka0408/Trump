@@ -148,6 +148,12 @@ public class BlackjackGame
             return GameResult.BlackJack;
         }
 
+        // ホストのみブラックジャックの場合
+        if (IsBlackJack(hostHand))
+        {
+            return GameResult.HostWin; 
+        }
+
         // プレイヤーがバーストした場合
         if (PlayerScore > BLACKJACK)
         {

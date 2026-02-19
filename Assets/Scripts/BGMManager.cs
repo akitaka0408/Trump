@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Audio;
 
 // BGMの操作
 public class BGMManager : MonoBehaviour
@@ -7,8 +8,8 @@ public class BGMManager : MonoBehaviour
     private static BGMManager instance;    // シングルトン管理用
     public AudioSource bgmSource;          // BGM用AudioSource(BGMの情報)
     public AudioClip[] bgmClips;           // BGM用の配列
+    public AudioMixer mixer;               // オーディオミキサー
 
-    private bool bgmEnabled = true;        // BGMが有効かどうか
     private int currentIndex = -1;         // 現在選ばれている音楽
 
     // 一番最初に呼び出される
@@ -30,13 +31,11 @@ public class BGMManager : MonoBehaviour
         }
     }
 
-    // BGMの有効状態を参照
-    public bool BGMEnabled　　　　　　　　 
+    // Awakeの次に呼び出される
+    private void Start()
     {
-        get
-        {
-            return bgmEnabled;
-        }
+        int savedIndex = GameDataManager.Instance.data.bgmIndex;
+        PlayBGM(savedIndex);
     }
 
     // シングルトンを参照する
@@ -52,17 +51,22 @@ public class BGMManager : MonoBehaviour
         }
     }
 
+    // 音量設定
+    public void SetVolume(float value)
+    {
+        if (value <= 0.0001f)
+        {
+            mixer.SetFloat("BGMVolume", -80f);
+        }
+        else
+        {
+            mixer.SetFloat("BGMVolume", Mathf.Log10(value) * 20);
+        }
+    }
+
     // 指定番号のBGMを再生
     public void PlayBGM(int index)
     {
-        // BGMをオンにする
-        bgmEnabled = true;
-
-        // BGMが有効の場合
-        if (!bgmEnabled)
-        {
-            return;
-        }
         // 番号が正しい
         if (index < 0 || index >= bgmClips.Length)
         {
@@ -80,19 +84,8 @@ public class BGMManager : MonoBehaviour
         bgmSource.loop = true;
         // 曲を流す
         bgmSource.Play();
-    }
 
-    // BGMを停止
-    public void StopBGM()
-    {
-        // bgmEnabledをOFFにする
-        bgmEnabled = false;
-
-        // bgmSourceがあり、bgmがONの場合
-        if (bgmSource != null && bgmSource.isPlaying)
-        {
-            // BGMを止める
-            bgmSource.Stop();
-        }
+        GameDataManager.Instance.data.bgmIndex = index;
+        GameDataManager.Instance.Save();
     }
 }

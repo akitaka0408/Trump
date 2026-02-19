@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Audio;
 
 // SEの操作
 public class SEManager : MonoBehaviour
@@ -14,7 +15,7 @@ public class SEManager : MonoBehaviour
     public AudioClip blackjackSE;       // ブラックジャック時の音
     public AudioClip retireSE;          // リタイア時の音
     public AudioClip gameOverSE;        // ゲームオーバー時の音
-    private bool seEnabled = true;      // SEが有効かどうか
+    public AudioMixer mixer;            // オーディオミキサー
 
     // 一番最初に呼び出される
     private void Awake()
@@ -49,36 +50,23 @@ public class SEManager : MonoBehaviour
     }
 
 
-    // SEの有効状態参照
-    public bool SEEnabled
+    // SEの音量設定
+    public void SetVolume(float value)
     {
-        get
+        if (value <= 0.0001f)
         {
-            return seEnabled;
+            mixer.SetFloat("SEVolume", -80f);
+        }
+        else
+        {
+            mixer.SetFloat("SEVolume", Mathf.Log10(value) * 20);
         }
     }
 
-    // SE有効化
-    public void EnableSE()
-    {
-        seEnabled = true;
-    }
-
-    // SE無効化
-    public void DisableSE()
-    {
-        seEnabled = false;
-    }
-
-    // 任意のSEを再生
+    // SEを鳴らす
     public void PlaySE(AudioClip clip)
     {
-        // seEnabledがtrueでseSourceとclipがある場合
-        if (seEnabled && seSource != null && clip != null)
-        {
-            // SEを一回だけ再生する(音が重なっても問題ない)
-            seSource.PlayOneShot(clip);
-        }
+        seSource.PlayOneShot(clip);
     }
 
     // クリック音

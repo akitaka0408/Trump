@@ -181,24 +181,22 @@ public class GameDataManager : MonoBehaviour
         Save();
     }
 
-
-    // SEの更新
-    public void SetSE(bool se)
+    // BGM情報保存
+    public void SetBGMVolume(float value)
     {
-        // 引数で渡されてきたSEを格納
-        data.se = se;
-        // 保存
+        data.bgmVolume = value;
+        BGMManager.Instance.SetVolume(value);
         Save();
     }
 
-    // BGMの更新
-    public void SetBGM(bool bgm)
+    // SE情報保存
+    public void SetSEVolume(float value)
     {
-        // 引数で渡されてきたBGMを格納
-        data.bgm = bgm;
-        // 保存
+        data.seVolume = value;
+        SEManager.Instance.SetVolume(value);
         Save();
     }
+
 
     // ミッション達成チェック
     void CheckMissions()
@@ -374,8 +372,8 @@ public class GameDataManager : MonoBehaviour
             {
                 new Record { gameType = "Blackjack", playCount = 0, winCount = 0, loseCount = 0 }
             },
-            bgm = true,
-            se = true,
+            bgmVolume = 1.5f,
+            seVolume = 1.5f,
             money = 1000,
             missionPlayCount = 0,
             missionWinCount = 0,      　　　　　　　　 

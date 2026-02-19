@@ -6,8 +6,8 @@ using System.Collections.Generic;
 public class Data
 {
     public List<Record> records = new List<Record>();  // 戦績データを格納するリスト。
-    public bool bgm = true;                            // BGMの ON/OFF(初期値はON)
-    public bool se = true;                             // SEの ON/OFF(初期値はON)
+    public float bgmVolume = 1.5f;                       // BGMの音量(初期値は1.5)
+    public float seVolume = 1.5f;                        // SEの音量(初期値は1.5)
     public int bgmIndex = 0;                           // 流すBGMの添え字(初期値は0)
     public int money = 1000;                           // プレイヤーの所持金(初期値は1000)
 
