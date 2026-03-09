@@ -7,40 +7,40 @@
       "RelativeMoniker": "D:0:0:{D1A78DF6-CF17-9435-DF22-1AB800100078}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\blackjackui.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D1A78DF6-CF17-9435-DF22-1AB800100078}|Assembly-CSharp.csproj|C:\\Users\\akita\\Desktop\\UnityProjects\\Trump\\assets\\scripts\\mission.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D1A78DF6-CF17-9435-DF22-1AB800100078}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\mission.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D1A78DF6-CF17-9435-DF22-1AB800100078}|Assembly-CSharp.csproj|C:\\Users\\akita\\Desktop\\UnityProjects\\Trump\\assets\\scripts\\semanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D1A78DF6-CF17-9435-DF22-1AB800100078}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\semanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D1A78DF6-CF17-9435-DF22-1AB800100078}|Assembly-CSharp.csproj|c:\\users\\akita\\desktop\\unityprojects\\trump\\assets\\scripts\\bgmmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D1A78DF6-CF17-9435-DF22-1AB800100078}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\bgmmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D1A78DF6-CF17-9435-DF22-1AB800100078}|Assembly-CSharp.csproj|C:\\Users\\akita\\Desktop\\UnityProjects\\Trump\\assets\\scripts\\gamedatamanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D1A78DF6-CF17-9435-DF22-1AB800100078}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\gamedatamanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{D1A78DF6-CF17-9435-DF22-1AB800100078}|Assembly-CSharp.csproj|C:\\Users\\akita\\Desktop\\UnityProjects\\Trump\\assets\\scripts\\blackjackmenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D1A78DF6-CF17-9435-DF22-1AB800100078}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\blackjackmenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D1A78DF6-CF17-9435-DF22-1AB800100078}|Assembly-CSharp.csproj|c:\\users\\akita\\desktop\\unityprojects\\trump\\assets\\scripts\\card.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D1A78DF6-CF17-9435-DF22-1AB800100078}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\card.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{D1A78DF6-CF17-9435-DF22-1AB800100078}|Assembly-CSharp.csproj|C:\\Users\\akita\\Desktop\\UnityProjects\\Trump\\assets\\scripts\\blackjackgame.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D1A78DF6-CF17-9435-DF22-1AB800100078}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\blackjackgame.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D1A78DF6-CF17-9435-DF22-1AB800100078}|Assembly-CSharp.csproj|C:\\Users\\akita\\Desktop\\UnityProjects\\Trump\\assets\\scripts\\card.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D1A78DF6-CF17-9435-DF22-1AB800100078}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\card.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D1A78DF6-CF17-9435-DF22-1AB800100078}|Assembly-CSharp.csproj|C:\\Users\\akita\\Desktop\\UnityProjects\\Trump\\assets\\scripts\\mission.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D1A78DF6-CF17-9435-DF22-1AB800100078}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\mission.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D1A78DF6-CF17-9435-DF22-1AB800100078}|Assembly-CSharp.csproj|C:\\Users\\akita\\Desktop\\UnityProjects\\Trump\\assets\\scripts\\record.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D1A78DF6-CF17-9435-DF22-1AB800100078}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\record.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{D1A78DF6-CF17-9435-DF22-1AB800100078}|Assembly-CSharp.csproj|C:\\Users\\akita\\Desktop\\UnityProjects\\Trump\\assets\\scripts\\data.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D1A78DF6-CF17-9435-DF22-1AB800100078}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\data.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D1A78DF6-CF17-9435-DF22-1AB800100078}|Assembly-CSharp.csproj|C:\\Users\\akita\\Desktop\\UnityProjects\\Trump\\assets\\scripts\\record.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D1A78DF6-CF17-9435-DF22-1AB800100078}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\record.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D1A78DF6-CF17-9435-DF22-1AB800100078}|Assembly-CSharp.csproj|C:\\Users\\akita\\Desktop\\UnityProjects\\Trump\\assets\\scripts\\semanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D1A78DF6-CF17-9435-DF22-1AB800100078}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\semanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D1A78DF6-CF17-9435-DF22-1AB800100078}|Assembly-CSharp.csproj|C:\\Users\\akita\\Desktop\\UnityProjects\\Trump\\assets\\scripts\\bgmmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D1A78DF6-CF17-9435-DF22-1AB800100078}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\bgmmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D1A78DF6-CF17-9435-DF22-1AB800100078}|Assembly-CSharp.csproj|C:\\Users\\akita\\Desktop\\UnityProjects\\Trump\\assets\\scripts\\gamedatamanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D1A78DF6-CF17-9435-DF22-1AB800100078}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\gamedatamanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -58,28 +58,28 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 2,
               "Title": "Card.cs",
               "DocumentMoniker": "C:\\Users\\akita\\Desktop\\UnityProjects\\Trump\\Assets\\Scripts\\Card.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Card.cs",
               "ToolTip": "C:\\Users\\akita\\Desktop\\UnityProjects\\Trump\\Assets\\Scripts\\Card.cs",
               "RelativeToolTip": "Assets\\Scripts\\Card.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAFAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAUAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-21T00:11:33.042Z"
+              "WhenOpened": "2026-01-21T00:11:33.042Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 3,
               "Title": "BlackjackGame.cs",
               "DocumentMoniker": "C:\\Users\\akita\\Desktop\\UnityProjects\\Trump\\Assets\\Scripts\\BlackjackGame.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\BlackjackGame.cs",
               "ToolTip": "C:\\Users\\akita\\Desktop\\UnityProjects\\Trump\\Assets\\Scripts\\BlackjackGame.cs",
               "RelativeToolTip": "Assets\\Scripts\\BlackjackGame.cs",
-              "ViewState": "AgIAAIoAAAAAAAAAAAAUwEoBAAAaAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEoBAAAaAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-19T00:56:34.592Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-19T00:56:34.592Z"
             },
             {
               "$type": "Document",
@@ -89,40 +89,39 @@
               "RelativeDocumentMoniker": "Assets\\Scripts\\BlackjackUI.cs",
               "ToolTip": "C:\\Users\\akita\\Desktop\\UnityProjects\\Trump\\Assets\\Scripts\\BlackjackUI.cs",
               "RelativeToolTip": "Assets\\Scripts\\BlackjackUI.cs",
-              "ViewState": "AgIAANYCAAAAAAAAAAASwOMCAAAoAAAAAAAAAA==",
+              "ViewState": "AgIAAKMAAAAAAAAAAAAUwLIAAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-12-02T00:07:49.517Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 1,
               "Title": "BlackjackMenu.cs",
               "DocumentMoniker": "C:\\Users\\akita\\Desktop\\UnityProjects\\Trump\\Assets\\Scripts\\BlackjackMenu.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\BlackjackMenu.cs",
               "ToolTip": "C:\\Users\\akita\\Desktop\\UnityProjects\\Trump\\Assets\\Scripts\\BlackjackMenu.cs",
               "RelativeToolTip": "Assets\\Scripts\\BlackjackMenu.cs",
-              "ViewState": "AgIAACQAAAAAAAAAAAAcwDAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAACMAAAAAAAAAAADwvwQAAAAVAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-11-19T02:44:04.519Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 4,
               "Title": "Mission.cs",
               "DocumentMoniker": "C:\\Users\\akita\\Desktop\\UnityProjects\\Trump\\Assets\\Scripts\\Mission.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Mission.cs",
               "ToolTip": "C:\\Users\\akita\\Desktop\\UnityProjects\\Trump\\Assets\\Scripts\\Mission.cs",
               "RelativeToolTip": "Assets\\Scripts\\Mission.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAATAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-28T02:02:14.842Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-01-28T02:02:14.842Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 5,
               "Title": "Record.cs",
               "DocumentMoniker": "C:\\Users\\akita\\Desktop\\UnityProjects\\Trump\\Assets\\Scripts\\Record.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Record.cs",
@@ -134,7 +133,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 6,
               "Title": "Data.cs",
               "DocumentMoniker": "C:\\Users\\akita\\Desktop\\UnityProjects\\Trump\\Assets\\Scripts\\Data.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Data.cs",
@@ -146,42 +145,39 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 9,
               "Title": "GameDataManager.cs",
               "DocumentMoniker": "C:\\Users\\akita\\Desktop\\UnityProjects\\Trump\\Assets\\Scripts\\GameDataManager.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\GameDataManager.cs",
               "ToolTip": "C:\\Users\\akita\\Desktop\\UnityProjects\\Trump\\Assets\\Scripts\\GameDataManager.cs",
               "RelativeToolTip": "Assets\\Scripts\\GameDataManager.cs",
-              "ViewState": "AgIAAHUBAAAAAAAAAAAAAHoBAAAvAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAHIBAAAmAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-02T02:47:50.776Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-02T02:47:50.776Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 8,
               "Title": "BGMManager.cs",
               "DocumentMoniker": "C:\\Users\\akita\\Desktop\\UnityProjects\\Trump\\Assets\\Scripts\\BGMManager.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\BGMManager.cs",
               "ToolTip": "C:\\Users\\akita\\Desktop\\UnityProjects\\Trump\\Assets\\Scripts\\BGMManager.cs",
               "RelativeToolTip": "Assets\\Scripts\\BGMManager.cs",
-              "ViewState": "AgIAABUAAAAAAAAAAAAAwBsAAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABsAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-26T00:49:18.145Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-26T00:49:18.145Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 7,
               "Title": "SEManager.cs",
               "DocumentMoniker": "C:\\Users\\akita\\Desktop\\UnityProjects\\Trump\\Assets\\Scripts\\SEManager.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\SEManager.cs",
               "ToolTip": "C:\\Users\\akita\\Desktop\\UnityProjects\\Trump\\Assets\\Scripts\\SEManager.cs",
               "RelativeToolTip": "Assets\\Scripts\\SEManager.cs",
-              "ViewState": "AgIAAGAAAAAAAAAAAAA2wHEAAAARAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAHEAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-26T00:47:26.979Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-26T00:47:26.979Z"
             }
           ]
         }

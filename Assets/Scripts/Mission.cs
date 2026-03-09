@@ -1,5 +1,6 @@
 using System;
 
+// ミッションを管理するためのクラス
 [Serializable]
 public class Mission
 {

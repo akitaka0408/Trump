@@ -1,916 +1,999 @@
-using System.Collections;
+ï»¿using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using DG.Tweening;
 
+// ã‚²ãƒ¼ãƒ ç”»é¢
 public class BlackjackUI : MonoBehaviour
 {
-    // ƒtƒB[ƒ‹ƒh’è‹`
+    // ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰å®šç¾©
 
-    // ƒpƒlƒ‹—Ş
-    public GameObject darkOverlay;        // ‰æ–ÊˆÃ“]—p
-    public GameObject betPanel;           // ƒxƒbƒgŠz“ü—Íƒpƒlƒ‹
-    public GameObject blackjackUIPanel;   // ƒQ[ƒ€’† UI ƒpƒlƒ‹
-    public GameObject rulePanel;          // ƒ‹[ƒ‹à–¾ƒpƒlƒ‹
-    public GameObject resultPanel;        // Œ‹‰Ê•\¦ƒpƒlƒ‹
-    public GameObject retirePanel;        // ƒŠƒ^ƒCƒAŠm”Fƒpƒlƒ‹
-    public GameObject dontTouchPanel;     // ƒzƒXƒg‚Ìƒ^[ƒ“’†‚É‘€ì‹Ö~‚É‚·‚éƒpƒlƒ‹
+    // ãƒ‘ãƒãƒ«é¡
+    public GameObject darkOverlay;        // ç”»é¢æš—è»¢ç”¨
+    public GameObject betPanel;           // ãƒ™ãƒƒãƒˆé¡å…¥åŠ›ãƒ‘ãƒãƒ«
+    public GameObject blackjackUIPanel;   // ã‚²ãƒ¼ãƒ ä¸­ UI ãƒ‘ãƒãƒ«
+    public GameObject rulePanel;          // ãƒ«ãƒ¼ãƒ«èª¬æ˜ãƒ‘ãƒãƒ«
+    public GameObject resultPanel;        // çµæœè¡¨ç¤ºãƒ‘ãƒãƒ«
+    public GameObject retirePanel;        // ãƒªã‚¿ã‚¤ã‚¢ç¢ºèªãƒ‘ãƒãƒ«
+    public GameObject dontTouchPanel;     // ãƒ›ã‚¹ãƒˆã®ã‚¿ãƒ¼ãƒ³ä¸­ã«æ“ä½œç¦æ­¢ã«ã™ã‚‹ãƒ‘ãƒãƒ«
 
-    // ‰æ‘œQÆ—p
-    public GameObject[] playerCardImages; // ƒvƒŒƒCƒ„[‚ÌƒJ[ƒh‰æ‘œƒIƒuƒWƒFƒNƒg
-    public GameObject[] hostCardImages;   // ƒzƒXƒg‚ÌƒJ[ƒh‰æ‘œƒIƒuƒWƒFƒNƒg
-    public GameObject backgroundImage;    // ”wŒi‰æ‘œ
-    public Sprite[] cardSprites;          // ƒJ[ƒh‰æ‘œi0`51j
-    public Sprite nullCardSprite;         // ‹ó‚ÌƒJ[ƒh‰æ‘œ
-    public Sprite backCardSprite;         // — Œü‚«ƒJ[ƒh‰æ‘œ
-    private Sprite turnCardFrontSprite;   // •\–ÊƒXƒvƒ‰ƒCƒgiƒAƒjƒ[ƒVƒ‡ƒ“‚Ég—pj
-    private Image turnCardImg;            // ƒJ[ƒh‰æ‘œiƒAƒjƒ[ƒVƒ‡ƒ“‚Ég—pj
+    // ç”»åƒå‚ç…§ç”¨
+    public GameObject[] playerCardImages; // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ã‚«ãƒ¼ãƒ‰ç”»åƒã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+    public GameObject[] hostCardImages;   // ãƒ›ã‚¹ãƒˆã®ã‚«ãƒ¼ãƒ‰ç”»åƒã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+    public GameObject backgroundImage;    // èƒŒæ™¯ç”»åƒ
+    public Sprite[] cardSprites;          // ã‚«ãƒ¼ãƒ‰ç”»åƒï¼ˆ0ï½51ï¼‰
+    public Sprite nullCardSprite;         // ç©ºã®ã‚«ãƒ¼ãƒ‰ç”»åƒ
+    public Sprite backCardSprite;         // è£å‘ãã‚«ãƒ¼ãƒ‰ç”»åƒ
+    private Sprite turnCardFrontSprite;   // è¡¨é¢ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆï¼ˆã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã«ä½¿ç”¨ï¼‰
+    private Image turnCardImg;            // ã‚«ãƒ¼ãƒ‰ç”»åƒï¼ˆã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã«ä½¿ç”¨ï¼‰
 
-    // ƒeƒLƒXƒgQÆ—p
-    public TMP_Text playerScoreText;      // ƒvƒŒƒCƒ„[‚ÌƒXƒRƒA•\¦ƒeƒLƒXƒg
-    public TMP_Text hostScoreText;        // ƒzƒXƒg‚ÌƒXƒRƒA•\¦ƒeƒLƒXƒg
-    public TMP_Text resultText;           // Œ‹‰ÊƒeƒLƒXƒg
-    public TMP_Text betsText;             // Œ»İ‚ÌƒxƒbƒgŠz•\¦ƒeƒLƒXƒg
-    public TMP_Text money1Text;           // Š‹à•\¦iƒxƒbƒgƒpƒlƒ‹j
-    public TMP_Text money2Text;           // Š‹à•\¦iƒQ[ƒ€’†j
-    public GameObject rule1Text;          // ƒ‹[ƒ‹1ƒy[ƒW–Ú‚ÌƒeƒLƒXƒg
-    public GameObject rule2Text;          // ƒ‹[ƒ‹2ƒy[ƒW–Ú‚ÌƒeƒLƒXƒg
-    public GameObject rule3Text;          // ƒ‹[ƒ‹3ƒy[ƒW–Ú‚ÌƒeƒLƒXƒg
-    public GameObject rule4Text;          // ƒ‹[ƒ‹4ƒy[ƒW–Ú‚ÌƒeƒLƒXƒg
-    public GameObject rule1IndexText;@@ // ƒy[ƒW•\¦1/4‚ÌƒeƒLƒXƒg
-    public GameObject rule2IndexText;     // ƒy[ƒW•\¦2/4‚ÌƒeƒLƒXƒg
-    public GameObject rule3IndexText;     // ƒy[ƒW•\¦3/4‚ÌƒeƒLƒXƒg
-    public GameObject rule4IndexText;     // ƒy[ƒW•\¦4/4‚ÌƒeƒLƒXƒg
-    public TMP_Text[] numberTexts;        // ƒxƒbƒgƒpƒlƒ‹‚Ì3Œ…‚Ì”šƒeƒLƒXƒg
-    public TMP_Text missionNoticeText;    // ƒ~ƒbƒVƒ‡ƒ“’B¬‚¨’m‚ç‚¹—p
+    // ãƒ†ã‚­ã‚¹ãƒˆå‚ç…§ç”¨
+    public TMP_Text playerScoreText;      // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ã‚¹ã‚³ã‚¢è¡¨ç¤ºãƒ†ã‚­ã‚¹ãƒˆ
+    public TMP_Text hostScoreText;        // ãƒ›ã‚¹ãƒˆã®ã‚¹ã‚³ã‚¢è¡¨ç¤ºãƒ†ã‚­ã‚¹ãƒˆ
+    public TMP_Text resultText;           // çµæœãƒ†ã‚­ã‚¹ãƒˆ
+    public TMP_Text betsText;             // ç¾åœ¨ã®ãƒ™ãƒƒãƒˆé¡è¡¨ç¤ºãƒ†ã‚­ã‚¹ãƒˆ
+    public TMP_Text money1Text;           // æ‰€æŒé‡‘è¡¨ç¤ºï¼ˆãƒ™ãƒƒãƒˆãƒ‘ãƒãƒ«ï¼‰
+    public TMP_Text money2Text;           // æ‰€æŒé‡‘è¡¨ç¤ºï¼ˆã‚²ãƒ¼ãƒ ä¸­ï¼‰
+    public GameObject rule1Text;          // ãƒ«ãƒ¼ãƒ«1ãƒšãƒ¼ã‚¸ç›®ã®ãƒ†ã‚­ã‚¹ãƒˆ
+    public GameObject rule2Text;          // ãƒ«ãƒ¼ãƒ«2ãƒšãƒ¼ã‚¸ç›®ã®ãƒ†ã‚­ã‚¹ãƒˆ
+    public GameObject rule3Text;          // ãƒ«ãƒ¼ãƒ«3ãƒšãƒ¼ã‚¸ç›®ã®ãƒ†ã‚­ã‚¹ãƒˆ
+    public GameObject rule4Text;          // ãƒ«ãƒ¼ãƒ«4ãƒšãƒ¼ã‚¸ç›®ã®ãƒ†ã‚­ã‚¹ãƒˆ
+    public GameObject rule1IndexText;ã€€ã€€ // ãƒšãƒ¼ã‚¸è¡¨ç¤º1/4ã®ãƒ†ã‚­ã‚¹ãƒˆ
+    public GameObject rule2IndexText;     // ãƒšãƒ¼ã‚¸è¡¨ç¤º2/4ã®ãƒ†ã‚­ã‚¹ãƒˆ
+    public GameObject rule3IndexText;     // ãƒšãƒ¼ã‚¸è¡¨ç¤º3/4ã®ãƒ†ã‚­ã‚¹ãƒˆ
+    public GameObject rule4IndexText;     // ãƒšãƒ¼ã‚¸è¡¨ç¤º4/4ã®ãƒ†ã‚­ã‚¹ãƒˆ
+    public TMP_Text[] numberTexts;        // ãƒ™ãƒƒãƒˆãƒ‘ãƒãƒ«ã®3æ¡ã®æ•°å­—ãƒ†ã‚­ã‚¹ãƒˆ
+    public TMP_Text missionNoticeText;    // ãƒŸãƒƒã‚·ãƒ§ãƒ³é”æˆãŠçŸ¥ã‚‰ã›ç”¨
 
-    // ƒ{ƒ^ƒ“QÆ—p
-    public GameObject hitButton;          // Hitƒ{ƒ^ƒ“
-    public GameObject standButton;        // Standƒ{ƒ^ƒ“
-    public GameObject doubleDownButton;   // Doubleƒ{ƒ^ƒ“
-    public GameObject homeButton;         // Homeƒ{ƒ^ƒ“
-    public GameObject continueButton;     // Continueƒ{ƒ^ƒ“
-    public GameObject ruleBackButton;     // ƒy[ƒW‚ğ–ß‚·ƒ{ƒ^ƒ“
-    public GameObject ruleNextButton;     // ƒy[ƒW‚ği‚ß‚éƒ{ƒ^ƒ“
+    // ãƒœã‚¿ãƒ³å‚ç…§ç”¨
+    public GameObject hitButton;          // Hitãƒœã‚¿ãƒ³
+    public GameObject standButton;        // Standãƒœã‚¿ãƒ³
+    public GameObject doubleDownButton;   // Doubleãƒœã‚¿ãƒ³
+    public GameObject homeButton;         // Homeãƒœã‚¿ãƒ³
+    public GameObject continueButton;     // Continueãƒœã‚¿ãƒ³
+    public GameObject ruleBackButton;     // ãƒšãƒ¼ã‚¸ã‚’æˆ»ã™ãƒœã‚¿ãƒ³
+    public GameObject ruleNextButton;     // ãƒšãƒ¼ã‚¸ã‚’é€²ã‚ã‚‹ãƒœã‚¿ãƒ³
 
-    // À•WQÆ—p
-    private RectTransform turnCardRT;@@// ƒJ[ƒh‚Ì RectTransform(À•W)
+    // åº§æ¨™å‚ç…§ç”¨
+    private RectTransform turnCardRT;ã€€ã€€// ã‚«ãƒ¼ãƒ‰ã® RectTransform(åº§æ¨™)
 
-    // ƒQ[ƒ€ƒƒWƒbƒN
-    private int[] number = new int[3];    // ƒxƒbƒgŠzi100, 10, 1 ‚ÌŒ…j
-    private bool TurnHostCard = false;    // ƒzƒXƒg‚Ì2–‡–Ú‚ğ•\‚É‚·‚é‚©‚Ç‚¤‚©”»’è
-    private BlackjackGame game;           // ƒQ[ƒ€ƒƒWƒbƒNƒCƒ“ƒXƒ^ƒ“ƒX                                      
+    // ã‚²ãƒ¼ãƒ ãƒ­ã‚¸ãƒƒã‚¯
+    private int betValue = 0;             // ç¾åœ¨ã®ãƒ™ãƒƒãƒˆé¡ï¼ˆ0ã€œ999ï¼‰
+    private bool TurnHostCard = false;    // ãƒ›ã‚¹ãƒˆã®2æšç›®ã‚’è¡¨ã«ã™ã‚‹ã‹ã©ã†ã‹åˆ¤å®š
+    private BlackjackGame game;           // ã‚²ãƒ¼ãƒ ãƒ­ã‚¸ãƒƒã‚¯ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹                                      
 
-    // ‰‚ß‚ÉŒÄ‚Ño‚³‚ê‚é
+    // åˆã‚ã«å‘¼ã³å‡ºã•ã‚Œã‚‹
     void Start()
     {
-        // ƒQ[ƒ€ƒƒWƒbƒN‚ğ¶¬‚µ
+        // ã‚²ãƒ¼ãƒ ãƒ­ã‚¸ãƒƒã‚¯ã‚’ç”Ÿæˆã—
         game = new BlackjackGame();
-        // Š‹à‚ğƒZƒbƒg
+        // æ‰€æŒé‡‘ã‚’ã‚»ãƒƒãƒˆ
         game.SetPlayerMoney(GameDataManager.Instance.data.money);
-        // Š‹à‚ğ UI ‚É”½‰f
+        // æ‰€æŒé‡‘ã‚’ UI ã«åæ˜ 
         money1Text.text = game.PlayerMoney.ToString();
-        // ƒzƒXƒg‚Ì“ñ–‡–Ú‚ÌƒJ[ƒh‚ğ— ‘¤‚É‚·‚é
+        // ãƒ›ã‚¹ãƒˆã®äºŒæšç›®ã®ã‚«ãƒ¼ãƒ‰ã‚’è£å´ã«ã™ã‚‹
         TurnHostCard = false;
-        // ƒxƒbƒg“ü—Í UI ‚Ì‰Šú•\¦
+        // ãƒ™ãƒƒãƒˆå…¥åŠ› UI ã®åˆæœŸè¡¨ç¤º
         UpdateDisplay();
     }
 
-    // ƒxƒbƒg“ü—Í—“‚Ì”š‚ğ UI ‚É”½‰f
+    // è¡¨ç¤ºæ›´æ–°
     void UpdateDisplay()
     {
-        for (int i = 0; i < 3; i++)
-        {
-            // UI‚É”½‰f
-            numberTexts[i].text = number[i].ToString();
-        }
+        // è¡¨ç¤ºç”¨ç”¨å¤‰æ•°å®šç¾©
+        int hundreds = betValue / 100;
+        int tens = (betValue / 10) % 10;
+        int ones = betValue % 10;
+
+        // æ–‡å­—åˆ—ã«ã—ã¦è¡¨ç¤º
+        numberTexts[0].text = hundreds.ToString();
+        numberTexts[1].text = tens.ToString();
+        numberTexts[2].text = ones.ToString();
     }
 
-    // Œ»İ‚ÌƒxƒbƒgŠz‚ğŒvZ
-    int GetBetAmount()
-    {
-        // “Y‚¦š‚ª¶‚©‚ç‚»‚ê‚¼‚ê100‚ÌˆÊE10‚ÌˆÊE1‚ÌˆÊ
-        return number[0] * 100 + number[1] * 10 + number[2];
-    }
-
-    // ƒxƒbƒg”š‚ğ+1
+    // +ãƒœã‚¿ãƒ³ï¼ˆindex: 0=100ã®ä½, 1=10ã®ä½, 2=1ã®ä½ï¼‰
     public void OnIncrementNumberButton(int index)
     {
-        // ƒNƒŠƒbƒN‰¹‚ğ–Â‚ç‚·
+        // ã‚¯ãƒªãƒƒã‚¯éŸ³ã‚’é³´ã‚‰ã™
         SEManager.Instance?.PlayClickSE();
-        // 0`9‚Åƒ‹[ƒv
-        number[index] = (number[index] + 1) % 10;
-        // •\¦‚ğXV
+
+        // è¨ˆç®—ç”¨ã®å¤‰æ•°
+        int add = 0;
+
+        // å¤‰æ›´ã—ãŸã®ãŒ1ã®ä½ã®å ´åˆ
+        if (index == 0)
+        {
+            add = 100;
+        }
+        // å¤‰æ›´ã—ãŸã®ãŒ1ã®ä½ã®å ´åˆ
+        else if (index == 1)
+        {
+            add = 10;
+        }
+        // å¤‰æ›´ã—ãŸã®ãŒ1ã®ä½ã®å ´åˆ
+        else if (index == 2)
+        {
+            add = 1;
+        }
+
+        // ãƒ™ãƒƒãƒˆé¡ã®ã¨ã“ã‚ã«è¿½åŠ 
+        betValue += add;
+        // 0ã€œ999ã«åˆ¶é™
+        if (betValue > 999)
+        {
+            betValue = 0;
+        }
+        // è¡¨ç¤ºæ›´æ–°
         UpdateDisplay();
     }
 
-    // ƒxƒbƒg”š‚ğ -1
+    // -ãƒœã‚¿ãƒ³ï¼ˆindex: 0=100ã®ä½, 1=10ã®ä½, 2=1ã®ä½ï¼‰
     public void OnDecrementNumberButton(int index)
     {
-        // ƒNƒŠƒbƒN‰¹‚ğ–Â‚ç‚·
+        // ã‚¯ãƒªãƒƒã‚¯éŸ³ã‚’é³´ã‚‰ã™
         SEManager.Instance?.PlayClickSE();
-        // 0`9‚Åƒ‹[ƒv
-        number[index] = (number[index] + 9) % 10;
-        // •\¦‚ğXV
+
+        // è¨ˆç®—ç”¨å¤‰æ•°
+        int sub = 0;
+
+        // å¤‰æ›´ã—ãŸã®ãŒ1ã®ä½ã®å ´åˆ
+        if (index == 0)
+        {
+            sub = 100;
+        }
+        // å¤‰æ›´ã—ãŸã®ãŒ10ã®ä½ã®å ´åˆ
+        else if (index == 1)
+        {
+            sub = 10;
+        }
+        // å¤‰æ›´ã—ãŸã®ãŒ100ã®ä½ã®å ´åˆ
+        else if (index == 2)
+        {
+            sub = 1;
+        }
+
+        // ãƒ™ãƒƒãƒˆé¡ã‹ã‚‰å¼•ã
+        betValue -= sub;
+        // 0ã€œ999ã«åˆ¶é™
+        if (betValue < 0)
+        {
+            betValue = 999;
+        }
+        // è¡¨ç¤ºæ›´æ–°
         UpdateDisplay();
     }
 
-    // Betƒ{ƒ^ƒ“
+    // ãƒ™ãƒƒãƒˆé¡ã‚’1(æœ€å°)ã«ã™ã‚‹
+    public void OnSetMinButton()
+    {
+        // ã‚¯ãƒªãƒƒã‚¯éŸ³ã‚’é³´ã‚‰ã™
+        SEManager.Instance?.PlayClickSE();
+        // ãƒ™ãƒƒãƒˆé¡ã‚’1ã«ã™ã‚‹
+        betValue = 1;
+        // è¡¨ç¤ºæ›´æ–°
+        UpdateDisplay();
+    }
+
+    // ãƒ™ãƒƒãƒˆé¡999 or æ‰€æŒé‡‘åˆ†(æœ€å¤§)ã«ã™ã‚‹
+    public void OnSetMaxButton()
+    {
+        // ã‚¯ãƒªãƒƒã‚¯éŸ³ã‚’é³´ã‚‰ã™
+        SEManager.Instance?.PlayClickSE();
+
+        // æ‰€æŒé‡‘ã‚’å–å¾—
+        int money = game.PlayerMoney;
+
+        // æ‰€æŒé‡‘ãŒ999ä»¥ä¸Šãªã‚‰999
+        if (money >= 999)
+        {
+            betValue = 999;
+        }
+        // æ‰€æŒé‡‘ãŒ999æœªæº€ãªã‚‰æ‰€æŒé‡‘
+        else
+        {
+            betValue = money;
+        }
+
+        // è¡¨ç¤ºæ›´æ–°
+        UpdateDisplay();
+    }
+
+
+    // Betãƒœã‚¿ãƒ³
     public void OnBetButton()
     {
-        // ƒNƒŠƒbƒN‰¹‚ğ–Â‚ç‚·
+        // ã‚¯ãƒªãƒƒã‚¯éŸ³ã‚’é³´ã‚‰ã™
         SEManager.Instance?.PlayClickSE();
-        // ƒxƒbƒgŠz‚ğæ“¾
-        int bet = GetBetAmount();
-        // ƒxƒbƒgŠz‚ª0 or Š‹à‚æ‚è‘½‚¢ê‡
+
+        int bet = betValue;
+
+        // ãƒ™ãƒƒãƒˆé¡ãŒ0ä»¥ä¸‹ã§æ‰€æŒé‡‘ã‚ˆã‚Šå¤§ãã„å ´åˆ
         if (bet <= 0 || bet > game.PlayerMoney)
         {
-            // ƒNƒŠƒbƒN‚ğ–³Œø
             return;
         }
 
-        // ƒxƒbƒgŠz‚ğƒZƒbƒg
+        // ãƒ™ãƒƒãƒˆé¡ã‚’ã‚»ãƒƒãƒˆ
         game.SetBet(bet);
-        // ƒ~ƒbƒVƒ‡ƒ“—piÅ‘åƒxƒbƒgj
         GameDataManager.Instance.SetBet(bet);
-        // Š‹àXViƒ}ƒCƒiƒXj
         GameDataManager.Instance.AddMoney(-bet);
-        // ƒXƒ^[ƒgƒ‰ƒEƒ“ƒhŠJn
+
+        // ã‚²ãƒ¼ãƒ é–‹å§‹
         game.StartRound();
-        // ƒJ[ƒh‚ÌUI‚ğXV
+        // UIæ›´æ–°
         UpdateCardUI();
-        // ƒxƒbƒgŠz‚ÌUI‚ğXV
         UpdateBetUI();
-        // ˆÃ“]‰ğœ
+
+        // æš—è»¢è§£é™¤
         darkOverlay.SetActive(false);
-        // ƒxƒbƒgƒpƒlƒ‹”ñ•\¦
+        // ãƒ™ãƒƒãƒˆãƒ‘ãƒãƒ«éè¡¨ç¤º
         betPanel.SetActive(false);
-        // ƒQ[ƒ€UIƒpƒlƒ‹‚ğ•\¦
+        // UIãƒ‘ãƒãƒ«è¡¨ç¤º
         blackjackUIPanel.SetActive(true);
     }
 
-    // Back(©)ƒ{ƒ^ƒ“
+    // Back(â†)ãƒœã‚¿ãƒ³
     public void OnBackButton()
     {
-        // ƒNƒŠƒbƒN‰¹‚ğ–Â‚ç‚·
+        // ã‚¯ãƒªãƒƒã‚¯éŸ³ã‚’é³´ã‚‰ã™
         SEManager.Instance?.PlayClickSE();
-        // BlackjackGame‰æ–Ê‚É‘JˆÚ
+        // BlackjackGameç”»é¢ã«é·ç§»
         SceneManager.LoadScene("BlackjackMenuScene");
     }
 
-    // Retire(~)ƒ{ƒ^ƒ“
+    // Retire(Ã—)ãƒœã‚¿ãƒ³
     public void OnRetireButton()
     {
-        // ƒNƒŠƒbƒN‰¹‚ğ–Â‚ç‚·
+        // ã‚¯ãƒªãƒƒã‚¯éŸ³ã‚’é³´ã‚‰ã™
         SEManager.Instance?.PlayClickSE();
-        // ”wŒi‚ğˆÃ“]
+        // èƒŒæ™¯ã‚’æš—è»¢
         darkOverlay.SetActive(true);
-        // ƒŠƒ^ƒCƒAŠm”Fƒpƒlƒ‹‚ğ•\¦
+        // ãƒªã‚¿ã‚¤ã‚¢ç¢ºèªãƒ‘ãƒãƒ«ã‚’è¡¨ç¤º
         retirePanel.SetActive(true);
     }
 
-    // ‚Í‚¢ƒ{ƒ^ƒ“
+    // ã¯ã„ãƒœã‚¿ãƒ³
     public void OnYesButton()
     {
-        // ƒNƒŠƒbƒN‰¹‚ğ–Â‚ç‚·
+        // ã‚¯ãƒªãƒƒã‚¯éŸ³ã‚’é³´ã‚‰ã™
         SEManager.Instance?.PlayClickSE();
-        // ‘€ì•s‰Â‚É‚·‚é
+        // æ“ä½œä¸å¯ã«ã™ã‚‹
         dontTouchPanel.SetActive(true);
-        // •‰‚¯”»’è‚É‚·‚é
+        // è² ã‘åˆ¤å®šã«ã™ã‚‹
         game.ApplyResult(GameResult.HostWin);
-        // •‰‚¯‚È‚Ì‚Åfalse‚É‚µ‚ÄXV
+        // è² ã‘ãªã®ã§falseã«ã—ã¦æ›´æ–°
         GameDataManager.Instance.UpdateRecord("Blackjack", 1, false);
-        // Š‹à·•ª‚ğŒvZ‚µ‚ÄXV
+        // æ‰€æŒé‡‘å·®åˆ†ã‚’è¨ˆç®—ã—ã¦æ›´æ–°
         int diff = game.PlayerMoney - GameDataManager.Instance.data.money;
         GameDataManager.Instance.AddMoney(diff);
-        // ƒŠƒUƒ‹ƒgƒpƒlƒ‹‚ÉƒŠƒ^ƒCƒA‚ğ“ü‚ê‚é
+        // ãƒªã‚¶ãƒ«ãƒˆãƒ‘ãƒãƒ«ã«ãƒªã‚¿ã‚¤ã‚¢ã‚’å…¥ã‚Œã‚‹
         resultText.text = "Retire";
-        // ƒtƒHƒ“ƒgƒJƒ‰[‚ğŠDF‚É‚·‚é
+        // ãƒ•ã‚©ãƒ³ãƒˆã‚«ãƒ©ãƒ¼ã‚’ç°è‰²ã«ã™ã‚‹
         resultText.color = Color.gray;
 
-        // ­‚µ‘Ò‚¿AƒŠƒUƒ‹ƒgƒpƒlƒ‹‚ğŠJ‚­
+        // å°‘ã—å¾…ã¡ã€ãƒªã‚¶ãƒ«ãƒˆãƒ‘ãƒãƒ«ã‚’é–‹ã
         StartCoroutine(ShowResultPanelDelay());
-        // ƒŠƒ^ƒCƒAŠm”Fƒpƒlƒ‹‚ğ”ñ•\¦
+        // ãƒªã‚¿ã‚¤ã‚¢ç¢ºèªãƒ‘ãƒãƒ«ã‚’éè¡¨ç¤º
         retirePanel.SetActive(false);
-        // ˆÃ“]‚ğ‰ğœ
+        // æš—è»¢ã‚’è§£é™¤
         darkOverlay.SetActive(false);
     }
 
-    // ‚¢‚¢‚¦ƒ{ƒ^ƒ“
+    // ã„ã„ãˆãƒœã‚¿ãƒ³
     public void OnNoButton()
     {
-        // ƒNƒŠƒbƒN‰¹‚ğ–Â‚ç‚·
+        // ã‚¯ãƒªãƒƒã‚¯éŸ³ã‚’é³´ã‚‰ã™
         SEManager.Instance?.PlayClickSE();
-        // ƒŠƒ^ƒCƒAŠm”Fƒpƒlƒ‹‚ğ”ñ•\¦
+        // ãƒªã‚¿ã‚¤ã‚¢ç¢ºèªãƒ‘ãƒãƒ«ã‚’éè¡¨ç¤º
         retirePanel.SetActive(false);
-        // ˆÃ“]‚ğ‰ğœ
+        // æš—è»¢ã‚’è§£é™¤
         darkOverlay.SetActive(false);
     }
-    // Hitƒ{ƒ^ƒ“
+    // Hitãƒœã‚¿ãƒ³
     public void OnHitButton()
     {
-        // èD‚ª21ˆÈã‚Ìê‡
+        // æ‰‹æœ­ãŒ21ä»¥ä¸Šã®å ´åˆ
         if (game.PlayerScore >= BlackjackGame.BLACKJACK)
         {
-            // ƒNƒŠƒbƒN‚ğ–³Œø
+            // ã‚¯ãƒªãƒƒã‚¯ã‚’ç„¡åŠ¹
             return;
         }
 
-        // ƒNƒŠƒbƒN‰¹‚ğ–Â‚ç‚·
+        // ã‚¯ãƒªãƒƒã‚¯éŸ³ã‚’é³´ã‚‰ã™
         SEManager.Instance?.PlayClickSE();
-        // ƒJ[ƒh‚ğˆø‚­
+        // ã‚«ãƒ¼ãƒ‰ã‚’å¼•ã
         game.PlayerHit();
-        // ƒJ[ƒh‚ğˆø‚­‰¹‚ğ–Â‚ç‚·
+        // ã‚«ãƒ¼ãƒ‰ã‚’å¼•ãéŸ³ã‚’é³´ã‚‰ã™
         SEManager.Instance?.PlayCardSE();
-        // ƒJ[ƒh‚ÌUIXV
+        // ã‚«ãƒ¼ãƒ‰ã®UIæ›´æ–°
         UpdateCardUI();
 
-        // ƒo[ƒXƒg(21‚æ‚è‘å‚«‚¢”š)‚Ìê‡
+        // ãƒãƒ¼ã‚¹ãƒˆ(21ã‚ˆã‚Šå¤§ãã„æ•°å­—)ã®å ´åˆ
         if (game.PlayerScore > BlackjackGame.BLACKJACK)
         {
-            // ƒzƒXƒg‚Ì“ñ–‡–Ú‚ÌƒJ[ƒh‚ğ•\Œü‚«‚Ì”»’è
+            // ãƒ›ã‚¹ãƒˆã®äºŒæšç›®ã®ã‚«ãƒ¼ãƒ‰ã‚’è¡¨å‘ãã®åˆ¤å®š
             game.HostSecondCard = true;
-            // ƒJ[ƒh‚ÌUIXV
+            // ã‚«ãƒ¼ãƒ‰ã®UIæ›´æ–°
             UpdateCardUI();
-            // ‘€ì•s‰Â‚É‚·‚é
+            // æ“ä½œä¸å¯ã«ã™ã‚‹
             dontTouchPanel.SetActive(true);
-            // ­‚µ‘Ò‚Á‚½Œã‘Šèƒ^[ƒ“‚ÉˆÚs
+            // å°‘ã—å¾…ã£ãŸå¾Œç›¸æ‰‹ã‚¿ãƒ¼ãƒ³ã«ç§»è¡Œ
             StartCoroutine(DelayBeforeHostTurn());
             return;
         }
     }
 
-    // Standƒ{ƒ^ƒ“
+    // Standãƒœã‚¿ãƒ³
     public void OnStandButton()
     {
-        // ƒNƒŠƒbƒN‰¹‚ğ–Â‚ç‚·
+        // ã‚¯ãƒªãƒƒã‚¯éŸ³ã‚’é³´ã‚‰ã™
         SEManager.Instance?.PlayClickSE();
-        // ƒzƒXƒg‚Ì“ñ–‡–Ú‚ÌƒJ[ƒh‚ğ•\Œü‚«‚Ì”»’è
+        // ãƒ›ã‚¹ãƒˆã®äºŒæšç›®ã®ã‚«ãƒ¼ãƒ‰ã‚’è¡¨å‘ãã®åˆ¤å®š
         game.HostSecondCard = true;
-        // ƒJ[ƒh‚ğˆø‚­‰¹‚ğ–Â‚ç‚·
+        // ã‚«ãƒ¼ãƒ‰ã‚’å¼•ãéŸ³ã‚’é³´ã‚‰ã™
         SEManager.Instance?.PlayCardSE();
-        // ƒJ[ƒh‚ÌUIXV
+        // ã‚«ãƒ¼ãƒ‰ã®UIæ›´æ–°
         UpdateCardUI();
-        // ‘€ì•s‰Â‚É‚·‚é
+        // æ“ä½œä¸å¯ã«ã™ã‚‹
         dontTouchPanel.SetActive(true);
-        // ­‚µ‘Ò‚Á‚½Œã‘Šèƒ^[ƒ“‚ÉˆÚs
+        // å°‘ã—å¾…ã£ãŸå¾Œç›¸æ‰‹ã‚¿ãƒ¼ãƒ³ã«ç§»è¡Œ
         StartCoroutine(DelayBeforeHostTurn());
     }
 
-    // Doubleƒ{ƒ^ƒ“
+    // Doubleãƒœã‚¿ãƒ³
     public void OnDoubleDownButton()
     {
-        // èD‚ª21ˆÈã‚Ìê‡
+        // æ‰‹æœ­ãŒ21ä»¥ä¸Šã®å ´åˆ
         if (game.PlayerScore >= BlackjackGame.BLACKJACK)
         {
-            // ƒNƒŠƒbƒN‚ğ–³Œø
+            // ã‚¯ãƒªãƒƒã‚¯ã‚’ç„¡åŠ¹
             return;
         }
 
-        // ƒ_ƒuƒ‹ƒ_ƒEƒ“‚ª•s‰Â‚Ìê‡
+        // ãƒ€ãƒ–ãƒ«ãƒ€ã‚¦ãƒ³ãŒä¸å¯ã®å ´åˆ
         if (!game.CanDoubleDown())
         {
-            // ƒNƒŠƒbƒN‚ğ–³Œø
+            // ã‚¯ãƒªãƒƒã‚¯ã‚’ç„¡åŠ¹
             return;
         }
 
-        // ƒNƒŠƒbƒN‰¹‚ğ–Â‚ç‚·
+        // ã‚¯ãƒªãƒƒã‚¯éŸ³ã‚’é³´ã‚‰ã™
         SEManager.Instance?.PlayClickSE();
-        // Doubledown(ƒxƒbƒg2”{{1–‡ˆø‚­)‚·‚é
+        // Doubledown(ãƒ™ãƒƒãƒˆ2å€ï¼‹1æšå¼•ã)ã™ã‚‹
         game.DoubleDown();
-        // ƒ_ƒuƒ‹Œã‚ÌƒxƒbƒgŠz‚ğƒ~ƒbƒVƒ‡ƒ“‚É”½‰f
+        // ãƒ€ãƒ–ãƒ«å¾Œã®ãƒ™ãƒƒãƒˆé¡ã‚’ãƒŸãƒƒã‚·ãƒ§ãƒ³ã«åæ˜ 
         GameDataManager.Instance.SetBet(game.CurrentBet);
-        // ƒJ[ƒh‚ğˆø‚­‰¹‚ğ–Â‚ç‚·
+        // ã‚«ãƒ¼ãƒ‰ã‚’å¼•ãéŸ³ã‚’é³´ã‚‰ã™
         SEManager.Instance?.PlayCardSE();
-        // ƒzƒXƒg‚Ì“ñ–‡–Ú‚ÌƒJ[ƒh‚ğ•\Œü‚«‚Ì”»’è
+        // ãƒ›ã‚¹ãƒˆã®äºŒæšç›®ã®ã‚«ãƒ¼ãƒ‰ã‚’è¡¨å‘ãã®åˆ¤å®š
         game.HostSecondCard = true;
-        // ƒJ[ƒh‚ÌUIXV
+        // ã‚«ãƒ¼ãƒ‰ã®UIæ›´æ–°
         UpdateCardUI();
-        // ƒxƒbƒgŠz‚ÌUIXV
+        // ãƒ™ãƒƒãƒˆé¡ã®UIæ›´æ–°
         UpdateBetUI();
-        // ‘€ì•s‰Â‚É‚·‚é
+        // æ“ä½œä¸å¯ã«ã™ã‚‹
         dontTouchPanel.SetActive(true);
 
-        // ƒJ[ƒh‚ğˆø‚¢‚½Œ‹‰Êƒo[ƒXƒg‚µ‚½ê‡
+        // ã‚«ãƒ¼ãƒ‰ã‚’å¼•ã„ãŸçµæœãƒãƒ¼ã‚¹ãƒˆã—ãŸå ´åˆ
         if (game.PlayerScore > BlackjackGame.BLACKJACK)
         {
-            // ƒzƒXƒg‚Ì“ñ–‡–Ú‚ÌƒJ[ƒh‚ğ•\Œü‚«‚Ì”»’è
+            // ãƒ›ã‚¹ãƒˆã®äºŒæšç›®ã®ã‚«ãƒ¼ãƒ‰ã‚’è¡¨å‘ãã®åˆ¤å®š
             game.HostSecondCard = true;
-            // ƒJ[ƒh‚ÌUIXV
+            // ã‚«ãƒ¼ãƒ‰ã®UIæ›´æ–°
             UpdateCardUI();
-            // ­‚µ‘Ò‚Á‚½Œã‘Šèƒ^[ƒ“‚ÉˆÚs
+            // å°‘ã—å¾…ã£ãŸå¾Œç›¸æ‰‹ã‚¿ãƒ¼ãƒ³ã«ç§»è¡Œ
             StartCoroutine(DelayBeforeHostTurn());
             return;
         }
 
-        // ­‚µ‘Ò‚Á‚½Œã‘Šèƒ^[ƒ“‚ÉˆÚs
+        // å°‘ã—å¾…ã£ãŸå¾Œç›¸æ‰‹ã‚¿ãƒ¼ãƒ³ã«ç§»è¡Œ
         StartCoroutine(DelayBeforeHostTurn());
     }
 
-    // Continueƒ{ƒ^ƒ“
+    // Continueãƒœã‚¿ãƒ³
     public void OnContinueButton()
     {
-        // ƒNƒŠƒbƒN‰¹‚ğ–Â‚ç‚·
+        // ã‚¯ãƒªãƒƒã‚¯éŸ³ã‚’é³´ã‚‰ã™
         SEManager.Instance?.PlayClickSE();
-        // ƒzƒXƒg‚Ì2–‡–Ú‚ğ— ‚É‚·‚é”»’è
+        // ãƒ›ã‚¹ãƒˆã®2æšç›®ã‚’è£ã«ã™ã‚‹åˆ¤å®š
         game.HostSecondCard = false;
-        // ƒJ[ƒh‚ğ‚ß‚­‚éƒAƒjƒ[ƒVƒ‡ƒ“‚Ìƒtƒ‰ƒO‚ğƒŠƒZƒbƒg
+        // ã‚«ãƒ¼ãƒ‰ã‚’ã‚ãã‚‹ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã®ãƒ•ãƒ©ã‚°ã‚’ãƒªã‚»ãƒƒãƒˆ
         TurnHostCard = false;
-        // ƒtƒHƒ“ƒgƒJƒ‰[‚ğ”’‚É–ß‚·
+        // ãƒ•ã‚©ãƒ³ãƒˆã‚«ãƒ©ãƒ¼ã‚’ç™½ã«æˆ»ã™
         resultText.color = Color.white;
-        // Œ‹‰ÊƒeƒLƒXƒg‚ğƒNƒŠƒA
+        // çµæœãƒ†ã‚­ã‚¹ãƒˆã‚’ã‚¯ãƒªã‚¢
         resultText.text = "";
-        // ‚±‚Ì‡‚Å’B¬‚µ‚½ƒ~ƒbƒVƒ‡ƒ“ƒŠƒXƒg‚ğƒŠƒZƒbƒg
+        // ã“ã®è©¦åˆã§é”æˆã—ãŸãƒŸãƒƒã‚·ãƒ§ãƒ³ãƒªã‚¹ãƒˆã‚’ãƒªã‚»ãƒƒãƒˆ
         GameDataManager.Instance.ClearNewlyClearedMissions();
 
-        // ƒvƒŒƒCƒ„[‚ÌèD”•ª‰ñ‚·
+        // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®æ‰‹æœ­æ•°åˆ†å›ã™
         foreach (var img in playerCardImages)
         {
-            // ƒJ[ƒh‰æ‘œ‚ÌƒŠƒZƒbƒg
+            // ã‚«ãƒ¼ãƒ‰ç”»åƒã®ãƒªã‚»ãƒƒãƒˆ
             img.GetComponent<Image>().sprite = nullCardSprite;
         }
 
-        // ƒzƒXƒg‚Ì‚ÌèD”•ª‰ñ‚·
+        // ãƒ›ã‚¹ãƒˆã®ã®æ‰‹æœ­æ•°åˆ†å›ã™
         foreach (var img in hostCardImages)
         {
-            // ƒJ[ƒh‰æ‘œ‚ÌƒŠƒZƒbƒg
+            // ã‚«ãƒ¼ãƒ‰ç”»åƒã®ãƒªã‚»ãƒƒãƒˆ
             img.GetComponent<Image>().sprite = nullCardSprite;
         }
 
-        // ƒ‹[ƒ‹ƒpƒlƒ‹‚ğ”ñ•\¦
+        // ãƒ«ãƒ¼ãƒ«ãƒ‘ãƒãƒ«ã‚’éè¡¨ç¤º
         rulePanel.SetActive(false);
-        // ƒŠƒUƒ‹ƒgƒpƒlƒ‹‚ğ”ñ•\¦
+        // ãƒªã‚¶ãƒ«ãƒˆãƒ‘ãƒãƒ«ã‚’éè¡¨ç¤º
         resultPanel.SetActive(false);
-        // ƒxƒbƒgƒpƒlƒ‹‚ğ•\¦
+        // ãƒ™ãƒƒãƒˆãƒ‘ãƒãƒ«ã‚’è¡¨ç¤º
         betPanel.SetActive(true);
-        // ƒQ[ƒ€UIƒpƒlƒ‹‚ğ”ñ•\¦
+        // ã‚²ãƒ¼ãƒ UIãƒ‘ãƒãƒ«ã‚’éè¡¨ç¤º
         blackjackUIPanel.SetActive(false);
     }
 
-    // Homeƒ{ƒ^ƒ“
+    // Homeãƒœã‚¿ãƒ³
     public void OnHomeButton()
     {
-        // ƒNƒŠƒbƒN‰¹‚ğ–Â‚ç‚·
+        // ã‚¯ãƒªãƒƒã‚¯éŸ³ã‚’é³´ã‚‰ã™
         SEManager.Instance?.PlayClickSE();
-        // ƒŠƒUƒ‹ƒgƒeƒLƒXƒg‚ğƒNƒŠƒA
+        // ãƒªã‚¶ãƒ«ãƒˆãƒ†ã‚­ã‚¹ãƒˆã‚’ã‚¯ãƒªã‚¢
         resultText.text = "";
-        // ƒzƒXƒg‚Ì2–‡–Ú‚ğ— ‚É‚·‚é”»’è
+        // ãƒ›ã‚¹ãƒˆã®2æšç›®ã‚’è£ã«ã™ã‚‹åˆ¤å®š
         game.HostSecondCard = false;
-        // ƒJ[ƒh‚ğ‚ß‚­‚éƒAƒjƒ[ƒVƒ‡ƒ“‚Ìƒtƒ‰ƒO‚ğƒŠƒZƒbƒg
+        // ã‚«ãƒ¼ãƒ‰ã‚’ã‚ãã‚‹ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã®ãƒ•ãƒ©ã‚°ã‚’ãƒªã‚»ãƒƒãƒˆ
         TurnHostCard = false;
-        // ƒtƒHƒ“ƒgƒJƒ‰[‚ğ”’‚É–ß‚·
+        // ãƒ•ã‚©ãƒ³ãƒˆã‚«ãƒ©ãƒ¼ã‚’ç™½ã«æˆ»ã™
         resultText.color = Color.white;
-        // ‚±‚Ì‡‚Å’B¬‚µ‚½ƒ~ƒbƒVƒ‡ƒ“ƒŠƒXƒg‚ğƒŠƒZƒbƒg
+        // ã“ã®è©¦åˆã§é”æˆã—ãŸãƒŸãƒƒã‚·ãƒ§ãƒ³ãƒªã‚¹ãƒˆã‚’ãƒªã‚»ãƒƒãƒˆ
         GameDataManager.Instance.ClearNewlyClearedMissions();
 
-        // ƒvƒŒƒCƒ„[‚ÌèD”•ª‰ñ‚·
+        // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®æ‰‹æœ­æ•°åˆ†å›ã™
         foreach (var img in playerCardImages)
         {
-            // ƒJ[ƒh‰æ‘œ‚ÌƒŠƒZƒbƒg
+            // ã‚«ãƒ¼ãƒ‰ç”»åƒã®ãƒªã‚»ãƒƒãƒˆ
             img.GetComponent<Image>().sprite = nullCardSprite;
         }
 
-        // ƒzƒXƒg‚Ì‚ÌèD”•ª‰ñ‚·
+        // ãƒ›ã‚¹ãƒˆã®ã®æ‰‹æœ­æ•°åˆ†å›ã™
         foreach (var img in hostCardImages)
         {
-            // ƒJ[ƒh‰æ‘œ‚ÌƒŠƒZƒbƒg
+            // ã‚«ãƒ¼ãƒ‰ç”»åƒã®ãƒªã‚»ãƒƒãƒˆ
             img.GetComponent<Image>().sprite = nullCardSprite;
         }
 
-        // ƒ‹[ƒ‹ƒpƒlƒ‹‚ğ”ñ•\¦
+        // ãƒ«ãƒ¼ãƒ«ãƒ‘ãƒãƒ«ã‚’éè¡¨ç¤º
         rulePanel.SetActive(false);
-        // ƒŠƒUƒ‹ƒgƒeƒLƒXƒg‚ğƒNƒŠƒA
+        // ãƒªã‚¶ãƒ«ãƒˆãƒ†ã‚­ã‚¹ãƒˆã‚’ã‚¯ãƒªã‚¢
         resultPanel.SetActive(false);
-        // ƒQ[ƒ€UIƒpƒlƒ‹‚ğ”ñ•\¦
+        // ã‚²ãƒ¼ãƒ UIãƒ‘ãƒãƒ«ã‚’éè¡¨ç¤º
         blackjackUIPanel.SetActive(false);
-        // BlackjackMenu‰æ–Ê‚É‘JˆÚ
+        // BlackjackMenuç”»é¢ã«é·ç§»
         SceneManager.LoadScene("BlackjackMenuScene");
     }
 
-    // ƒzƒXƒg‚Ìƒ^[ƒ“
+    // ãƒ›ã‚¹ãƒˆã®ã‚¿ãƒ¼ãƒ³
     IEnumerator HostTurn()
     {
-        // ƒzƒXƒg‚ªƒJ[ƒh‚ğˆø‚­‚×‚«ŠÔ‚Íƒ‹[ƒv
+        // ãƒ›ã‚¹ãƒˆãŒã‚«ãƒ¼ãƒ‰ã‚’å¼•ãã¹ãé–“ã¯ãƒ«ãƒ¼ãƒ—
         while (game.HostShouldHit())
         {
-            // 1•b‘Ò‚Â
+            // 1ç§’å¾…ã¤
             yield return new WaitForSeconds(1f);
-            // ƒJ[ƒh‚ğˆø‚­
+            // ã‚«ãƒ¼ãƒ‰ã‚’å¼•ã
             game.HostHit();
-            // ƒJ[ƒh‚ğˆø‚­‰¹‚ğ–Â‚ç‚·
+            // ã‚«ãƒ¼ãƒ‰ã‚’å¼•ãéŸ³ã‚’é³´ã‚‰ã™
             SEManager.Instance?.PlayCardSE();
-            // ƒJ[ƒhUI‚ÌXV
+            // ã‚«ãƒ¼ãƒ‰UIã®æ›´æ–°
             UpdateCardUI();
         }
-        // Endround‚Ö
+        // Endroundã¸
         EndRound();
     }
 
-    // ƒ^[ƒ“‚ÌI—¹
+    // ã‚¿ãƒ¼ãƒ³ã®çµ‚äº†æ™‚
     void EndRound()
     {
-        // Ÿ”s”»’è
+        // å‹æ•—åˆ¤å®š
         GameResult result = game.Evaluate();
-        // Š‹à‚ÌXV
+        // æ‰€æŒé‡‘ã®æ›´æ–°
         game.ApplyResult(result);
-        // Š‹à·•ª‚ğŒvZ‚µ‚ÄXV
+        // æ‰€æŒé‡‘å·®åˆ†ã‚’è¨ˆç®—ã—ã¦æ›´æ–°
         int diff = game.PlayerMoney - GameDataManager.Instance.data.money;
         GameDataManager.Instance.AddMoney(diff);
 
-        // Ÿ”s‹L˜^‚ğXV
+        // å‹æ•—è¨˜éŒ²ã‚’æ›´æ–°
         switch (result)
         {
-            // ƒuƒ‰ƒbƒNƒWƒƒƒbƒNŸ—˜”»’è‚Ìê‡
+            // ãƒ–ãƒ©ãƒƒã‚¯ã‚¸ãƒ£ãƒƒã‚¯å‹åˆ©åˆ¤å®šã®å ´åˆ
             case GameResult.BlackJack:
-                // ƒuƒ‰ƒbƒNƒWƒƒƒbƒN‰ñ”‚ğƒJƒEƒ“ƒg
+                // ãƒ–ãƒ©ãƒƒã‚¯ã‚¸ãƒ£ãƒƒã‚¯å›æ•°ã‚’ã‚«ã‚¦ãƒ³ãƒˆ
                 GameDataManager.Instance.AddBlackjackCount();
-                // Ÿ—˜‚È‚Ì‚Åtrue
+                // å‹åˆ©ãªã®ã§true
                 GameDataManager.Instance.UpdateRecord("Blackjack", 0, true);
                 break;
 
-            // Ÿ—˜”»’è‚Ìê‡
+            // å‹åˆ©åˆ¤å®šã®å ´åˆ
             case GameResult.PlayerWin:
-                // Ÿ—˜‚È‚Ì‚Åtrue
+                // å‹åˆ©ãªã®ã§true
                 GameDataManager.Instance.UpdateRecord("Blackjack", 0, false);
                 break;
 
-            // ƒzƒXƒgŸ—˜‚Ìê‡
+            // ãƒ›ã‚¹ãƒˆå‹åˆ©ã®å ´åˆ
             case GameResult.HostWin:
-                // ”s–k‚È‚Ì‚Åfalse
+                // æ•—åŒ—ãªã®ã§false
                 GameDataManager.Instance.UpdateRecord("Blackjack", 1, false);
                 break;
 
-            // ˆø‚«•ª‚¯‚Ìê‡
+            // å¼•ãåˆ†ã‘ã®å ´åˆ
             case GameResult.Push:
-                // Ÿ—˜‚Å‚Í‚È‚¢‚Ì‚Åfalse
+                // å‹åˆ©ã§ã¯ãªã„ã®ã§false
                 GameDataManager.Instance.UpdateRecord("Blackjack", 2, false);
                 break;
         }
 
-        // ƒf[ƒ^•Û‘¶
+        // ãƒ‡ãƒ¼ã‚¿ä¿å­˜
         GameDataManager.Instance.Save();
 
-        // Œ‹‰ÊƒeƒLƒXƒg‚ğİ’è
+        // çµæœãƒ†ã‚­ã‚¹ãƒˆã‚’è¨­å®š
         switch (result)
         {
-            // ƒuƒ‰ƒbƒNƒWƒƒƒbƒNŸ—˜‚Ìê‡
+            // ãƒ–ãƒ©ãƒƒã‚¯ã‚¸ãƒ£ãƒƒã‚¯å‹åˆ©ã®å ´åˆ
             case GameResult.BlackJack:
-                // ƒŠƒUƒ‹ƒgƒpƒlƒ‹‚ÉBlackJack‚ğ“ü‚ê‚é
+                // ãƒªã‚¶ãƒ«ãƒˆãƒ‘ãƒãƒ«ã«BlackJackã‚’å…¥ã‚Œã‚‹
                 resultText.text = "BlackJack";
-                // ƒtƒHƒ“ƒgƒJƒ‰[‚ğƒS[ƒ‹ƒh‚É‚·‚é
+                // ãƒ•ã‚©ãƒ³ãƒˆã‚«ãƒ©ãƒ¼ã‚’ã‚´ãƒ¼ãƒ«ãƒ‰ã«ã™ã‚‹
                 resultText.color = Color.gold;
                 break;
 
-            // ƒvƒŒƒCƒ„[Ÿ—˜‚Ìê‡
+            // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼å‹åˆ©ã®å ´åˆ
             case GameResult.PlayerWin:
-                // ƒŠƒUƒ‹ƒgƒpƒlƒ‹‚ÉWin‚ğ“ü‚ê‚é
+                // ãƒªã‚¶ãƒ«ãƒˆãƒ‘ãƒãƒ«ã«Winã‚’å…¥ã‚Œã‚‹
                 resultText.text = "Win";
-                // ƒtƒHƒ“ƒgƒJƒ‰[‚ğÔ‚É‚·‚é
+                // ãƒ•ã‚©ãƒ³ãƒˆã‚«ãƒ©ãƒ¼ã‚’èµ¤ã«ã™ã‚‹
                 resultText.color = Color.red;
                 break;
 
-            // ƒzƒXƒgŸ—˜‚Ìê‡
+            // ãƒ›ã‚¹ãƒˆå‹åˆ©ã®å ´åˆ
             case GameResult.HostWin:
-                // ƒŠƒUƒ‹ƒgƒpƒlƒ‹‚ÉLose‚ğ“ü‚ê‚é
+                // ãƒªã‚¶ãƒ«ãƒˆãƒ‘ãƒãƒ«ã«Loseã‚’å…¥ã‚Œã‚‹
                 resultText.text = "Lose";
-                // ƒtƒHƒ“ƒgƒJƒ‰[‚ğÂ‚É‚·‚é
+                // ãƒ•ã‚©ãƒ³ãƒˆã‚«ãƒ©ãƒ¼ã‚’é’ã«ã™ã‚‹
                 resultText.color = Color.blue;
                 break;
 
-            // ˆø‚«•ª‚¯‚Ìê‡
+            // å¼•ãåˆ†ã‘ã®å ´åˆ
             case GameResult.Push:
                 resultText.text = "Draw";
                 break;
         }
 
-        // ƒŠƒUƒ‹ƒgƒpƒlƒ‹‚ğ­‚µ’x‚ç‚¹‚Ä•\¦
+        // ãƒªã‚¶ãƒ«ãƒˆãƒ‘ãƒãƒ«ã‚’å°‘ã—é…ã‚‰ã›ã¦è¡¨ç¤º
         StartCoroutine(ShowResultPanelDelay());
-        // ƒJ[ƒhUI‚ÌXV
+        // ã‚«ãƒ¼ãƒ‰UIã®æ›´æ–°
         UpdateCardUI();
     }
 
-    // ƒzƒXƒgƒ^[ƒ“ˆÚs
+    // ãƒ›ã‚¹ãƒˆã‚¿ãƒ¼ãƒ³ç§»è¡Œæ™‚
     IEnumerator DelayBeforeHostTurn()
     {
-        // 1•b‘Ò‚Â
+        // 1ç§’å¾…ã¤
         yield return new WaitForSeconds(1f); 
-        // ƒzƒXƒgƒ^[ƒ“ŠJn
+        // ãƒ›ã‚¹ãƒˆã‚¿ãƒ¼ãƒ³é–‹å§‹
         StartCoroutine(HostTurn());
     }
 
-    // ‘Ò‹@‚µ‚ÄAƒŠƒUƒ‹ƒg•\¦
+    // å¾…æ©Ÿã—ã¦ã€ãƒªã‚¶ãƒ«ãƒˆè¡¨ç¤º
     IEnumerator ShowResultPanelDelay()
     {
-        // 1•b‘Ò‚Â
+        // 1ç§’å¾…ã¤
         yield return new WaitForSeconds(1f);
-        // ƒxƒbƒgŠzUI‚ÌXV
+        // ãƒ™ãƒƒãƒˆé¡UIã®æ›´æ–°
         UpdateBetUI();
 
-        // ƒŠƒUƒ‹ƒgƒpƒlƒ‹•\¦
+        // ãƒªã‚¶ãƒ«ãƒˆãƒ‘ãƒãƒ«è¡¨ç¤º
         resultPanel.SetActive(true);
-        // ”wŒi‚ÌˆÃ“]
+        // èƒŒæ™¯ã®æš—è»¢
         darkOverlay.SetActive(true);
-        // ƒvƒŒƒCƒ„[‘€ì•s‰Âƒpƒlƒ‹”ñ•\¦
+        // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼æ“ä½œä¸å¯ãƒ‘ãƒãƒ«éè¡¨ç¤º
         dontTouchPanel.SetActive(false);
 
-        // V‚µ‚­ƒNƒŠƒA‚µ‚½ƒ~ƒbƒVƒ‡ƒ“‚ª‚ ‚éê‡
+        // æ–°ã—ãã‚¯ãƒªã‚¢ã—ãŸãƒŸãƒƒã‚·ãƒ§ãƒ³ãŒã‚ã‚‹å ´åˆ
         if (GameDataManager.Instance.HasNewlyClearedMission())
         {
-            // V‚µ‚­’B¬‚µ‚½ƒ~ƒbƒVƒ‡ƒ“ƒŠƒXƒg‚ğæ“¾
+            // æ–°ã—ãé”æˆã—ãŸãƒŸãƒƒã‚·ãƒ§ãƒ³ãƒªã‚¹ãƒˆã‚’å–å¾—
             var list = GameDataManager.Instance.GetNewlyClearedMissions();
-            // ƒeƒLƒXƒg‚ğ•\¦
+            // ãƒ†ã‚­ã‚¹ãƒˆã‚’è¡¨ç¤º
             missionNoticeText.gameObject.SetActive(true);
-            // ƒeƒLƒXƒg‚ÉƒŠƒXƒg‚Ì“à—e‚ğ’Ç‰Á
-            missionNoticeText.text = string.Join("E", list);
-            // ƒeƒLƒXƒg‚É•¶š‚ğ’Ç‰Á
-            missionNoticeText.text += " ‚ğ’B¬‚µ‚Ü‚µ‚½";
+            // ãƒ†ã‚­ã‚¹ãƒˆã«ãƒªã‚¹ãƒˆã®å†…å®¹ã‚’è¿½åŠ 
+            missionNoticeText.text = string.Join("ãƒ»", list);
+            // ãƒ†ã‚­ã‚¹ãƒˆã«æ–‡å­—ã‚’è¿½åŠ 
+            missionNoticeText.text += " ã‚’é”æˆã—ã¾ã—ãŸ";
         }
-        // ‚È‚¢ê‡
+        // ãªã„å ´åˆ
         else
         {
-            // ƒeƒLƒXƒg‚ğ”ñ•\¦
+            // ãƒ†ã‚­ã‚¹ãƒˆã‚’éè¡¨ç¤º
             missionNoticeText.gameObject.SetActive(false);
         }
 
-        // Ÿ—˜ƒeƒLƒXƒg•ÏX
+        // å‹åˆ©æ™‚ãƒ†ã‚­ã‚¹ãƒˆå¤‰æ›´
         switch (resultText.text)
         {
             case "BlackJack":
-                // ƒuƒ‰ƒbƒNƒWƒƒƒbƒN‚Ì‰¹‚ğ–Â‚ç‚·
+                // ãƒ–ãƒ©ãƒƒã‚¯ã‚¸ãƒ£ãƒƒã‚¯æ™‚ã®éŸ³ã‚’é³´ã‚‰ã™
                 SEManager.Instance?.PlayBlackjackSE();
                 break;
 
             case "Win":
-                // Ÿ—˜‚Ì‰¹‚ğ–Â‚ç‚·
+                // å‹åˆ©æ™‚ã®éŸ³ã‚’é³´ã‚‰ã™
                 SEManager.Instance?.PlayWinSE();
                 break;
 
             case "Lose":
-                // ”s–k‚Ì‰¹‚ğ–Â‚ç‚·
+                // æ•—åŒ—æ™‚ã®éŸ³ã‚’é³´ã‚‰ã™
                 SEManager.Instance?.PlayLoseSE();
                 break;
 
             case "Retire":
-                // ƒŠƒ^ƒCƒA‚Ì‰¹‚ğ–Â‚ç‚·
+                // ãƒªã‚¿ã‚¤ã‚¢æ™‚ã®éŸ³ã‚’é³´ã‚‰ã™
                 SEManager.Instance?.PlayRetireSE();
                 break;
 
             case "Draw":
-                // ˆø‚«•ª‚¯‚Ì‰¹‚ğ–Â‚ç‚·
+                // å¼•ãåˆ†ã‘æ™‚ã®éŸ³ã‚’é³´ã‚‰ã™
                 SEManager.Instance?.PlayDrawSE();
                 break;
         }
 
     }
 
-    // ƒzƒXƒg‚ÌƒXƒRƒA•\¦
+    // ãƒ›ã‚¹ãƒˆã®ã‚¹ã‚³ã‚¢è¡¨ç¤º
     int GetVisibleHostScore()
     {
-        // ƒXƒRƒA‚Ì‡Œv
+        // ã‚¹ã‚³ã‚¢ã®åˆè¨ˆ
         int total = 0;
 
-        // ƒzƒXƒg‚ÌèD‚ª1–‡ˆÈã‚Ìê‡
+        // ãƒ›ã‚¹ãƒˆã®æ‰‹æœ­ãŒ1æšä»¥ä¸Šã®å ´åˆ
         if (game.HostHand.Count > 0)
         {
-            // ƒJ[ƒh‚ğæ“¾
+            // ã‚«ãƒ¼ãƒ‰ã‚’å–å¾—
             Card card = game.HostHand[0];
-            // ’l‚Ì’è‹`
+            // å€¤ã®å®šç¾©
             int value;
 
-            // ƒJ[ƒh‚ªA‚Ìê‡
+            // ã‚«ãƒ¼ãƒ‰ãŒAã®å ´åˆ
             if (card.Rank == 1)
             {
                 // ACE_HIGH
                 value = 11;
             }
-            // JQK‚Ìê‡
+            // JQKã®å ´åˆ
             else if (card.Rank >= 11)
             {
-                // 10‚Æ‚µ‚Äˆµ‚¤
+                // 10ã¨ã—ã¦æ‰±ã†
                 value = 10;
             }
-            // ‚»‚êˆÈŠO‚ÌƒJ[ƒh‚Ìê‡
+            // ãã‚Œä»¥å¤–ã®ã‚«ãƒ¼ãƒ‰ã®å ´åˆ
             else
             {
-                // ”š’Ê‚è
+                // æ•°å­—é€šã‚Š
                 value = card.Rank;
             }
 
-            // ‡Œv‚É‘«‚·
+            // åˆè¨ˆã«è¶³ã™
             total += value;
         }
 
         return total;
     }
 
-    // ƒJ[ƒhUIXV
+    // ã‚«ãƒ¼ãƒ‰UIæ›´æ–°
     void UpdateCardUI()
     {
-        // ƒvƒŒƒCƒ„[‚ÌƒJ[ƒh‰æ‘œƒXƒƒbƒg•¶‰ñ‚·
+        // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ã‚«ãƒ¼ãƒ‰ç”»åƒã‚¹ãƒ­ãƒƒãƒˆæ–‡å›ã™
         for (int i = 0; i < playerCardImages.Length; i++)
         {
-            // ƒvƒŒƒCƒ„[‚ÌèD”•ª‰ñ‚·
+            // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®æ‰‹æœ­æ•°åˆ†å›ã™
             if (i < game.PlayerHand.Count)
             {
-                // card‚Éî•ñ‚ğŠi”[
+                // cardã«æƒ…å ±ã‚’æ ¼ç´
                 Card card = game.PlayerHand[i];
-                // ƒJ[ƒh‰æ‘œ”z—ñ‚Ì’†‚ÅA‘Î‰‚·‚éˆÊ’u‚ğŒvZ‚µ‚Ä‚¢‚é
+                // ã‚«ãƒ¼ãƒ‰ç”»åƒé…åˆ—ã®ä¸­ã§ã€å¯¾å¿œã™ã‚‹ä½ç½®ã‚’è¨ˆç®—ã—ã¦ã„ã‚‹
                 int index = card.Suit * 13 + (card.Rank - 1);
-                // ImageƒRƒ“ƒ|[ƒlƒ“ƒg‚Ìæ“¾
+                // Imageã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®å–å¾—
                 Image img = playerCardImages[i].GetComponent<Image>();
-                // nullCard(V‚µ‚­ƒJ[ƒh‚ª’u‚©‚ê‚½‚©)‚Ì”»’è
+                // nullCard(æ–°ã—ãã‚«ãƒ¼ãƒ‰ãŒç½®ã‹ã‚ŒãŸã‹)ã®åˆ¤å®š
                 bool isNewCard = img.sprite == nullCardSprite; 
-                // ŒvZ‚µ‚½index‚ğ—p‚¢‚ÄA‘Î‰‚·‚éƒJ[ƒh‰æ‘œ‚ğƒZƒbƒg‚µ‚Ä‚¢‚é
+                // è¨ˆç®—ã—ãŸindexã‚’ç”¨ã„ã¦ã€å¯¾å¿œã™ã‚‹ã‚«ãƒ¼ãƒ‰ç”»åƒã‚’ã‚»ãƒƒãƒˆã—ã¦ã„ã‚‹
                 img.sprite = cardSprites[index];
 
-                // V‚µ‚­ƒJ[ƒh‚ª’u‚©‚ê‚½êŠ‚¾‚Á‚½ê‡
+                // æ–°ã—ãã‚«ãƒ¼ãƒ‰ãŒç½®ã‹ã‚ŒãŸå ´æ‰€ã ã£ãŸå ´åˆ
                 if (isNewCard)
                 {
-                    // ƒJ[ƒh‚ğˆø‚¢‚Ä‚­‚éƒAƒjƒ[ƒVƒ‡ƒ“‚ğ‚Â‚¯‚é
+                    // ã‚«ãƒ¼ãƒ‰ã‚’å¼•ã„ã¦ãã‚‹ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚’ã¤ã‘ã‚‹
                     AnimetionDrawCard(playerCardImages[i]);
                 }
             }
         }
 
-        // ƒzƒXƒg‚ÌƒJ[ƒh‰æ‘œƒXƒƒbƒg•¶‰ñ‚·
+        // ãƒ›ã‚¹ãƒˆã®ã‚«ãƒ¼ãƒ‰ç”»åƒã‚¹ãƒ­ãƒƒãƒˆæ–‡å›ã™
         for (int i = 0; i < hostCardImages.Length; i++)
         {
             if (i < game.HostHand.Count)
             {
-                // card‚Éî•ñ‚ğŠi”[
+                // cardã«æƒ…å ±ã‚’æ ¼ç´
                 Card card = game.HostHand[i];
-                // ƒJ[ƒh‰æ‘œ”z—ñ‚Ì’†‚ÅA‘Î‰‚·‚éˆÊ’u‚ğŒvZ‚µ‚Ä‚¢‚é
+                // ã‚«ãƒ¼ãƒ‰ç”»åƒé…åˆ—ã®ä¸­ã§ã€å¯¾å¿œã™ã‚‹ä½ç½®ã‚’è¨ˆç®—ã—ã¦ã„ã‚‹
                 int index = card.Suit * 13 + (card.Rank - 1);
-                // ImageƒRƒ“ƒ|[ƒlƒ“ƒg‚Ìæ“¾
+                // Imageã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®å–å¾—
                 Image img = hostCardImages[i].GetComponent<Image>();
-                // nullCard(V‚µ‚­ƒJ[ƒh‚ª’u‚©‚ê‚½‚©)‚Ì”»’è
+                // nullCard(æ–°ã—ãã‚«ãƒ¼ãƒ‰ãŒç½®ã‹ã‚ŒãŸã‹)ã®åˆ¤å®š
                 bool isNewCard = img.sprite == nullCardSprite;
-                // ŒvZ‚µ‚½index‚ğ—p‚¢‚ÄA‘Î‰‚·‚éƒJ[ƒh‰æ‘œ‚ğƒZƒbƒg‚·‚é
+                // è¨ˆç®—ã—ãŸindexã‚’ç”¨ã„ã¦ã€å¯¾å¿œã™ã‚‹ã‚«ãƒ¼ãƒ‰ç”»åƒã‚’ã‚»ãƒƒãƒˆã™ã‚‹
                 img.sprite = cardSprites[index];
 
-                // èD‚Ì“ñ–‡–Ú‚ÌƒJ[ƒh‚È‚ç
+                // æ‰‹æœ­ã®äºŒæšç›®ã®ã‚«ãƒ¼ãƒ‰ãªã‚‰
                 if (i == 1 && !game.HostSecondCard)
                 {
-                    // ‰æ‘œ‚ğ— –Ê‚ÌƒJ[ƒh‚ğ•\¦‚·‚é
+                    // ç”»åƒã‚’è£é¢ã®ã‚«ãƒ¼ãƒ‰ã‚’è¡¨ç¤ºã™ã‚‹
                     img.sprite = backCardSprite;
                 }
-                // ‚»‚êˆÈŠO‚ÌƒJ[ƒh‚È‚ç
+                // ãã‚Œä»¥å¤–ã®ã‚«ãƒ¼ãƒ‰ãªã‚‰
                 else
                 {
-                    // “ñ–‡–Ú‚ÌƒJ[ƒh‚ª— ‘¤•\¦‚Ìê‡
+                    // äºŒæšç›®ã®ã‚«ãƒ¼ãƒ‰ãŒè£å´è¡¨ç¤ºã®å ´åˆ
                     if (i == 1 &&game.HostSecondCard &&!TurnHostCard)
                     {
-                        // ƒzƒXƒg‚Ì“ñ–‡–Ú‚ÌƒJ[ƒh‚ğ•\Œü‚«‚Ì”»’è
+                        // ãƒ›ã‚¹ãƒˆã®äºŒæšç›®ã®ã‚«ãƒ¼ãƒ‰ã‚’è¡¨å‘ãã®åˆ¤å®š
                         TurnHostCard = true;
-                        // ‚ß‚­‚éƒAƒjƒ[ƒVƒ‡ƒ“‚ğ‚Â‚¯‚é
+                        // ã‚ãã‚‹ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚’ã¤ã‘ã‚‹
                         AnimetionTurnCard(hostCardImages[i], cardSprites[index]);
                     }
-                    // ‚»‚êˆÈŠO‚ÌƒJ[ƒh‚È‚ç
+                    // ãã‚Œä»¥å¤–ã®ã‚«ãƒ¼ãƒ‰ãªã‚‰
                     else
                     {
-                        // ŒvZ‚µ‚½index‚ğ—p‚¢‚ÄA‘Î‰‚·‚éƒJ[ƒh‰æ‘œ‚ğƒZƒbƒg‚µ‚Ä‚¢‚é
+                        // è¨ˆç®—ã—ãŸindexã‚’ç”¨ã„ã¦ã€å¯¾å¿œã™ã‚‹ã‚«ãƒ¼ãƒ‰ç”»åƒã‚’ã‚»ãƒƒãƒˆã—ã¦ã„ã‚‹
                         img.sprite = cardSprites[index];
                     }
                 }
 
-                // V‚µ‚­ƒJ[ƒh‚ª’u‚©‚ê‚½êŠ‚¾‚Á‚½ê‡
+                // æ–°ã—ãã‚«ãƒ¼ãƒ‰ãŒç½®ã‹ã‚ŒãŸå ´æ‰€ã ã£ãŸå ´åˆ
                 if (isNewCard)
                 {
-                    // ƒJ[ƒh‚ğˆø‚¢‚Ä‚­‚éƒAƒjƒ[ƒVƒ‡ƒ“‚ğ‚Â‚¯‚é
+                    // ã‚«ãƒ¼ãƒ‰ã‚’å¼•ã„ã¦ãã‚‹ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚’ã¤ã‘ã‚‹
                     AnimetionDrawCard(hostCardImages[i]);
                 }
             }
 
         }
 
-        // ƒvƒŒƒCƒ„[‚ÌƒXƒRƒA•\¦
+        // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ã‚¹ã‚³ã‚¢è¡¨ç¤º
         playerScoreText.text = game.PlayerScore.ToString();
 
-        // ƒzƒXƒg‚Ì“ñ–‡–Ú‚ÌƒJ[ƒh‚ª— ‘¤•\¦‚Ìê‡
+        // ãƒ›ã‚¹ãƒˆã®äºŒæšç›®ã®ã‚«ãƒ¼ãƒ‰ãŒè£å´è¡¨ç¤ºã®å ´åˆ
         if (!game.HostSecondCard)
         {
-            // ƒzƒXƒg‚Ì1–‡–Ú‚¾‚¯‚ÌƒXƒRƒA‚ğ•\¦
+            // ãƒ›ã‚¹ãƒˆã®1æšç›®ã ã‘ã®ã‚¹ã‚³ã‚¢ã‚’è¡¨ç¤º
             hostScoreText.text = GetVisibleHostScore().ToString();
         }
-        // ƒzƒXƒg‚Ì“ñ–‡–Ú‚ÌƒJ[ƒh‚ª•\‘¤•\¦‚Ìê‡
+        // ãƒ›ã‚¹ãƒˆã®äºŒæšç›®ã®ã‚«ãƒ¼ãƒ‰ãŒè¡¨å´è¡¨ç¤ºã®å ´åˆ
         else
         {
-            // ‚·‚×‚Ä‚ÌƒXƒRƒA‡Œv‚ğ•\¦
+            // ã™ã¹ã¦ã®ã‚¹ã‚³ã‚¢åˆè¨ˆã‚’è¡¨ç¤º
             hostScoreText.text = game.HostScore.ToString();
         }
     }
 
-    // ƒxƒbƒgŠz‚ÌUI‚ÌXV
+    // ãƒ™ãƒƒãƒˆé¡ã®UIã®æ›´æ–°
     void UpdateBetUI()
     {
-        // ƒxƒbƒgŠz‚Ì•\¦
+        // ãƒ™ãƒƒãƒˆé¡ã®è¡¨ç¤º
         betsText.text = game.CurrentBet.ToString();
-        // ƒxƒbƒgƒpƒlƒ‹‚ÌŠ‹à•\¦
+        // ãƒ™ãƒƒãƒˆãƒ‘ãƒãƒ«ã®æ‰€æŒé‡‘è¡¨ç¤º
         money1Text.text = game.PlayerMoney.ToString();
-        // ƒQ[ƒ€’†‚ÌŠ‹à•\¦
+        // ã‚²ãƒ¼ãƒ ä¸­ã®æ‰€æŒé‡‘è¡¨ç¤º
         money2Text.text = game.PlayerMoney.ToString();
     }
 
-    // ƒ‹[ƒ‹ƒ{ƒ^ƒ“
+    // ãƒ«ãƒ¼ãƒ«ãƒœã‚¿ãƒ³
     public void OnRuleButton()
     {
-        // ƒNƒŠƒbƒN‰¹‚ğ–Â‚ç‚·
+        // ã‚¯ãƒªãƒƒã‚¯éŸ³ã‚’é³´ã‚‰ã™
         SEManager.Instance?.PlayClickSE();
-        // ”wŒi‚ğˆÃ“]
+        // èƒŒæ™¯ã‚’æš—è»¢
         darkOverlay.SetActive(true);
-        // ƒ‹[ƒ‹ƒpƒlƒ‹‚ğ•\¦
+        // ãƒ«ãƒ¼ãƒ«ãƒ‘ãƒãƒ«ã‚’è¡¨ç¤º
         rulePanel.SetActive(true);
-        // ƒ‹[ƒ‹2ƒy[ƒW–ÚƒeƒLƒXƒg‚ğ”ñ•\¦
+        // ãƒ«ãƒ¼ãƒ«2ãƒšãƒ¼ã‚¸ç›®ãƒ†ã‚­ã‚¹ãƒˆã‚’éè¡¨ç¤º
         rule2Text.SetActive(false);
-        // ƒ‹[ƒ‹3ƒy[ƒW–ÚƒeƒLƒXƒg‚ğ”ñ•\¦
+        // ãƒ«ãƒ¼ãƒ«3ãƒšãƒ¼ã‚¸ç›®ãƒ†ã‚­ã‚¹ãƒˆã‚’éè¡¨ç¤º
         rule3Text.SetActive(false);
-        // ƒ‹[ƒ‹4ƒy[ƒW–ÚƒeƒLƒXƒg‚ğ”ñ•\¦
+        // ãƒ«ãƒ¼ãƒ«4ãƒšãƒ¼ã‚¸ç›®ãƒ†ã‚­ã‚¹ãƒˆã‚’éè¡¨ç¤º
         rule4Text.SetActive(false);
-        // ƒy[ƒW•\¦1‚ğ•\¦
+        // ãƒšãƒ¼ã‚¸è¡¨ç¤º1ã‚’è¡¨ç¤º
         rule1IndexText.SetActive(true);
-        // ƒy[ƒW•\¦2‚ğ”ñ•\¦
+        // ãƒšãƒ¼ã‚¸è¡¨ç¤º2ã‚’éè¡¨ç¤º
         rule2IndexText.SetActive(false);
-        // ƒy[ƒW•\¦3‚ğ”ñ•\¦
+        // ãƒšãƒ¼ã‚¸è¡¨ç¤º3ã‚’éè¡¨ç¤º
         rule3IndexText.SetActive(false);
-        // ƒy[ƒW•\¦4‚ğ”ñ•\¦
+        // ãƒšãƒ¼ã‚¸è¡¨ç¤º4ã‚’éè¡¨ç¤º
         rule4IndexText.SetActive(false);
-        // ƒy[ƒW‚ğ–ß‚·ƒ{ƒ^ƒ“‚ğ”ñ•\¦
+        // ãƒšãƒ¼ã‚¸ã‚’æˆ»ã™ãƒœã‚¿ãƒ³ã‚’éè¡¨ç¤º
         ruleBackButton.SetActive(false);
     }
 
-    // ƒ‹[ƒ‹ƒpƒlƒ‹“à‚Ì¨(i‚Ş)ƒ{ƒ^ƒ“‚ğ‰Ÿ‚µ‚½‚Æ‚«‚ÉÀs‚³‚ê‚éƒƒ\ƒbƒh
+    // ãƒ«ãƒ¼ãƒ«ãƒ‘ãƒãƒ«å†…ã®â†’(é€²ã‚€)ãƒœã‚¿ãƒ³ã‚’æŠ¼ã—ãŸã¨ãã«å®Ÿè¡Œã•ã‚Œã‚‹ãƒ¡ã‚½ãƒƒãƒ‰
     public void OnRuleNextButton()
     {
-        // ƒNƒŠƒbƒN‰¹‚ğ–Â‚ç‚·
+        // ã‚¯ãƒªãƒƒã‚¯éŸ³ã‚’é³´ã‚‰ã™
         SEManager.Instance?.PlayClickSE();
 
-        // Œ»İƒ‹[ƒ‹1ƒy[ƒW–Ú‚Ìê‡
+        // ç¾åœ¨ãƒ«ãƒ¼ãƒ«1ãƒšãƒ¼ã‚¸ç›®ã®å ´åˆ
         if (rule1Text.activeSelf)
         {
-            // ƒy[ƒW‚ğ–ß‚·ƒ{ƒ^ƒ“‚ğ•\¦
+            // ãƒšãƒ¼ã‚¸ã‚’æˆ»ã™ãƒœã‚¿ãƒ³ã‚’è¡¨ç¤º
             ruleBackButton.SetActive(true);
-            // ƒ‹[ƒ‹1ƒy[ƒW–ÚƒeƒLƒXƒg‚ğ”ñ•\¦
+            // ãƒ«ãƒ¼ãƒ«1ãƒšãƒ¼ã‚¸ç›®ãƒ†ã‚­ã‚¹ãƒˆã‚’éè¡¨ç¤º
             rule1Text.SetActive(false);
-            // ƒ‹[ƒ‹2ƒy[ƒW–ÚƒeƒLƒXƒg‚ğ•\¦
+            // ãƒ«ãƒ¼ãƒ«2ãƒšãƒ¼ã‚¸ç›®ãƒ†ã‚­ã‚¹ãƒˆã‚’è¡¨ç¤º
             rule2Text.SetActive(true);
-            // ƒy[ƒW•\¦1‚ğ”ñ•\¦
+            // ãƒšãƒ¼ã‚¸è¡¨ç¤º1ã‚’éè¡¨ç¤º
             rule1IndexText.SetActive(false);
-            // ƒy[ƒW•\¦2‚ğ•\¦
+            // ãƒšãƒ¼ã‚¸è¡¨ç¤º2ã‚’è¡¨ç¤º
             rule2IndexText.SetActive(true);
         }
 
-        // Œ»İƒ‹[ƒ‹2ƒy[ƒW–Ú‚Ìê‡
+        // ç¾åœ¨ãƒ«ãƒ¼ãƒ«2ãƒšãƒ¼ã‚¸ç›®ã®å ´åˆ
         else if (rule2Text.activeSelf)
         {
-            // ƒ‹[ƒ‹2ƒy[ƒW–ÚƒeƒLƒXƒg‚ğ”ñ•\¦
+            // ãƒ«ãƒ¼ãƒ«2ãƒšãƒ¼ã‚¸ç›®ãƒ†ã‚­ã‚¹ãƒˆã‚’éè¡¨ç¤º
             rule2Text.SetActive(false);
-            // ƒ‹[ƒ‹3ƒy[ƒW–ÚƒeƒLƒXƒg‚ğ•\¦
+            // ãƒ«ãƒ¼ãƒ«3ãƒšãƒ¼ã‚¸ç›®ãƒ†ã‚­ã‚¹ãƒˆã‚’è¡¨ç¤º
             rule3Text.SetActive(true);
-            // ƒy[ƒW•\¦2‚ğ”ñ•\¦
+            // ãƒšãƒ¼ã‚¸è¡¨ç¤º2ã‚’éè¡¨ç¤º
             rule2IndexText.SetActive(false);
-            // ƒy[ƒW•\¦3‚ğ•\¦
+            // ãƒšãƒ¼ã‚¸è¡¨ç¤º3ã‚’è¡¨ç¤º
             rule3IndexText.SetActive(true);
         }
 
-        // Œ»İƒ‹[ƒ‹3ƒy[ƒW–Ú‚Ìê‡
+        // ç¾åœ¨ãƒ«ãƒ¼ãƒ«3ãƒšãƒ¼ã‚¸ç›®ã®å ´åˆ
         else if (rule3Text.activeSelf)
         {
-            // ƒ‹[ƒ‹3ƒy[ƒW–ÚƒeƒLƒXƒg‚ğ”ñ•\¦
+            // ãƒ«ãƒ¼ãƒ«3ãƒšãƒ¼ã‚¸ç›®ãƒ†ã‚­ã‚¹ãƒˆã‚’éè¡¨ç¤º
             rule3Text.SetActive(false);
-            // ƒ‹[ƒ‹4ƒy[ƒW–ÚƒeƒLƒXƒg‚ğ•\¦
+            // ãƒ«ãƒ¼ãƒ«4ãƒšãƒ¼ã‚¸ç›®ãƒ†ã‚­ã‚¹ãƒˆã‚’è¡¨ç¤º
             rule4Text.SetActive(true);
-            // ƒy[ƒW•\¦3‚ğ”ñ•\¦
+            // ãƒšãƒ¼ã‚¸è¡¨ç¤º3ã‚’éè¡¨ç¤º
             rule3IndexText.SetActive(false);
-            // ƒy[ƒW•\¦4‚ğ•\¦
+            // ãƒšãƒ¼ã‚¸è¡¨ç¤º4ã‚’è¡¨ç¤º
             rule4IndexText.SetActive(true);
-            // ƒy[ƒW‚ği‚ß‚é‚ğ”ñ•\¦
+            // ãƒšãƒ¼ã‚¸ã‚’é€²ã‚ã‚‹ã‚’éè¡¨ç¤º
             ruleNextButton.SetActive(false);
         }
     }
 
-    // ƒ‹[ƒ‹ƒpƒlƒ‹“à‚Ì©(–ß‚é)ƒ{ƒ^ƒ“‚ğ‰Ÿ‚µ‚½‚Æ‚«‚ÉÀs‚³‚ê‚éƒƒ\ƒbƒh
+    // ãƒ«ãƒ¼ãƒ«ãƒ‘ãƒãƒ«å†…ã®â†(æˆ»ã‚‹)ãƒœã‚¿ãƒ³ã‚’æŠ¼ã—ãŸã¨ãã«å®Ÿè¡Œã•ã‚Œã‚‹ãƒ¡ã‚½ãƒƒãƒ‰
     public void OnRuleBackButton()
     {
-        // ƒNƒŠƒbƒN‰¹‚ğ–Â‚ç‚·
+        // ã‚¯ãƒªãƒƒã‚¯éŸ³ã‚’é³´ã‚‰ã™
         SEManager.Instance?.PlayClickSE();
 
-        // Œ»İƒ‹[ƒ‹2ƒy[ƒW–Ú‚Ìê‡
+        // ç¾åœ¨ãƒ«ãƒ¼ãƒ«2ãƒšãƒ¼ã‚¸ç›®ã®å ´åˆ
         if (rule2Text.activeSelf)
         {
-            // ƒy[ƒW‚ğ–ß‚éƒ{ƒ^ƒ“‚ğ”ñ•\¦
+            // ãƒšãƒ¼ã‚¸ã‚’æˆ»ã‚‹ãƒœã‚¿ãƒ³ã‚’éè¡¨ç¤º
             ruleBackButton.SetActive(false);
-            // ƒ‹[ƒ‹1ƒy[ƒW–ÚƒeƒLƒXƒg‚ğ•\¦
+            // ãƒ«ãƒ¼ãƒ«1ãƒšãƒ¼ã‚¸ç›®ãƒ†ã‚­ã‚¹ãƒˆã‚’è¡¨ç¤º
             rule1Text.SetActive(true);
-            // ƒ‹[ƒ‹2ƒy[ƒW–ÚƒeƒLƒXƒg‚ğ”ñ•\¦
+            // ãƒ«ãƒ¼ãƒ«2ãƒšãƒ¼ã‚¸ç›®ãƒ†ã‚­ã‚¹ãƒˆã‚’éè¡¨ç¤º
             rule2Text.SetActive(false);
-            // ƒy[ƒW•\¦1‚ğ•\¦
+            // ãƒšãƒ¼ã‚¸è¡¨ç¤º1ã‚’è¡¨ç¤º
             rule1IndexText.SetActive(true);
-            // ƒy[ƒW•\¦2‚ğ”ñ•\¦
+            // ãƒšãƒ¼ã‚¸è¡¨ç¤º2ã‚’éè¡¨ç¤º
             rule2IndexText.SetActive(false);
         }
 
-        // Œ»İƒ‹[ƒ‹3ƒy[ƒW–Ú‚Ìê‡
+        // ç¾åœ¨ãƒ«ãƒ¼ãƒ«3ãƒšãƒ¼ã‚¸ç›®ã®å ´åˆ
         else if (rule3Text.activeSelf)
         {
-            // ƒ‹[ƒ‹2ƒy[ƒW–ÚƒeƒLƒXƒg‚ğ•\¦
+            // ãƒ«ãƒ¼ãƒ«2ãƒšãƒ¼ã‚¸ç›®ãƒ†ã‚­ã‚¹ãƒˆã‚’è¡¨ç¤º
             rule2Text.SetActive(true);
-            // ƒ‹[ƒ‹3ƒy[ƒW–ÚƒeƒLƒXƒg‚ğ”ñ•\¦
+            // ãƒ«ãƒ¼ãƒ«3ãƒšãƒ¼ã‚¸ç›®ãƒ†ã‚­ã‚¹ãƒˆã‚’éè¡¨ç¤º
             rule3Text.SetActive(false);
-            // ƒy[ƒW•\¦2‚ğ•\¦
+            // ãƒšãƒ¼ã‚¸è¡¨ç¤º2ã‚’è¡¨ç¤º
             rule2IndexText.SetActive(true);
-            // ƒy[ƒW•\¦3‚ğ”ñ•\¦
+            // ãƒšãƒ¼ã‚¸è¡¨ç¤º3ã‚’éè¡¨ç¤º
             rule3IndexText.SetActive(false);
         }
 
-        // Œ»İƒ‹[ƒ‹3ƒy[ƒW–Ú‚Ìê‡
+        // ç¾åœ¨ãƒ«ãƒ¼ãƒ«3ãƒšãƒ¼ã‚¸ç›®ã®å ´åˆ
         else if (rule4Text.activeSelf)
         {
-            // ƒ‹[ƒ‹3ƒy[ƒW–ÚƒeƒLƒXƒg‚ğ•\¦
+            // ãƒ«ãƒ¼ãƒ«3ãƒšãƒ¼ã‚¸ç›®ãƒ†ã‚­ã‚¹ãƒˆã‚’è¡¨ç¤º
             rule3Text.SetActive(true);
-            // ƒ‹[ƒ‹4ƒy[ƒW–ÚƒeƒLƒXƒg‚ğ”ñ•\¦
+            // ãƒ«ãƒ¼ãƒ«4ãƒšãƒ¼ã‚¸ç›®ãƒ†ã‚­ã‚¹ãƒˆã‚’éè¡¨ç¤º
             rule4Text.SetActive(false);
-            // ƒy[ƒW•\¦3‚ğ•\¦
+            // ãƒšãƒ¼ã‚¸è¡¨ç¤º3ã‚’è¡¨ç¤º
             rule3IndexText.SetActive(true);
-            // ƒy[ƒW•\¦4‚ğ”ñ•\¦
+            // ãƒšãƒ¼ã‚¸è¡¨ç¤º4ã‚’éè¡¨ç¤º
             rule4IndexText.SetActive(false);
-            // ƒy[ƒW‚ği‚ß‚éƒ{ƒ^ƒ“‚ğ•\¦
+            // ãƒšãƒ¼ã‚¸ã‚’é€²ã‚ã‚‹ãƒœã‚¿ãƒ³ã‚’è¡¨ç¤º
             ruleNextButton.SetActive(true);
         }
     }
 
-    // ƒ‹[ƒ‹ƒpƒlƒ‹“à‚Ìcloseƒ{ƒ^ƒ“‚ğ‰Ÿ‚µ‚½‚Æ‚«‚ÉÀs‚³‚ê‚éƒƒ\ƒbƒh
+    // ãƒ«ãƒ¼ãƒ«ãƒ‘ãƒãƒ«å†…ã®closeãƒœã‚¿ãƒ³ã‚’æŠ¼ã—ãŸã¨ãã«å®Ÿè¡Œã•ã‚Œã‚‹ãƒ¡ã‚½ãƒƒãƒ‰
     public void OnRuleCloseButton()
     {
-        // ƒNƒŠƒbƒN‰¹‚ğ–Â‚ç‚·
+        // ã‚¯ãƒªãƒƒã‚¯éŸ³ã‚’é³´ã‚‰ã™
         SEManager.Instance?.PlayClickSE();
-        // ˆÃ“]‚ğ‰ğœ
+        // æš—è»¢ã‚’è§£é™¤
         darkOverlay.SetActive(false);
-        // ƒ‹[ƒ‹ƒpƒlƒ‹‚ğ•Â‚¶‚é
+        // ãƒ«ãƒ¼ãƒ«ãƒ‘ãƒãƒ«ã‚’é–‰ã˜ã‚‹
         rulePanel.SetActive(false);
-        // ƒ‹[ƒ‹2ƒy[ƒW–ÚƒeƒLƒXƒg‚ğ”ñ•\¦
+        // ãƒ«ãƒ¼ãƒ«2ãƒšãƒ¼ã‚¸ç›®ãƒ†ã‚­ã‚¹ãƒˆã‚’éè¡¨ç¤º
         rule2Text.SetActive(false);
-        // ƒ‹[ƒ‹3ƒy[ƒW–ÚƒeƒLƒXƒg‚ğ”ñ•\¦
+        // ãƒ«ãƒ¼ãƒ«3ãƒšãƒ¼ã‚¸ç›®ãƒ†ã‚­ã‚¹ãƒˆã‚’éè¡¨ç¤º
         rule3Text.SetActive(false);
-        // ƒ‹[ƒ‹3ƒy[ƒW–ÚƒeƒLƒXƒg‚ğ”ñ•\¦
+        // ãƒ«ãƒ¼ãƒ«3ãƒšãƒ¼ã‚¸ç›®ãƒ†ã‚­ã‚¹ãƒˆã‚’éè¡¨ç¤º
         rule4Text.SetActive(false);
-        // ƒ‹[ƒ‹1ƒy[ƒW–ÚƒeƒLƒXƒg‚ğ•\¦
+        // ãƒ«ãƒ¼ãƒ«1ãƒšãƒ¼ã‚¸ç›®ãƒ†ã‚­ã‚¹ãƒˆã‚’è¡¨ç¤º
         rule1Text.SetActive(true);
-        // ƒy[ƒW•\¦1‚ğ•\¦
+        // ãƒšãƒ¼ã‚¸è¡¨ç¤º1ã‚’è¡¨ç¤º
         rule1IndexText.SetActive(true);
-        // ƒy[ƒW•\¦2‚ğ”ñ•\¦
+        // ãƒšãƒ¼ã‚¸è¡¨ç¤º2ã‚’éè¡¨ç¤º
         rule2IndexText.SetActive(false);
-        // ƒy[ƒW•\¦3‚ğ”ñ•\¦
+        // ãƒšãƒ¼ã‚¸è¡¨ç¤º3ã‚’éè¡¨ç¤º
         rule3IndexText.SetActive(false);
-        // ƒy[ƒW•\¦4‚ğ”ñ•\¦
+        // ãƒšãƒ¼ã‚¸è¡¨ç¤º4ã‚’éè¡¨ç¤º
         rule4IndexText.SetActive(false);
-        // ƒy[ƒW‚ğ–ß‚·ƒ{ƒ^ƒ“‚ğ”ñ•\¦
+        // ãƒšãƒ¼ã‚¸ã‚’æˆ»ã™ãƒœã‚¿ãƒ³ã‚’éè¡¨ç¤º
         ruleBackButton.SetActive(false);
-        // ƒy[ƒW‚ği‚ß‚é‚ğ”ñ•\¦
+        // ãƒšãƒ¼ã‚¸ã‚’é€²ã‚ã‚‹ã‚’éè¡¨ç¤º
         ruleNextButton.SetActive(true);
     }
 
-    // ƒJ[ƒh‚ğˆø‚¢‚Ä‚­‚éƒAƒjƒ[ƒVƒ‡ƒ“
+    // ã‚«ãƒ¼ãƒ‰ã‚’å¼•ã„ã¦ãã‚‹ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³
     void AnimetionDrawCard(GameObject cardObj)
     {
-        // ƒJ[ƒh‚ÌUI‚ğ‘€ì‚·‚é‚½‚ß‚ÉRectTransform‚ğæ“¾
+        // ã‚«ãƒ¼ãƒ‰ã®UIã‚’æ“ä½œã™ã‚‹ãŸã‚ã«RectTransformã‚’å–å¾—
         RectTransform rt = cardObj.GetComponent<RectTransform>();
-        // •`‰æ‚ğÅ‘O–Ê‚É‚·‚é
+        // æç”»ã‚’æœ€å‰é¢ã«ã™ã‚‹
         rt.SetAsLastSibling();
-        // ÅI“I‚ÉˆÚ“®‚µ‚½‚¢ˆÊ’u
+        // æœ€çµ‚çš„ã«ç§»å‹•ã—ãŸã„ä½ç½®
         Vector2 targetPos = rt.anchoredPosition;
-        // ƒAƒjƒ[ƒVƒ‡ƒ“ŠJnˆÊ’u‚ğ‰æ–Ê‰Eã‚ ‚½‚è‚Éİ’è
+        // ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³é–‹å§‹ä½ç½®ã‚’ç”»é¢å³ä¸Šã‚ãŸã‚Šã«è¨­å®š
         rt.anchoredPosition = new Vector2(700, 500);
-        // DOTween‚ğg‚Á‚ÄˆÚ“®(‰æ–ÊŠO‚©‚çˆÚ“®‚³‚¹‚Ä‚«‚Äˆø‚¢‚½‚æ‚¤‚ÉŒ©‚¹‚é)
+        // DOTweenã‚’ä½¿ã£ã¦ç§»å‹•(ç”»é¢å¤–ã‹ã‚‰ç§»å‹•ã•ã›ã¦ãã¦å¼•ã„ãŸã‚ˆã†ã«è¦‹ã›ã‚‹)
         rt.DOAnchorPos(targetPos, 0.4f).SetEase(Ease.OutCubic);
 
     }
 
-    // ƒJ[ƒh‚ğ‚ß‚­‚éƒAƒjƒ[ƒVƒ‡ƒ“
+    // ã‚«ãƒ¼ãƒ‰ã‚’ã‚ãã‚‹ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³
     public void AnimetionTurnCard(GameObject cardObj, Sprite frontSprite)
     {
-        // ƒJ[ƒh‚ÌUI‚ğ‘€ì‚·‚é‚½‚ß‚ÉRectTransform‚ğæ“¾
+        // ã‚«ãƒ¼ãƒ‰ã®UIã‚’æ“ä½œã™ã‚‹ãŸã‚ã«RectTransformã‚’å–å¾—
         RectTransform rt = cardObj.GetComponent<RectTransform>();
-        // ƒJ[ƒh‰æ‘œ
+        // ã‚«ãƒ¼ãƒ‰ç”»åƒ
         Image img = cardObj.GetComponent<Image>();
 
-        // ƒJ[ƒh‚ÌUI‚ğ‘€ì‚·‚é‚½‚ß‚Ì’l‚ğŠi”[
-        turnCardRT = rt;                    // À•W
-        turnCardImg = img;                  // ƒJ[ƒh‚Ì— –Ê‚Ì‰æ‘œ
-        turnCardFrontSprite = frontSprite;  // ƒJ[ƒh‚Ì•\–Ê‚Ì‰æ‘œ
+        // ã‚«ãƒ¼ãƒ‰ã®UIã‚’æ“ä½œã™ã‚‹ãŸã‚ã®å€¤ã‚’æ ¼ç´
+        turnCardRT = rt;                    // åº§æ¨™
+        turnCardImg = img;                  // ã‚«ãƒ¼ãƒ‰ã®è£é¢ã®ç”»åƒ
+        turnCardFrontSprite = frontSprite;  // ã‚«ãƒ¼ãƒ‰ã®è¡¨é¢ã®ç”»åƒ
 
-        // DOTween‚ğg‚Á‚ÄƒJ[ƒh‚ğk‚ß‚éˆ—(k‚ß‚Ä‚ß‚­‚ç‚ê‚½‚ÉŒ©‚¹‚é)
+        // DOTweenã‚’ä½¿ã£ã¦ã‚«ãƒ¼ãƒ‰ã‚’ç¸®ã‚ã‚‹å‡¦ç†(ç¸®ã‚ã¦ã‚ãã‚‰ã‚ŒãŸã«è¦‹ã›ã‚‹)
         rt.DOScaleX(0f, 0.15f).SetEase(Ease.InQuad).OnComplete(OnTurnCardHalf);
     }
 
-    // ƒJ[ƒh‚ª— –Ê‚É‚È‚éuŠÔ‚ÉŒÄ‚Î‚ê‚é
+    // ã‚«ãƒ¼ãƒ‰ãŒè£é¢ã«ãªã‚‹ç¬é–“ã«å‘¼ã°ã‚Œã‚‹
     private void OnTurnCardHalf()
     {
-        // ‰æ‘œ‚ğƒJ[ƒh‚Ì— –Ê‚©‚ç•\–Ê‚É·‚µ‘Ö‚¦
+        // ç”»åƒã‚’ã‚«ãƒ¼ãƒ‰ã®è£é¢ã‹ã‚‰è¡¨é¢ã«å·®ã—æ›¿ãˆ
         turnCardImg.sprite = turnCardFrontSprite;
 
-        // ƒJ[ƒh‚ğŒ³‚Ì‰¡•‚É–ß‚·ƒAƒjƒ[ƒVƒ‡ƒ“
+        // ã‚«ãƒ¼ãƒ‰ã‚’å…ƒã®æ¨ªå¹…ã«æˆ»ã™ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³
         turnCardRT.DOScaleX(1f, 0.15f).SetEase(Ease.OutQuad);
     }
 }
